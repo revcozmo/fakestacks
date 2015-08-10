@@ -69,42 +69,6 @@ module.exports = {
 	            })
 	        }
 	    });
-
-
-  // 		var YQL = require("yql");
- 
-		// new YQL.exec('select * from data.html.cssselect where url="http://topbet.eu/sportsbook/college-football/ncaa" and css=".odds-page-container-Moneyline .odds-row-moneyline"', function(response) {
-		//     var selected_sports_book_index = 1; //Bovada
-		//     var gamesCount = response.query.results.results.div.length;
-		//     for (var i=0; i<gamesCount; i++) {
-		// 		var gameOdds = response.query.results.results.div[i].div;
-		// 		var gameKey = gameOdds[1].a[0].href;
-		// 		var time = gameOdds[0].content;
-		// 		var team1 = gameOdds[1].a[0].content;
-		// 		var team2 = gameOdds[1].a[1].content;
-		// 		var moneyLine1 = gameOdds[3].div.div[selected_sports_book_index].span[0].content;
-		// 		var moneyLine2 = gameOdds[3].div.div[selected_sports_book_index].span[1].content;
-		// 		if (moneyLine1 != null && moneyLine1.trim().length !== 0) {
-		// 			var bettable = {};
-		// 			bettable.gameKey = gameKey;
-		// 			bettable.gameTime = time;
-		// 			bettable.team1 = team1;
-		// 			bettable.team2 = team2;
-		// 			bettable.team1MoneyLine = moneyLine1;
-		// 			bettable.team2MoneyLine = moneyLine2;
-		// 			Bettable.create( bettable, function bettableCreated (err, bettable) {
-		// 				if (err) {
-		// 					console.log(err);
-		// 					req.session.flash = {
-		// 						err: err
-		// 					}
-		// 				}
-		// 				console.log("Added bettable " + bettable.gameKey);
-		// 			});
-		//     	}
-		//     }
-		//     res.redirect('/bettable');
-		// });
 	},
 
 	index: function(req, res, next) {

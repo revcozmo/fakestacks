@@ -1,0 +1,14 @@
+<div class="container">
+	<h3>Your Wagers</h3>
+	<table class='table'>
+
+		<% _.each(potentialBets, function(bet) { %>
+		<tr data-id="<%= bet.id %>" data-model="bet">
+			<td><%= bet.time %></td>
+			<td><%= bettable.team %></td>
+			<td><%= bettable.spread %></td>
+			<td><%= bettable.amount %></td>
+		</tr>
+		<% }) %>
+	</table>
+</div>

@@ -72,6 +72,7 @@ module.exports = {
 			// Log user in
 			req.session.authenticated = true;
 			req.session.User = user;
+			req.session.potentialBets = [];
 
 			// Change status to online
 			user.online = true;

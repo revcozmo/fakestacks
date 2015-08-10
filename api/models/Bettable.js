@@ -48,6 +48,19 @@ module.exports = {
   		return obj;
   	}
     
+  },
+
+  beforeCreate: function(values, next) {
+    Bettable.findByGameKey(values.gameKey, function foundBettable(err, foundBettables) {
+        if (err) return next(err);
+        if (foundBettables == null || foundBettables.length == 0) {
+          next();
+        }
+        else {
+          console.log("Duplicate gameKey, skipping...");
+          return;
+        }
+    });
   }
 
 };
