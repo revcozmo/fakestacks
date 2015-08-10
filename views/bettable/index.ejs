@@ -8,22 +8,14 @@
 			<td><%= bettable.team1 %></td>
 			<td><%= bettable.team1Spread %></td>
 			<td>
-				<input type="hidden" name="_method" value="create"/>
-				<input type="hidden" name="team" value="<%= bettable.team1 %>"/>
-				<input type="hidden" name="bettableId" value="<%= bettable.id %>"/>
-				<input type="submit" class="bet-btn btn btn-sm" value="Bet"/>
-				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId1 %>" value="Bet"/>
 			</td>
 		</tr>
 		<tr data-id="<%= bettable.id %>" data-model="bettable">
 			<td><%= bettable.team2 %></td>
 			<td><%= bettable.team2Spread %></td>
 			<td>
-				<input type="hidden" name="_method" value="create"/>
-				<input type="hidden" name="team" value="<%= bettable.team2 %>"/>
-				<input type="hidden" name="bettableId" value="<%= bettable.id %>"/>
-				<input type="submit" class="bet-btn btn btn-sm" value="Bet"/>
-				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId2 %>" value="Bet"/>
 			</td>
 		</tr>
 

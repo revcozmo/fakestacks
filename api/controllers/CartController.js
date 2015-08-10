@@ -9,34 +9,32 @@ module.exports = {
 	
 	create: function (req, res, next) {
 		var bet = req.params.all();
-		if (req.session.User == null) {
-			res.redirect('/session/new');
-		}
-		bet.userId = req.session.User.id;
-		bet.time = new Date();
-		console.log("Original: " + bet);
-		Bettable.findOne(bet.bettableId, function foundBettable(err, bettable) {
+		Bettable.findOne(bet.bettableId, function foundBettable(err, bettable) { 
 			if (err) return next(err);
-			if (!bettable) return next('Game with ID ' + bet.bettableId + ' doesn\'t exist');
-			bet.bettableId = bettable.id;
-			if (bettable.team1 != bet.team && bettable.team2 != bet.team) {
-				return next(bet.team + ' is not a valid team for this game');
+			if (!bettable) return res.badRequest('Game with ID ' + bet.bettableId + ' doesn\'t exist');
+			var potentialBet = {};
+			potentialBet.bettable = bettable;
+			potentialBet.betId = bet.betId;
+			if (bettable.betId1 != bet.betId && bettable.betId2 != bet.betId) {
+				return res.badRequest(bet.betId + ' is not a valid betId for this game');
 			}
-			else if (bettable.team1 == bet.team) {
-				bet.spread = bettable.team1Spread;
+			potentialBet.amount = 0; //Make this an inputtable value later
+			if (!req.session.cart) {
+				req.session.cart = [];
 			}
-			else if (bettable.team2 == bet.team) {
-				bet.spread = bettable.team2Spread;
-			}
-			bet.amount = 0; //Make this an inputtable value later
-			req.session.potentialBets.push(bet);
+			req.session.cart.push(potentialBet);
+			req.session.save()
+			console.log("Cart size: " + req.session.cart.length);
 		});
-		return;
 	},	
 
 	index: function(req, res, next) {
+		if (!req.session.cart) {
+			req.session.cart = [];
+		}
+		console.log("Cart size: " + req.session.cart.length);
 		res.view({
-			potentialBets: req.session.potentialBets
+			potentialBets: req.session.cart
 		});
 	}
 

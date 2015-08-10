@@ -52,6 +52,8 @@ module.exports = {
 							bettable.gameTime = gameTime;
 							bettable.team1 = team1;
 							bettable.team2 = team2;
+							bettable.betId1 = betId1;
+							bettable.betId2 = betId2;
 							bettable.team1Spread = spread1;
 							bettable.team2Spread = spread2;
 							Bettable.create( bettable, function bettableCreated (err, bettable) {

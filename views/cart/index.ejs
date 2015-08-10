@@ -3,11 +3,16 @@
 	<table class='table'>
 
 		<% _.each(potentialBets, function(bet) { %>
-		<tr data-id="<%= bet.id %>" data-model="bet">
-			<td><%= bet.time %></td>
-			<td><%= bettable.team %></td>
-			<td><%= bettable.spread %></td>
-			<td><%= bettable.amount %></td>
+		<tr data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.betId %>" data-model="bet">
+			<td><%= bet.bettable.gameTime %></td>
+			<% if (bet.betId == bet.bettable.betId1) { %>
+				<td><%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %></td>
+				<td>at <%= bet.bettable.team2 %></td>
+			<% } else { %>
+				<td><%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %></td>
+				<td>vs <%= bet.bettable.team1 %></td>
+			<% } %>
+			<td><%= bet.amount %></td>
 		</tr>
 		<% }) %>
 	</table>

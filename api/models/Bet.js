@@ -28,6 +28,10 @@ module.exports = {
   		type: 'integer',
   		required: true
   	},
+    betId: {
+      type: 'integer',
+      required: true
+    },
   	team: {
   		type: 'string',
   		required: true

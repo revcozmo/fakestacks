@@ -22,6 +22,14 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
+    betId1: {
+      type: 'integer',
+      required: true
+    },
+    betId2: {
+      type: 'integer',
+      required: true
+    },
   	team1: {
   		type: 'string',
   		required: true
