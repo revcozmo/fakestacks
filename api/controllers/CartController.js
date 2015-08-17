@@ -25,6 +25,8 @@ module.exports = {
 			req.session.cart.push(potentialBet);
 			req.session.save()
 			console.log("Cart size: " + req.session.cart.length);
+			res.status(201);
+			return res.json(potentialBet);
 		});
 	},	
 

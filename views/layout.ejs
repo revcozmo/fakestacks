@@ -49,15 +49,16 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <% if (session.authenticated) { %>
-              <li class="active"><a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> <%= session.User.lastName %></a> </li>
+              <li><a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> <%= session.User.lastName %></a> </li>
             <% } %>
             <% if (session.authenticated && session.User.admin) { %>
-            <li><a href="/user">User Administration</a></li>
-            <li><a href="#">Placeholder2</a></li>
+            <li><a href="/user">Administration</a></li>
             <% } %>
+            <li><a href="/bettable">Play</a></li>
           </ul>
-          <div class="navbar-right">
+          <div class="nav navbar-right">
             <% if (session.authenticated) { %>
+              <li class="money"><a href="/account" id="account-balance" class="money">$0.00</a></li>
               <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">sign-out</a>
             <% } %>
           </div>
@@ -76,14 +77,12 @@
         </div>
       </div>
     </div>
-
     <%- body %>
-
     <div class="container">
       <hr>
       <footer class="footer pull-right">
         <div>
-          <div>A fantasy college football gambling application by Jason Goetz</div>
+          <div>Put your fake money where your mouth is!</div>
         </div>
       </footer>
     </div>
@@ -145,6 +144,7 @@
     <script src="/js/bootstrap.js"></script>
     <script src="/js/customHandlers.js"></script>
     <script src="/js/customValidate.js"></script>
+    <script src="/js/ejs_production.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

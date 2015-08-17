@@ -76,8 +76,12 @@ module.exports = {
 	index: function(req, res, next) {
 		Bettable.find(function foundBettables(err, bettables) {
 			if (err) return next(err);
+			if (!req.session.cart) {
+				req.session.cart = [];
+			}
 			res.view({
-				bettables: bettables
+				bettables: bettables,
+				potentialBets: req.session.cart
 			});
 		});
 	},

@@ -12,6 +12,10 @@ $(document).ready(function(){
             data: bet,
             contentType: 'application/json',
             context: this,
+            success: function(data) {
+            	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data});
+        		$(tpl).appendTo(".potential-bet-list");
+            },
             statusCode: {
 			    403: function() {
 			      window.location.href = 'session/new';

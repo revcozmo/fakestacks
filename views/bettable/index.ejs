@@ -1,24 +1,33 @@
 <div class="container">
-	<h3>Games</h3>
-	<table class='table'>
+	<div class="row">
+		<div class="col-md-9">
+		<h3>Games</h3>
+		<table class='table'>
 
-		<% _.each(bettables, function(bettable) { %>
-		<tr data-id="<%= bettable.id %>" data-model="bettable">
-			<td rowspan="2"><%= bettable.gameTime %></td>
-			<td><%= bettable.team1 %></td>
-			<td><%= bettable.team1Spread %></td>
-			<td>
-				<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId1 %>" value="Bet"/>
-			</td>
-		</tr>
-		<tr data-id="<%= bettable.id %>" data-model="bettable">
-			<td><%= bettable.team2 %></td>
-			<td><%= bettable.team2Spread %></td>
-			<td>
-				<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId2 %>" value="Bet"/>
-			</td>
-		</tr>
+			<% _.each(bettables, function(bettable) { %>
+			<tr data-id="<%= bettable.id %>" data-model="bettable">
+				<td rowspan="2"><%= bettable.gameTime %></td>
+				<td><%= bettable.team1 %></td>
+				<td><%= bettable.team1Spread %></td>
+				<td>
+					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId1 %>" value="Bet"/>
+				</td>
+			</tr>
+			<tr data-id="<%= bettable.id %>" data-model="bettable">
+				<td><%= bettable.team2 %></td>
+				<td><%= bettable.team2Spread %></td>
+				<td>
+					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-bet-id="<%= bettable.betId2 %>" value="Bet"/>
+				</td>
+			</tr>
 
-		<% }) %>
-	</table>
-</div>	
+			<% }) %>
+		</table>
+		</div>
+		<div class="col-md-3">
+			<%- include ../cart/index.ejs %>
+		</div>
+	</div>
+</div>
+
+	
