@@ -1,15 +1,21 @@
 <% if (potentialBets != null) { %>
-	<div class="panel panel-default">
+	<div class="panel panel-default potential-bet-panel">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				Your Wagers
+				Bet Slip
 			</h3>
 		</div>
 		<div class="panel-body">
+			<% if (potentialBets.length == 0) { %>
+			<%- include ../../assets/templates/noGamesMessage.ejs %>
+			<% } %>
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>
 		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>		
 			<% }) %>
+			</ul>
+			<ul class="list-group">
+			<%- include ../../assets/templates/totalTally.ejs %>
 			</ul>
 		</div>
 	</div>
