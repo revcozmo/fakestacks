@@ -41,7 +41,7 @@ module.exports = {
 			potentialBet.amount = req.param('amount');
 			req.session.save();
 		}
-		return res.status(200);
+		return res.ok();
 	},
 
 	destroy: function(req, res, next) {

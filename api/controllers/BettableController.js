@@ -79,9 +79,14 @@ module.exports = {
 			if (!req.session.cart) {
 				req.session.cart = [];
 			}
+			var total = 0
+			for (var i=0; i<req.session.cart.length; i++) {
+				total += parseInt(req.session.cart[i].amount);
+			}
 			res.view({
 				bettables: bettables,
-				potentialBets: req.session.cart
+				potentialBets: req.session.cart,
+				totalAmount: total
 			});
 		});
 	},

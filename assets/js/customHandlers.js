@@ -14,8 +14,11 @@ $(document).ready(function(){
             context: this,
             success: function(data) {
             	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data});
-        		$( ".no-games-info-message" ).remove();
+        		$( ".no-games-info-message" ).hide();
         		$(tpl).appendTo(".potential-bet-list");
+        		$( "#num-bets" ).text($(".bet-amount").length);
+        		$( "#bets-total-amount" ).text(getTotalBetAmount());
+        		$( ".ul-total-tally" ).show();
         		$( ".bet-amount" ).blur(blurHandler);
         		$( "button.close" ).click(closeHandler);
             },
@@ -34,9 +37,7 @@ $(document).ready(function(){
 	});
 
 	$( ".bet-amount" ).blur(blurHandler);
-
 	$( "button.close" ).click(closeHandler);
-
 	$( "#review-bets" ).click(reviewBets);	
 
 });
@@ -52,6 +53,9 @@ var blurHandler = function( event ) {
         data: data,
         contentType: 'application/json',
         context: this,
+        complete: function() {
+        	$( "#bets-total-amount" ).text(getTotalBetAmount());
+        },
         statusCode: {
 		    403: function() {
 		      window.location.href = 'session/new';
@@ -77,17 +81,23 @@ var closeHandler = function( event ) {
         context: this,
         complete: function() {
         	if ($( ".bet-amount" ).length == 0) {
-        		var tpl = new EJS({url : 'templates/noGamesMessage.ejs' }).render(tpl);
-        		$(tpl).prependTo(".potential-bet-panel .panel-body");
+        		$( ".no-games-info-message" ).show();
+        		$( ".ul-total-tally" ).hide();
         	}
+        	$( "#num-bets" ).text($(".bet-amount").length);
+        	$( "#bets-total-amount" ).text(getTotalBetAmount());
         }
     });
 }
 
 var reviewBets = function(event) {
+	alert("Total Bet: " + getTotalBetAmount());
+}
+
+var getTotalBetAmount = function() {
 	var totalAmount = 0;
 	$.each($(".bet-amount"), function( index, betInput ) {
 	  	totalAmount += parseInt(betInput.value);
 	});
-	alert("Total Bet: " + totalAmount);
+	return totalAmount;
 }

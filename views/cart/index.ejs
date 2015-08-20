@@ -6,16 +6,32 @@
 			</h3>
 		</div>
 		<div class="panel-body">
-			<% if (potentialBets.length == 0) { %>
-			<%- include ../../assets/templates/noGamesMessage.ejs %>
-			<% } %>
+			<span class="no-games-info-message" 
+				<% if (potentialBets.length > 0) { %>
+				hidden="true" 
+				<% } %>
+				>Add games to your bet slip
+			</span>
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>
 		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>		
 			<% }) %>
 			</ul>
-			<ul class="list-group">
-			<%- include ../../assets/templates/totalTally.ejs %>
+			<ul class="list-group ul-total-tally"
+				<% if (potentialBets.length == 0) { %>
+				hidden="true" 
+				<% } %>
+			><li class="list-group-item total-tally">
+					<div class="num-bets-selected">
+					<span id="num-bets"><%= potentialBets.length %></span> BETS SELECTED
+					</div>
+					<div class="total-tally-risk">
+					Total Risk: $<span id="bets-total-amount"><%= totalAmount %></span>
+					</div>
+				  	<button id="review-bets" class="btn btn-default center-block" type="button">
+				    Review Bets
+				  	</button>
+				</li>
 			</ul>
 		</div>
 	</div>
