@@ -56,15 +56,7 @@ module.exports = {
 							bettable.betId2 = betId2;
 							bettable.team1Spread = spread1;
 							bettable.team2Spread = spread2;
-							Bettable.create( bettable, function bettableCreated (err, bettable) {
-								if (err) {
-									console.log(err);
-									req.session.flash = {
-										err: err
-									}
-								}
-								console.log("Added bettable " + bettable.gameKey);
-							});
+							Bettable.updateOrCreate(gameKey, bettable);
 				    	}
 				    }
 				    res.redirect('/bettable');

@@ -69,6 +69,33 @@ module.exports = {
           return;
         }
     });
+  },
+
+  updateOrCreate: function(gameKey, bettable) {
+    Bettable.findOneByGameKey(gameKey, function foundBettable(err, foundBettable) {
+      if (foundBettable) {
+        Bettable.update({gameKey: gameKey},bettable,function bettableCreated (err, updatedBettable) {
+          if (err) {
+            console.log(err);
+            req.session.flash = {
+              err: err
+            }
+          }
+          console.log("Updated bettable " + gameKey);
+        });
+      }
+      else {
+        Bettable.create( bettable, function bettableCreated (err, createdBettable) {
+          if (err) {
+            console.log(err);
+            req.session.flash = {
+              err: err
+            }
+          }
+          console.log("Added bettable " + gameKey);
+        });
+      }
+    });
   }
 
 };
