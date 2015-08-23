@@ -5,6 +5,10 @@
 
 module.exports = function(req, res, ok) {
 
+	if (req.session.User == null) {
+		res.redirect('/session/new');
+    	return;
+	}
 	var sessionUserMatchesId = (req.session.User.id == req.param('id'));
 	var isAdmin = req.session.User.admin;
 
@@ -15,8 +19,8 @@ module.exports = function(req, res, ok) {
 		req.session.flash = {
 			err: noRightsError
 		}
-    res.redirect('/session/new');
-    return;
+    	res.redirect('/session/new');
+    	return;
 	}
 
 	ok();

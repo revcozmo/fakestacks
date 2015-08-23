@@ -27,16 +27,22 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  '*': 'flash',
+  '*': ['flash', 'ensureReturnToUrl'],
+  SessionController: {
+    '*': ['flash']
+  },
+  AccountController: {
+    '*': "sessionAuth"
+  },
 
   user: {
-    'new': "flash",
-    'create': "flash",
+    'new': ["flash", "userCanSeeProfile"],
+    'create': "userCanSeeProfile",
     'show': "userCanSeeProfile",
     'edit': "userCanSeeProfile",
     'update': "userCanSeeProfile",
     '*': "admin"
-  }
+  },
 
   /***************************************************************************
   *                                                                          *

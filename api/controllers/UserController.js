@@ -32,7 +32,22 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
-			res.redirect('/user/show/'+user.id);
+			newAccount = {
+				userId: user.id,
+				amount: 500,
+				betId: null
+			};
+			Account.create(newAccount, function accountCreated(err, account) {
+				if (err) {
+					console.log(err);
+					req.session.flash = {
+						err: err
+					}
+
+					return res.redirect('/user/new');
+				}
+				res.redirect('/user/show/'+user.id);
+			});
 		});
 	},
 

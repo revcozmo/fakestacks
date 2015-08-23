@@ -38,7 +38,8 @@ $(document).ready(function(){
 
 	$( ".bet-amount" ).blur(blurHandler);
 	$( "button.close" ).click(closeHandler);
-	$( "#review-bets" ).click(reviewBets);	
+	$( "#review-bets" ).click(reviewBets);
+	$( "#confirm-bets" ).click(confirmBets);	
 
 });
 
@@ -91,7 +92,13 @@ var closeHandler = function( event ) {
 }
 
 var reviewBets = function(event) {
-	alert("Total Bet: " + getTotalBetAmount());
+	//TODO: validate
+	//alert("Total Bet: " + getTotalBetAmount());
+	location.href = "confirmation";
+}
+
+var confirmBets = function(event) {
+	location.href = "bet/create";
 }
 
 var getTotalBetAmount = function() {
