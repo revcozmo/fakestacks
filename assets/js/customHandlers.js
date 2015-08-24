@@ -4,8 +4,8 @@ $(document).ready(function(){
 	  	event.preventDefault();
 	  	var el = $(event.target);
 	  	var bettableId = el.data('bettableId');
-	  	var betId = el.data('betId');
-	  	var bet = {bettableId: bettableId, betId: betId};
+	  	var sideId = el.data('sideId');
+	  	var bet = {bettableId: bettableId, sideId: sideId};
 	  	$.ajax({
             type: 'GET',
             url: "cart/create",
@@ -44,13 +44,13 @@ $(document).ready(function(){
 });
 
 var blurHandler = function( event ) {
-	var betId = $(event.target).closest('.list-group-item')[0].dataset.betId;
+	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
 	var value = event.target.value;
 	//Do some validation on the amount here
 	var data = {amount: value};
 	$.ajax({
         type: 'GET',
-        url: "cart/edit/"+betId,
+        url: "cart/edit/"+sideId,
         data: data,
         contentType: 'application/json',
         context: this,
@@ -72,12 +72,12 @@ var blurHandler = function( event ) {
 }
 
 var closeHandler = function( event ) {
-	var betId = $(event.target).closest('.list-group-item')[0].dataset.betId;
+	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
 	var value = event.target.value;
 	console.log("close handler");
 	$.ajax({
         type: 'GET',
-        url: "cart/destroy/"+betId,
+        url: "cart/destroy/"+sideId,
         contentType: 'application/json',
         context: this,
         complete: function() {

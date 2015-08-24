@@ -12,12 +12,12 @@ module.exports = {
 
   attributes: {
 
-  	userId: {
-  		type: 'integer',
+  	user: {
+      model: 'User',
   		required: true
   	},
-  	bettableId: {
-  		type: 'integer',
+  	bettable: {
+  		model: 'Bettable',
   		required: true
   	},
   	time: {
@@ -28,9 +28,14 @@ module.exports = {
   		type: 'integer',
   		required: true
   	},
-    betId: {
+    sideId: {
       type: 'integer',
       required: true
+    },
+    win: {
+      type: 'boolean',
+      required: false,
+      defaultTo: null
     },
 
   	toJSON: function() {

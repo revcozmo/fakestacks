@@ -1,0 +1,29 @@
+<div class="container">
+	<h3>Account: $<%= total %></h3>
+	<table class='table'>
+		<tr>
+			<th>Transaction</th>
+			<th>Amount</th>
+			<th>Tally</th>
+		</tr>
+
+		<% _.each(transactions, function(transaction) { %>
+		<tr data-id="<%= transaction.id %>" data-model="transaction">
+			<td>
+			<% if (transaction.bet == null) { %>
+				<%= "Account Created" %> 
+			<% } else { %>
+				<% if (transaction.bet.sideId == transaction.bettable.sideId1) { %>
+					<%= transaction.bettable.team1 %><%= transaction.bettable.team1Spread %> @ <%= transaction.bettable.team2 %>
+				<% } else { %>
+					<%= transaction.bettable.team2 %><%= transaction.bettable.team2Spread %> vs <%= transaction.bettable.team1 %>
+				<% } %>
+			<% } %>
+			</td>
+			<td><%= transaction.amount %></td>
+			<td><%= transaction.tally %></td>
+		</tr>
+
+		<% }) %>
+	</table>
+</div>

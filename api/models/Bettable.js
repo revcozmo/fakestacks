@@ -22,11 +22,11 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
-    betId1: {
+    sideId1: {
       type: 'integer',
       required: true
     },
-    betId2: {
+    sideId2: {
       type: 'integer',
       required: true
     },

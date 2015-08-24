@@ -34,6 +34,10 @@ module.exports = {
   	encryptedPassword: {
   		type: 'string'
   	},
+    bets: {
+        collection: 'Bet',
+        via: 'user'
+    },
 
   	toJSON: function() {
   		var obj = this.toObject();

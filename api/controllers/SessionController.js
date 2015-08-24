@@ -88,21 +88,32 @@ module.exports = {
 
 				// If the user is also an admin redirect to the user list (e.g. /views/user/index.ejs)
 				// This is used in conjunction with config/policies.js file
-				if (req.session.User.admin) {
+				Transaction.getTransactionsWithTally(user.id, function(err, transactionsWithTally) {
+					if (err) {
+						console.log(err);
+						req.session.flash = {
+							err: err
+						}
+						return res.redirect('/');
+					}
+					req.session.User.money = transactionsWithTally.total;
+					if (req.session.User.admin) {
+						if (req.session.returnTo) {
+						   res.redirect(req.session.returnTo);
+						} else {
+						   res.redirect('/');
+						}
+						return;
+					}
+
+					//Redirect to their profile page (e.g. /views/user/show.ejs)
 					if (req.session.returnTo) {
 					   res.redirect(req.session.returnTo);
 					} else {
 					   res.redirect('/');
 					}
-					return;
-				}
-
-				//Redirect to their profile page (e.g. /views/user/show.ejs)
-				if (req.session.returnTo) {
-				   res.redirect(req.session.returnTo);
-				} else {
-				   res.redirect('/');
-				}
+				});
+				
 			});
 		});
 	},

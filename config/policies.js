@@ -31,7 +31,7 @@ module.exports.policies = {
   SessionController: {
     '*': ['flash']
   },
-  AccountController: {
+  TransactionController: {
     '*': "sessionAuth"
   },
 

@@ -9,7 +9,7 @@ module.exports = {
 	
 	create: function (req, res, next) {
 		var bet = req.params.all();
-		var cartBet = this.getBetFromCart(bet.betId, req.session.cart);
+		var cartBet = this.getBetFromCart(bet.sideId, req.session.cart);
 		if (cartBet) {
 			return res.status(204);
 		}
@@ -18,9 +18,9 @@ module.exports = {
 			if (!bettable) return res.badRequest('Game with ID ' + bet.bettableId + ' doesn\'t exist');
 			var potentialBet = {};
 			potentialBet.bettable = bettable;
-			potentialBet.betId = bet.betId;
-			if (bettable.betId1 != bet.betId && bettable.betId2 != bet.betId) {
-				return res.badRequest(bet.betId + ' is not a valid betId for this game');
+			potentialBet.sideId = bet.sideId;
+			if (bettable.sideId1 != bet.sideId && bettable.sideId2 != bet.sideId) {
+				return res.badRequest(bet.sideId + ' is not a valid sideId for this game');
 			}
 			potentialBet.amount = 0; //Make this an inputtable value later
 			if (!req.session.cart) {
@@ -62,20 +62,20 @@ module.exports = {
 		});
 	},
 
-	getBetFromCart: function(betId, cart) {
+	getBetFromCart: function(sideId, cart) {
 		for (var i=0; i<cart.length; i++) {
 			var potentialBet = cart[i];
-			if (potentialBet.betId == betId) {
+			if (potentialBet.sideId == sideId) {
 				return potentialBet;
 			}
 		}
 	},
 
-	removeBetFromCart: function(betId, cart) {
+	removeBetFromCart: function(sideId, cart) {
 		console.log("Cart size before: " + cart.length);
 		for (var i=0; i<cart.length; i++) {
 			var potentialBet = cart[i];
-			if (potentialBet.betId == betId) {
+			if (potentialBet.sideId == sideId) {
 				cart.splice(i, 1);
 				console.log("removing");
 			}

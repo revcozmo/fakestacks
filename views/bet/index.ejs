@@ -1,15 +1,17 @@
 <div class="container">
-<% if (potentialBets != null) { %>
+<% if (bets != null) { %>
 	<div class="panel panel-default potential-bet-panel">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				Bet Confirmation
+				Pending Bets
 			</h3>
 		</div>
 		<div class="panel-body">
-			<ul class="list-group potential-bet-list">
-			<% _.each(potentialBets, function(bet) { %>
-				<li class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
+			<ul class="list-group pending-bet-list">
+			<% _.each(bets, function(bet) { %>
+				<li id="bet-<%= bet.id %>" class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
+					<p>
+						<%= bet.user.firstName %> <%= bet.user.lastName %>
 					<p>
 					<% if (bet.sideId == bet.bettable.sideId1) { %>
 						<%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %>
@@ -30,21 +32,14 @@
 					<p>
 					Amount: $<%= bet.amount %>
 				  	</p>
+				  	<p>
+				  	<div class="btn-group" role="group">
+					  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-default win-button">Win</button>
+					  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-default loss-button">Loss</button>
+					</div>
+					</p>
 				</li>
 				<% }) %>
-			</ul>
-			<ul class="list-group ul-total-tally"
-				<li class="list-group-item total-tally">
-					<div class="num-bets-selected">
-					<span id="num-bets"><%= potentialBets.length %></span> BETS
-					</div>
-					<div class="total-tally-risk">
-					Total Risk: $<span id="bets-total-amount"><%= totalAmount %></span>
-					</div>
-				  	<button id="confirm-bets" class="btn btn-default center-block" type="button">
-				    Confirm
-				  	</button>
-				</li>
 			</ul>
 		</div>
 	</div>

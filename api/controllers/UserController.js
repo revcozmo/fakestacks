@@ -32,12 +32,12 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
-			newAccount = {
-				userId: user.id,
+			newAccountTransaction = {
+				user: user,
 				amount: 500,
-				betId: null
+				bet: null
 			};
-			Account.create(newAccount, function accountCreated(err, account) {
+			Transaction.create(newAccountTransaction, function accountCreated(err, account) {
 				if (err) {
 					console.log(err);
 					req.session.flash = {

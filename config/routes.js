@@ -35,7 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'static/index'
   },
-  '/account': 'AccountController.show'
+  '/account': 'TransactionController.show'
 
   /***************************************************************************
   *                                                                          *

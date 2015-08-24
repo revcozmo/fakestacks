@@ -39,8 +39,8 @@ module.exports = {
 
 				    for (var i=0; i<gamesCount; i++) {
 						var gameKey = games.eq(i).attr("id");
-						var betId1 = games.eq(i).find(".row0 .rotation_number").contents().last().text().trim();
-						var betId2 = games.eq(i).find(".row1 .rotation_number").contents().last().text().trim();
+						var sideId1 = games.eq(i).find(".row0 .rotation_number").contents().last().text().trim();
+						var sideId2 = games.eq(i).find(".row1 .rotation_number").contents().last().text().trim();
 						var gameTime = games.eq(i).find("h3 span").text();
 						var team1 = games.eq(i).find(".row0 .name").text().trim();
 						var team2 = games.eq(i).find(".row1 .name").text().trim();
@@ -52,8 +52,8 @@ module.exports = {
 							bettable.gameTime = gameTime;
 							bettable.team1 = team1;
 							bettable.team2 = team2;
-							bettable.betId1 = betId1;
-							bettable.betId2 = betId2;
+							bettable.sideId1 = sideId1;
+							bettable.sideId2 = sideId2;
 							bettable.team1Spread = spread1;
 							bettable.team2Spread = spread2;
 							Bettable.updateOrCreate(gameKey, bettable);
