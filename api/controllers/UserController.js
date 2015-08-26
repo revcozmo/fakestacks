@@ -23,7 +23,10 @@ module.exports = {
 	},
 
 	create: function (req, res, next) {
+		var user = req.params.all();
+		user.admin = req.session.emptyLeague ? true : false;
 		User.create( req.params.all(), function userCreated (err, user) {
+			req.session.emptyLeague = false;
 			if (err) {
 				console.log(err);
 				req.session.flash = {

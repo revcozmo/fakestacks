@@ -53,22 +53,27 @@ module.exports = {
 		}
 	},
 
+	update: function(req, res, next) {
+		Bet.update(req.param('id'), req.params.all(), function betUpdated(err) {
+			if (err) {
+				console.log("BET UPDATE FAILED: " + err);
+				return res.badRequest();
+			}
+			return res.ok();
+		});
+	},
+
 	index: function(req, res, next) {
 		Bet.find().where({win:null}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
-			console.log("Bets: " + bets.length);
-			var users = {};
+			var betsByUser = {};
 			for (var i=0; i<bets.length; i++) {
-				if (!users[bets[i].user.id]) {
-					users[bets[i].user.id] = [];
+				if (!betsByUser[bets[i].user.id]) {
+					betsByUser[bets[i].user.id] = [];
 				}
-				users[bets[i].user.id].push(bets[i]);
+				betsByUser[bets[i].user.id].push(bets[i]);
 			}
-			for (var id in users) {
-				console.log('User: ' + id + ": " + users[id].length);
-			}
-			//TODO: Do something with this view later
 			res.view({
-				bets: bets
+				betsByUser: betsByUser
 			});
 		});
 	},

@@ -35,9 +35,16 @@ module.exports.policies = {
     '*': "sessionAuth"
   },
 
+  bet: {
+    'index': "admin",
+    'update': "admin",
+    'create': "sessionAuth",
+    '*': "sessionAuth"
+  },
+
   user: {
-    'new': ["flash"],
-    'create': "flash",
+    'new': ["admin", "flash"],
+    'create': ["admin", "flash"],
     'show': "userCanSeeProfile",
     'edit': "userCanSeeProfile",
     'update': "userCanSeeProfile",

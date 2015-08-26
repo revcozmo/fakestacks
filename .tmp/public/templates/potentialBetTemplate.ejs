@@ -1,7 +1,7 @@
-<li class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.betId %>">
+<li class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-side-id="<%= bet.sideId %>">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<p>
-	<% if (bet.betId == bet.bettable.betId1) { %>
+	<% if (bet.sideId == bet.bettable.sideId1) { %>
 		<%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %>
 	<% } else { %>
 		<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
@@ -11,7 +11,7 @@
 	<%= bet.bettable.gameTime %>
 	</p>
 	<p>
-	<% if (bet.betId == bet.bettable.betId1) { %>
+	<% if (bet.sideId == bet.bettable.sideId1) { %>
 		<%= bet.bettable.team1 %> @ <%= bet.bettable.team2 %>
 	<% } else { %>
 		<%= bet.bettable.team2 %> vs <%= bet.bettable.team1 %>

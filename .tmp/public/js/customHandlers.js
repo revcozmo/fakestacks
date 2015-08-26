@@ -1,56 +1,59 @@
 $(document).ready(function(){
 	
-	$( ".bet-btn" ).click(function( event ) {
-	  	event.preventDefault();
-	  	var el = $(event.target);
-	  	var bettableId = el.data('bettableId');
-	  	var betId = el.data('betId');
-	  	var bet = {bettableId: bettableId, betId: betId};
-	  	$.ajax({
-            type: 'GET',
-            url: "cart/create",
-            data: bet,
-            contentType: 'application/json',
-            context: this,
-            success: function(data) {
-            	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data});
-        		$( ".no-games-info-message" ).hide();
-        		$(tpl).appendTo(".potential-bet-list");
-        		$( "#num-bets" ).text($(".bet-amount").length);
-        		$( "#bets-total-amount" ).text(getTotalBetAmount());
-        		$( ".ul-total-tally" ).show();
-        		$( ".bet-amount" ).blur(blurHandler);
-        		$( "button.close" ).click(closeHandler);
-            },
-            statusCode: {
-			    403: function() {
-			      	window.location.href = 'session/new';
-			    },
-			    400: function(data) {
-			    	alert("Error", data);
-			    },
-			    500: function(data) {
-			    	alert("Error", data);
-			    }
-  			}
-        });
-	});
-
+	$( ".bet-btn" ).click(betButtonHandler);
 	$( ".bet-amount" ).blur(blurHandler);
 	$( "button.close" ).click(closeHandler);
 	$( "#review-bets" ).click(reviewBets);
-	$( "#confirm-bets" ).click(confirmBets);	
+	$( "#confirm-bets" ).click(confirmBets);
+	$( ".win-button" ).click(winButtonHandler);
+	$( ".loss-button" ).click(lossButtonHandler);	
 
 });
 
+var betButtonHandler = function( event ) {
+  	event.preventDefault();
+  	var el = $(event.target);
+  	var bettableId = el.data('bettableId');
+  	var sideId = el.data('sideId');
+  	var bet = {bettableId: bettableId, sideId: sideId};
+  	$.ajax({
+        type: 'GET',
+        url: "cart/create",
+        data: bet,
+        contentType: 'application/json',
+        context: this,
+        success: function(data) {
+        	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data});
+    		$( ".no-games-info-message" ).hide();
+    		$(tpl).appendTo(".potential-bet-list");
+    		$( "#num-bets" ).text($(".bet-amount").length);
+    		$( "#bets-total-amount" ).text(getTotalBetAmount());
+    		$( ".ul-total-tally" ).show();
+    		$( ".bet-amount" ).blur(blurHandler);
+    		$( "button.close" ).click(closeHandler);
+        },
+        statusCode: {
+		    403: function() {
+		      	window.location.href = 'session/new';
+		    },
+		    400: function(data) {
+		    	alert("Error", data);
+		    },
+		    500: function(data) {
+		    	alert("Error", data);
+		    }
+		}
+    });
+}
+
 var blurHandler = function( event ) {
-	var betId = $(event.target).closest('.list-group-item')[0].dataset.betId;
+	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
 	var value = event.target.value;
 	//Do some validation on the amount here
 	var data = {amount: value};
 	$.ajax({
         type: 'GET',
-        url: "cart/edit/"+betId,
+        url: "cart/edit/"+sideId,
         data: data,
         contentType: 'application/json',
         context: this,
@@ -72,12 +75,12 @@ var blurHandler = function( event ) {
 }
 
 var closeHandler = function( event ) {
-	var betId = $(event.target).closest('.list-group-item')[0].dataset.betId;
+	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
 	var value = event.target.value;
 	console.log("close handler");
 	$.ajax({
         type: 'GET',
-        url: "cart/destroy/"+betId,
+        url: "cart/destroy/"+sideId,
         contentType: 'application/json',
         context: this,
         complete: function() {
@@ -99,6 +102,30 @@ var reviewBets = function(event) {
 
 var confirmBets = function(event) {
 	location.href = "bet/create";
+}
+
+var winButtonHandler = function(event) {
+	winLossHandler(event, true);
+}
+
+var lossButtonHandler = function(event) {
+	winLossHandler(event, false);
+}
+
+var winLossHandler = function(event, win) {
+	var el = $(event.target);
+	var betId = el.data().betId;
+	var data = {win: win};
+	$.ajax({
+        type: 'GET',
+        data: data,
+        url: "bet/update/"+betId,
+        contentType: 'application/json',
+        context: this,
+        complete: function() {
+        	el.closest('.list-group-item').hide();
+        }
+    });
 }
 
 var getTotalBetAmount = function() {
