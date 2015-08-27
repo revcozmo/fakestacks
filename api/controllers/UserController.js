@@ -25,7 +25,7 @@ module.exports = {
 	create: function (req, res, next) {
 		var user = req.params.all();
 		user.admin = req.session.emptyLeague ? true : false;
-		User.create( req.params.all(), function userCreated (err, user) {
+		User.create( user, function userCreated (err, user) {
 			req.session.emptyLeague = false;
 			if (err) {
 				console.log(err);
@@ -71,6 +71,33 @@ module.exports = {
 			res.view({
 				user: user
 			});
+		});
+	},
+
+	password: function(req, res, next) {
+		User.findOne(req.param('id'), function foundUser(err, user) {
+			if (err) return next(err);
+			if (!user) return next();
+			res.view({
+				user: user
+			});
+		});
+	},
+
+	updatepass: function(req, res, next) {
+		console.log("i made it");
+		var user = req.params.all();
+		user.password_update = true;
+		User.update(req.param('id'), req.params.all(), function updatedPassword(err) {
+			console.log("hi");
+			if (err) {
+				console.log("ERROR");
+				req.session.flash = {
+					err: err
+				}
+				return res.redirect('/user/password/' + req.param('id'));
+			}
+			res.redirect('/user/show/' + req.param('id'));
 		});
 	},
 

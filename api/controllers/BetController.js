@@ -54,12 +54,36 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-		Bet.update(req.param('id'), req.params.all(), function betUpdated(err) {
+		Bet.update(req.param('id'), req.params.all(), function betUpdated(err, updatedBets) {
 			if (err) {
 				console.log("BET UPDATE FAILED: " + err);
 				return res.badRequest();
 			}
-			return res.ok();
+			var bet = updatedBets[0];
+			if (bet.win) {
+				console.log("Logging winning transaction");
+				transaction = {
+					user: req.session.User,
+					amount: 2*parseInt(bet.amount),
+					bet: bet,
+					bettable: bet.bettable
+				};
+				Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
+					if (err) {
+						console.log(err);
+						req.session.flash = {
+							err: err
+						}
+						console.log("TRANSACTION UPDATE FAILED: " + err);
+						return res.badRequest();
+					}
+					req.session.User.money += createdTransaction.amount;
+					return res.ok();
+				});
+			}
+			else {
+				return res.ok();
+			}
 		});
 	},
 

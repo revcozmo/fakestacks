@@ -44,20 +44,20 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Play Money</a>
+          <a class="navbar-brand" href="/bettable">Play</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <% if (session.authenticated) { %>
-              <li><a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> <%= session.User.lastName %></a> </li>
-            <% } %>
             <% if (session.authenticated && session.User.admin) { %>
-            <li><a href="/user">Administration</a></li>
+            <li><a href="/user">Users</a></li>
             <% } %>
-            <li><a href="/bettable">Play</a></li>
+            <% if (session.authenticated) { %>
+            <li><a href="/bet">Pending Bets</a></li>
+            <% } %>
           </ul>
           <div class="nav navbar-right">
             <% if (session.authenticated) { %>
+              <li><a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> <%= session.User.lastName %></a> </li>
               <li class="money"><a href="/account" id="account-balance" class="money">$<%= session.User.money %>.00</a></li>
               <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">sign-out</a>
             <% } %>

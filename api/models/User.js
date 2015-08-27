@@ -58,6 +58,19 @@ module.exports = {
     var encryptedPassword = require('password-hash').generate(values.password);
     values.encryptedPassword = encryptedPassword;
     next();
-  }
+  },
+
+  beforeUpdate: function(values, next) {
+    if (!values.password_update) {
+      return next();
+    }
+    if (!values.password || values.password != values.confirmation) {
+      return next({err: ["Password doesn't match password confirmation"]});
+    }
+
+    var encryptedPassword = require('password-hash').generate(values.password);
+    values.encryptedPassword = encryptedPassword;
+    next();
+  },
 
 };

@@ -48,6 +48,8 @@ module.exports.policies = {
     'show': "userCanSeeProfile",
     'edit': "userCanSeeProfile",
     'update': "userCanSeeProfile",
+    'password': ["password", "flash"],
+    'updatepass': "password",
     '*': "admin"
   },
 

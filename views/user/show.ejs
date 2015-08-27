@@ -1,11 +1,7 @@
 <div class="container">
 	<h1><%- user.firstName %> <%- user.lastName %></h1>
-	<% if (user.admin) { %>
-		<td><img src="/images/admin.png"></td>
-	<% } else { %>
-		<td><img src="/images/pawn.png"></td>
-	<% } %>
 	<h1><%- user.email %></h1>
 
 	<a class="btn btn-medium btn-primary" href="/user/edit/<%= user.id %>">Edit</a>
+	<a class="btn btn-medium btn-primary" href="/user/password/<%= user.id %>">Update Password</a>
 </div>
