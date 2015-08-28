@@ -3,27 +3,32 @@
 	<table class='table'>
 		<tr>
 			<th>Transaction</th>
+			<th>Win/Loss</th>
 			<th>Amount</th>
 			<th>Tally</th>
 		</tr>
-
-		<% _.each(transactions, function(transaction) { %>
-		<tr data-id="<%= transaction.id %>" data-model="transaction">
+		<tr><td>Account Creation</td><td></td><td><%= start %></td><td><%= start %></td></tr>
+		<% _.each(bets, function(bet) { %>
+		<tr data-id="<%= bet.id %>" data-model="transaction">
 			<td>
-			<% if (transaction.bet == null) { %>
-				<%= "Account Created" %> 
-			<% } else { %>
-				<% if (transaction.bet.sideId == transaction.bettable.sideId1) { %>
-					<%= transaction.bettable.team1 %><%= transaction.bettable.team1Spread %> @ <%= transaction.bettable.team2 %>
+				<% if (bet.sideId == bet.bettable.sideId1) { %>
+					<%= bet.bettable.team1 %><%= bet.bettable.team1Spread %> @ <%= bet.bettable.team2 %>
 				<% } else { %>
-					<%= transaction.bettable.team2 %><%= transaction.bettable.team2Spread %> vs <%= transaction.bettable.team1 %>
+					<%= bet.bettable.team2 %><%= bet.bettable.team2Spread %> vs <%= bet.bettable.team1 %>
 				<% } %>
-			<% } %>
 			</td>
-			<td><%= transaction.amount %></td>
-			<td><%= transaction.tally %></td>
+			<% if (bet.win === true) { %>
+				<td>WIN</td>
+				<td><%= bet.amount %></td>
+			<% } else if (bet.win === false) { %>
+				<td>LOSS</td>
+				<td>-<%= bet.amount %></td>
+			<% } else { %>
+				<td>PENDING</td>
+				<td>(<%= bet.amount %>)</td>
+			<% } %>
+			<td><%= bet.tally %></td>
 		</tr>
-
 		<% }) %>
 	</table>
 </div>

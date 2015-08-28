@@ -7,12 +7,24 @@
 
 module.exports = {
 	show: function(req, res, next) {
-		Transaction.getTransactionsWithTally(req.session.User.id, function foundTransactions(err, transactionsWithTotal) {
+		Bet.find().where({user: req.session.User.id}).populate('bettable').exec(function foundBets(err, bets) {
 			if (err) return next(err);
-			if (!transactionsWithTotal) return next();
+			if (!bets) return next();
+			var runningTally = sails.config.league.startingAccount;
+			for (var i=0; i<bets.length; i++) {
+				var bet = bets[i];
+				if (bet.win === true) {
+					runningTally += bet.amount;
+				}
+				else if (bet.win === false) {
+					runningTally -= bet.amount;
+				}
+				bet.tally = runningTally;
+			}
 			res.view({
-				transactions: transactionsWithTotal.transactions,
-				total: transactionsWithTotal.total
+				bets: bets,
+				total: bets[bets.length-1].tally,
+				start: sails.config.league.startingAccount
 			});
 		});
 	}

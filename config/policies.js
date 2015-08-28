@@ -36,7 +36,7 @@ module.exports.policies = {
   },
 
   bet: {
-    'index': "admin",
+    'index': "sessionAuth",
     'update': "admin",
     'create': "sessionAuth",
     '*': "sessionAuth"
