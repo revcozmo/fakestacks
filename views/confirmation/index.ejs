@@ -6,6 +6,13 @@
 				Bet Confirmation
 			</h3>
 		</div>
+		<% if(flash && flash.err) { %>
+            <ul class="alert alert-success">
+        	<% Object.keys(flash.err).forEach(function(error) { %>
+            	<li><%- JSON.stringify(flash.err[error]) %></li>
+        	<% }) %>
+        	</ul>
+        <% } %>
 		<div class="panel-body">
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>

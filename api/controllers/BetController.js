@@ -13,27 +13,22 @@ module.exports = {
 		if (req.session.User == null) {
 			res.redirect('/session/new');
 		}
-		//TODO: Should validate one more time
-		for (var i=0; i<confirmedBets.length; i++) {
-			var bet = confirmedBets[i];
-			bet.bettable = bet.bettable;
-			bet.user = req.session.User;
-			bet.time = new Date();
-			Bet.create( bet, function betCreated(err, createdBet) {
-				if (err) {
-					console.log(err);
-					req.session.flash = {
-						err: err
-					}
-					return res.redirect('/bettable');
+		
+		ValidationService.validateBets(req, confirmedBets, function(errors) {
+			console.log("Callback errors: " + errors);
+			if (errors.length > 0) {
+		      	req.session.flash = {
+					err: errors
 				}
-				transaction = {
-					user: req.session.User,
-					amount: 0-parseInt(createdBet.amount),
-					bet: createdBet,
-					bettable: createdBet.bettable
-				};
-				Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
+				return res.redirect('/confirmation');
+		    }
+
+			for (var i=0; i<confirmedBets.length; i++) {
+				var bet = confirmedBets[i];
+				bet.bettable = bet.bettable;
+				bet.user = req.session.User;
+				bet.time = new Date();
+				Bet.create( bet, function betCreated(err, createdBet) {
 					if (err) {
 						console.log(err);
 						req.session.flash = {
@@ -41,16 +36,31 @@ module.exports = {
 						}
 						return res.redirect('/bettable');
 					}
-					console.log("Bet Created!");
-					createdBets++;
-					req.session.User.money += createdTransaction.amount;
-					if (createdBets == req.session.cart.length) {
-						req.session.cart = [];
-						res.redirect('/bettable');
-					}
+					transaction = {
+						user: req.session.User,
+						amount: 0-parseInt(createdBet.amount),
+						bet: createdBet,
+						bettable: createdBet.bettable
+					};
+					Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
+						if (err) {
+							console.log(err);
+							req.session.flash = {
+								err: err
+							}
+							return res.redirect('/bettable');
+						}
+						console.log("Bet Created!");
+						createdBets++;
+						req.session.User.money += createdTransaction.amount;
+						if (createdBets == req.session.cart.length) {
+							req.session.cart = [];
+							res.redirect('/bettable');
+						}
+					});
 				});
-			});
-		}
+	    	}
+		});
 	},
 
 	update: function(req, res, next) {

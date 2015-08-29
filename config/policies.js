@@ -38,7 +38,7 @@ module.exports.policies = {
   bet: {
     'index': "sessionAuth",
     'update': "admin",
-    'create': "sessionAuth",
+    'create': ["sessionAuth", "flash"],
     '*': "sessionAuth"
   },
 

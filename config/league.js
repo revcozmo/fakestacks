@@ -2,5 +2,5 @@
 module.exports.league = {
   startingAccount: 500,
   weeklyBetAccountRatio: .5,
-  weeklyBetCountMax: 5
+  weeklyBetCountMax: 4
 };
