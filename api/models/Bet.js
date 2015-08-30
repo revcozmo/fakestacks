@@ -7,7 +7,6 @@
 
 module.exports = {
   tableName: 'bet',
-  adapter: 'mysql',
   schema: true,
 
   attributes: {

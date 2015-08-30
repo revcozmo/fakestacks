@@ -7,7 +7,6 @@
 
 module.exports = {
   tableName: 'transactions',
-  adapter: 'mysql',
 
   schema: true,
 

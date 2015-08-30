@@ -8,7 +8,6 @@
 
 module.exports = {
   tableName: 'users',
-  adapter: 'mysql',
 
   schema: true,
 
