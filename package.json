@@ -6,7 +6,7 @@
   "keywords": [],
   "dependencies": {
     "cheerio": "latest",
-    "ejs": "~0.8.4",
+    "ejs": "~0.8.8",
     "express": "latest",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -21,10 +21,12 @@
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "~0.0.4",
     "include-all": "^0.1.6",
-    "rc": "~0.5.0",
+    "password-hash": "1.2.2",
+    "pg": "4.4.1",
+    "rc": "0.5.5",
     "request": "latest",
     "sails": "~0.11.0",
-    "sails-disk": "~0.10.0"
+    "sails-postgresql": "^0.10.16"
   },
   "scripts": {
     "debug": "node debug app.js",

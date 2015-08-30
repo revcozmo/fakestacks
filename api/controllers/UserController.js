@@ -24,6 +24,9 @@ module.exports = {
 
 	create: function (req, res, next) {
 		var user = req.params.all();
+		for (key in user) {
+			console.log(key + ":" + user[key]);
+		}
 		user.admin = req.session.emptyLeague ? true : false;
 		User.create( user, function userCreated (err, user) {
 			req.session.emptyLeague = false;

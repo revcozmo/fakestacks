@@ -7,9 +7,7 @@
 		<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
 	<% } %>
 	</p>
-	<p>
-	<%= bet.bettable.gameTime %>
-	</p>
+	<p class="gametime"><%= bet.bettable.gameTime %></p>
 	<p>
 	<% if (bet.sideId == bet.bettable.sideId1) { %>
 		<%= bet.bettable.team1 %> @ <%= bet.bettable.team2 %>
@@ -21,7 +19,7 @@
     <div class="form-group">
         <label for="amount" class="control-label col-xs-6">Amount:</label>
         <div class="col-xs-5" style="float:right;">
-            <input type="number" class="bet-amount form-control" id="amount" placeholder="$" value="<%= bet.amount %>">
+            <input type="number" min="0" step="1" class="bet-amount form-control" id="amount" placeholder="$" value="<%= bet.amount %>">
         </div>
     </div>
 	</form>

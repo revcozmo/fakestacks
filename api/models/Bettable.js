@@ -19,7 +19,7 @@ module.exports = {
   		required: true
   	},
   	gameTime: {
-  		type: 'string',
+  		type: 'datetime',
   		required: true
   	},
     sideId1: {
@@ -59,6 +59,7 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
+    delete values.id;
     Bettable.findByGameKey(values.gameKey, function foundBettable(err, foundBettables) {
         if (err) return next(err);
         if (foundBettables == null || foundBettables.length == 0) {

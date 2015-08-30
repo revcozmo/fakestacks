@@ -18,11 +18,9 @@
 module.exports = {
     
   create: function (req, res, next) {
-  		//var express = require('express');
 		var fs = require('fs');
 		var request = require('request');
 		var cheerio = require('cheerio');
-		//var app     = express();
     
     	url = 'http://topbet.eu/sportsbook/college-football/ncaa';
 
@@ -69,7 +67,8 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-		Bettable.find(function foundBettables(err, bettables) {
+		var rightnow = new Date();
+		Bettable.find().where({gametime: {'>=':rightnow}}).exec(function foundBettables(err, bettables) {
 			if (err) return next(err);
 			if (!req.session.cart) {
 				req.session.cart = [];

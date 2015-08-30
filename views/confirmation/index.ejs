@@ -24,9 +24,7 @@
 						<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
 					<% } %>
 					</p>
-					<p>
-					<%= bet.bettable.gameTime %>
-					</p>
+					<p class="gametime"><%= bet.bettable.gameTime %></p>
 					<p>
 					<% if (bet.sideId == bet.bettable.sideId1) { %>
 						<%= bet.bettable.team1 %> @ <%= bet.bettable.team2 %>

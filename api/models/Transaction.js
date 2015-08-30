@@ -28,6 +28,11 @@ module.exports = {
     }
   },
 
+  beforeCreate: function(values, next) {
+    delete values.id;
+    next();
+  },
+
   getTransactionsWithTally: function(userId, cb) {
     Transaction.find()
 		.where({'user':userId})

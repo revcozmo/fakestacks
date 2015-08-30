@@ -6,7 +6,14 @@ $(document).ready(function(){
 	$( "#review-bets" ).click(reviewBets);
 	$( "#confirm-bets" ).click(confirmBets);
 	$( ".win-button" ).click(winButtonHandler);
-	$( ".loss-button" ).click(lossButtonHandler);	
+	$( ".loss-button" ).click(lossButtonHandler);
+
+    $( ".gametime" ).text(function(index, text) {
+        var timeInSeconds = Date.parse(text);
+        var m = moment(timeInSeconds);
+        var niceDate = m.format("dddd, MMM Do, h:mma z")
+        $(".gametime")[index].innerText = niceDate;
+    });	
 
 });
 

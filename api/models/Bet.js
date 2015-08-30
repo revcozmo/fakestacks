@@ -45,6 +45,7 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
+    delete values.id;
     var errors = [];
     //FIXME: Need to have the actual number of pending bets for this user
     console.log(values);

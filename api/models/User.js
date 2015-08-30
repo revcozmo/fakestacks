@@ -14,6 +14,11 @@ module.exports = {
 
   attributes: {
   	
+    // id: {
+    //   type: 'integer',
+    //   autoIncrement: true,
+    //   primaryKey: true
+    // },
   	firstName: {
   		type: 'string',
   		required: true
@@ -51,6 +56,7 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
+    delete values.id;
     if (!values.password || values.password != values.confirmation) {
       return next({err: ["Password doesn't match password confirmation"]});
     }

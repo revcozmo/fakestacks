@@ -6,7 +6,7 @@
 
 			<% _.each(bettables, function(bettable) { %>
 			<tr data-id="<%= bettable.id %>" data-model="bettable">
-				<td rowspan="2"><%= bettable.gameTime %></td>
+				<td class="gametime" rowspan="2"><%= bettable.gameTime %></td>
 				<td><%= bettable.team1 %></td>
 				<td><%= bettable.team1Spread %></td>
 				<td>
