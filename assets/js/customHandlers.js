@@ -8,6 +8,7 @@ $(document).ready(function(){
 	$( ".win-button" ).click(winButtonHandler);
 	$( ".loss-button" ).click(lossButtonHandler);
 
+    var timezone = jstz.determine().name();
     $( ".gametime" ).text(function(index, text) {
         var timeInSeconds = Date.parse(text);
         var m = moment(timeInSeconds);
