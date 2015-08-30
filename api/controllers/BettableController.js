@@ -68,7 +68,7 @@ module.exports = {
 
 	index: function(req, res, next) {
 		var rightnow = new Date();
-		Bettable.find().where({gametime: {'>=':rightnow}}).exec(function foundBettables(err, bettables) {
+		Bettable.find().where({gameTime: {'>=':rightnow}}).exec(function foundBettables(err, bettables) {
 			if (err) return next(err);
 			if (!req.session.cart) {
 				req.session.cart = [];
