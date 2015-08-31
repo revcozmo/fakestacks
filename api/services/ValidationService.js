@@ -8,6 +8,7 @@ module.exports = {
 		var errors = [];
 		
 		//Validate the entered bet amounts
+		console.log("Validating bets");
 		for (var i=0; i<bets.length; i++) {
 			var amount = bets[i].amount;
 			if (isNaN(amount)) {

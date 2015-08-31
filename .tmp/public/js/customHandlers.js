@@ -7,12 +7,7 @@ $(document).ready(function(){
 	$( "#confirm-bets" ).click(confirmBets);
 	$( ".win-button" ).click(winButtonHandler);
 	$( ".loss-button" ).click(lossButtonHandler);
-    $( ".gametime" ).text(function(index, text) {
-        var timeInSeconds = Date.parse(text);
-        var m = moment(timeInSeconds);
-        var niceDate = m.format("dddd, MMM Do, h:mma z")
-        $(".gametime")[index].innerText = niceDate;
-    });	
+    $( ".gametime" ).text(replaceDates);
 
 });
 
@@ -37,6 +32,7 @@ var betButtonHandler = function( event ) {
     		$( ".ul-total-tally" ).show();
     		$( ".bet-amount" ).blur(blurHandler);
     		$( "button.close" ).click(closeHandler);
+            $( ".gametime" ).text(replaceDates);
         },
         statusCode: {
 		    403: function() {
@@ -101,9 +97,20 @@ var closeHandler = function( event ) {
 }
 
 var reviewBets = function(event) {
-	//TODO: validate
-	//alert("Total Bet: " + getTotalBetAmount());
-	location.href = "confirmation";
+    if (validateBets()) {
+    	location.href = "confirmation";
+    }
+}
+
+var validateBets = function() {
+    var totalAmount = getTotalBetAmount();
+    $(".bet-amount").each(function( index ) {
+        if (isNaN(this.value)) {
+            $("#betting-errors").show();
+            return false;
+        }
+    });
+    return true;
 }
 
 var confirmBets = function(event) {
@@ -132,6 +139,13 @@ var winLossHandler = function(event, win) {
         	el.closest('.list-group-item').hide();
         }
     });
+}
+
+var replaceDates = function(index, text) {
+    var timeInSeconds = Date.parse(text);
+    var m = moment(timeInSeconds);
+    var niceDate = m.format("dddd, MMM Do, h:mma z")
+    $(".gametime")[index].innerText = niceDate;
 }
 
 var getTotalBetAmount = function() {
