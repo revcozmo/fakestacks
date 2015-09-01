@@ -23,7 +23,7 @@ module.exports = {
 			}
 			res.view({
 				bets: bets,
-				total: bets[bets.length-1].tally,
+				total: bets.length==0 ? 0 : bets[bets.length-1].tally,
 				start: sails.config.league.startingAccount
 			});
 		});
