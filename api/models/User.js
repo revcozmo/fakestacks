@@ -59,6 +59,7 @@ module.exports = {
     if (!values.password || values.password != values.confirmation) {
       return next({err: ["Password doesn't match password confirmation"]});
     }
+    values.email = values.email.toLowerCase();
 
     var encryptedPassword = require('password-hash').generate(values.password);
     values.encryptedPassword = encryptedPassword;

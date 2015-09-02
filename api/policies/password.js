@@ -4,7 +4,6 @@
 
 module.exports = function(req, res, ok) {
 
-	console.log("Hello?");
 	if (req.session.User == null) {
 		res.redirect('/session/new');
     	return;
@@ -22,7 +21,6 @@ module.exports = function(req, res, ok) {
     	return;
 	}
 
-	console.log("It's okay");
 	ok();
 
 };

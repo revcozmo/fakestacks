@@ -41,25 +41,6 @@ module.exports = {
   		var obj = this.toObject();
   		return obj;
   	}
-  },
-
-  beforeCreate: function(values, next) {
-    delete values.id;
-    var errors = [];
-    //FIXME: Need to have the actual number of pending bets for this user
-    console.log(values);
-    console.log("values.length" + values.length);
-    console.log("MAX: " + parseInt(sails.config.league.weeklyBetCountMax));
-    if (values.length > parseInt(sails.config.league.weeklyBetCountMax)) {
-      errors.push("You cannot exceed " + sails.config.league.weeklyBetCountMax + " bets for the week");
-    }
-    //TODO: Invalidate against total money with sails.config.league.weeklyBetAccountRatio
-    //TODO: Make sure none of these bets have already started
-    //TODO: Make sure none of these bets have been updated
-    if (errors.length > 0) {
-      return next({err: errors});
-    }
-    next();
   }
 };
 

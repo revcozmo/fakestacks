@@ -7,7 +7,8 @@
 
 module.exports = {
 	show: function(req, res, next) {
-		Bet.find().where({user: req.session.User.id}).populate('bettable').exec(function foundBets(err, bets) {
+		var userId = req.param('id');
+		Bet.find().where({user: userId ? userId : req.session.User.id}).populate('bettable').exec(function foundBets(err, bets) {
 			if (err) return next(err);
 			if (!bets) return next();
 			var runningTally = sails.config.league.startingAccount;
@@ -23,7 +24,7 @@ module.exports = {
 			}
 			res.view({
 				bets: bets,
-				total: bets.length==0 ? 0 : bets[bets.length-1].tally,
+				total: bets.length==0 ? sails.config.league.startingAccount : bets[bets.length-1].tally,
 				start: sails.config.league.startingAccount
 			});
 		});

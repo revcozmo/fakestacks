@@ -43,6 +43,7 @@ module.exports.policies = {
   },
 
   user: {
+    'index': "sessionAuth",
     'new': ["admin", "flash"],
     'create': ["admin", "flash"],
     'show': "userCanSeeProfile",

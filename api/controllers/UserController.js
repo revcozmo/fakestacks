@@ -123,8 +123,28 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-		User.find(function foundUsers(err, users) {
+		User.find().populate('bets').exec(function foundUsers(err, users) {
 			if (err) return next(err);
+			for (var i=0; i<users.length; i++) {
+				var runningTally = sails.config.league.startingAccount;
+				var pendingTally = 0;
+				var bets = users[i].bets;
+				for (var j=0; j<bets.length; j++) {
+					var bet = bets[j];
+					if (bet.win === true) {
+						runningTally += bet.amount;
+					}
+					else if (bet.win === false) {
+						runningTally -= bet.amount;
+					}
+					else {
+						pendingTally += bet.amount;
+					}
+				}
+				users[i].money = runningTally;
+				users[i].pending = pendingTally;
+			}
+			users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.pending-user1.pending) : (user2.money-user1.money)});
 			res.view({
 				users: users
 			});
