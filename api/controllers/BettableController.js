@@ -68,12 +68,12 @@ module.exports = {
 
 	index: function(req, res, next) {
 		var rightnow = new Date();
-		Bettable.find().where({gameTime: {'>=':rightnow}}).exec(function foundBettables(err, bettables) {
+		Bettable.find().where({gameTime: {'>=':rightnow}}).sort({ gameTime: 'asc' }).exec(function foundBettables(err, bettables) {
 			if (err) return next(err);
 			if (!req.session.cart) {
 				req.session.cart = [];
 			}
-			var total = 0
+			var total = 0;
 			for (var i=0; i<req.session.cart.length; i++) {
 				total += parseInt(req.session.cart[i].amount);
 			}

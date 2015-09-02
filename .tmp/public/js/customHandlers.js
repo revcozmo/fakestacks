@@ -8,6 +8,7 @@ $(document).ready(function(){
 	$( ".win-button" ).click(winButtonHandler);
 	$( ".loss-button" ).click(lossButtonHandler);
     $( ".gametime" ).text(replaceDates);
+    $( ".gametime" ).removeClass("gametime");
 
 });
 
@@ -33,6 +34,8 @@ var betButtonHandler = function( event ) {
     		$( ".bet-amount" ).blur(blurHandler);
     		$( "button.close" ).click(closeHandler);
             $( ".gametime" ).text(replaceDates);
+            $( ".gametime" ).removeClass("gametime");
+
         },
         statusCode: {
 		    403: function() {
@@ -144,7 +147,7 @@ var winLossHandler = function(event, win) {
 var replaceDates = function(index, text) {
     var timeInSeconds = Date.parse(text);
     var m = moment(timeInSeconds);
-    var niceDate = m.format("dddd, MMM Do, h:mma z")
+    var niceDate = m.format("dddd, MMM Do, h:mma z");
     $(".gametime")[index].innerText = niceDate;
 }
 
