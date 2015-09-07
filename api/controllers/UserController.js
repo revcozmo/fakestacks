@@ -24,9 +24,6 @@ module.exports = {
 
 	create: function (req, res, next) {
 		var user = req.params.all();
-		for (key in user) {
-			console.log(key + ":" + user[key]);
-		}
 		user.admin = req.session.emptyLeague ? true : false;
 		User.create( user, function userCreated (err, user) {
 			req.session.emptyLeague = false;
@@ -88,13 +85,10 @@ module.exports = {
 	},
 
 	updatepass: function(req, res, next) {
-		console.log("i made it");
 		var user = req.params.all();
 		user.password_update = true;
 		User.update(req.param('id'), req.params.all(), function updatedPassword(err) {
-			console.log("hi");
 			if (err) {
-				console.log("ERROR");
 				req.session.flash = {
 					err: err
 				}
@@ -137,7 +131,7 @@ module.exports = {
 					else if (bet.win === false) {
 						runningTally -= bet.amount;
 					}
-					else {
+					else if (bet.complete === false) {
 						pendingTally += bet.amount;
 					}
 				}

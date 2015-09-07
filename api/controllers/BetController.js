@@ -70,7 +70,7 @@ module.exports = {
 				return res.badRequest();
 			}
 			var bet = updatedBets[0];
-			if (bet.win) {
+			if (bet.win === true) {
 				console.log("Logging winning transaction");
 				transaction = {
 					user: req.session.User,
@@ -87,18 +87,38 @@ module.exports = {
 						console.log("TRANSACTION UPDATE FAILED: " + err);
 						return res.badRequest();
 					}
-					req.session.User.money += createdTransaction.amount;
+					return res.ok();
+				});
+			}
+			else if (bet.win == null) {
+				console.log("Logging push transaction");
+				transaction = {
+					user: bet.user,
+					amount: parseInt(bet.amount),
+					bet: bet,
+					bettable: bet.bettable
+				};
+				Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
+					if (err) {
+						console.log(err);
+						req.session.flash = {
+							err: err
+						}
+						console.log("TRANSACTION UPDATE FAILED: " + err);
+						return res.badRequest();
+					}
 					return res.ok();
 				});
 			}
 			else {
+				console.log("Logging losing transaction");
 				return res.ok();
 			}
 		});
 	},
 
 	index: function(req, res, next) {
-		Bet.find().where({win:null}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
+		Bet.find().where({complete:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
 			var betsByUser = {};
 			for (var i=0; i<bets.length; i++) {
 				if (!betsByUser[bets[i].user.id]) {

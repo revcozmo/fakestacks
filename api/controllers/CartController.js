@@ -48,7 +48,6 @@ module.exports = {
 		var id = req.param('id');
 		var potentialBet = this.removeBetFromCart(id, req.session.cart);
 		req.session.save();
-		console.log("here we go");
 		return res.ok()
 	},	
 
@@ -77,7 +76,6 @@ module.exports = {
 			var potentialBet = cart[i];
 			if (potentialBet.sideId == sideId) {
 				cart.splice(i, 1);
-				console.log("removing");
 			}
 		}
 		console.log("Cart size: " + cart.length);

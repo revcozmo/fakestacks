@@ -23,6 +23,9 @@
 			<% } else if (bet.win === false) { %>
 				<td>LOSS</td>
 				<td>-<%= bet.amount %></td>
+			<% } else if (bet.complete === true) { %>
+				<td>PUSH</td>
+				<td>-</td>
 			<% } else { %>
 				<td>PENDING</td>
 				<td>(<%= bet.amount %>)</td>

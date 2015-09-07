@@ -36,6 +36,11 @@ module.exports = {
       required: false,
       defaultTo: null
     },
+    complete: {
+      type: 'boolean',
+      required: true,
+      defaultTo: false
+    },
 
   	toJSON: function() {
   		var obj = this.toObject();

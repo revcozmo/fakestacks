@@ -6,6 +6,7 @@ $(document).ready(function(){
 	$( "#review-bets" ).click(reviewBets);
 	$( "#confirm-bets" ).click(confirmBets);
 	$( ".win-button" ).click(winButtonHandler);
+    $( ".push-button" ).click(pushButtonHandler);
 	$( ".loss-button" ).click(lossButtonHandler);
     $( ".gametime" ).text(replaceDates);
     $( ".gametime" ).removeClass("gametime");
@@ -82,7 +83,6 @@ var blurHandler = function( event ) {
 var closeHandler = function( event ) {
 	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
 	var value = event.target.value;
-	console.log("close handler");
 	$.ajax({
         type: 'GET',
         url: "cart/destroy/"+sideId,
@@ -128,10 +128,17 @@ var lossButtonHandler = function(event) {
 	winLossHandler(event, false);
 }
 
+var pushButtonHandler = function(event) {
+    winLossHandler(event, null);
+}
+
 var winLossHandler = function(event, win) {
 	var el = $(event.target);
 	var betId = el.data().betId;
-	var data = {win: win};
+    var data = {complete: true};
+    if (win!=null) {
+        data.win = win;
+    }
 	$.ajax({
         type: 'GET',
         data: data,
