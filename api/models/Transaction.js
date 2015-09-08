@@ -51,5 +51,33 @@ module.exports = {
 		});
   },
 
+  afterUpdate: function(transaction, cb) {
+    console.log(transaction.user);
+    Transaction.updateUserMoney(transaction.user, transaction.amount, cb);
+  },
+
+  afterCreate: function(transaction, cb) {
+    console.log(transaction.user);
+    Transaction.updateUserMoney(transaction.user, transaction.amount, cb);
+  },
+
+  updateUserMoney: function(userId, amount, cb) {
+    console.log("Updating user money for " + userId);
+    if (!sails.config.cache.user_money[userId]) {
+      Transaction.getTransactionsWithTally(userId, function(err, transactionsWithTally) {
+        if (err) {
+          //TODO: handle error
+        }
+        sails.config.cache.user_money[userId] = transactionsWithTally.total;
+        sails.config.cache.user_money[userId] += amount;
+        cb();
+      })
+    }
+    else {
+      sails.config.cache.user_money[userId] += amount;
+      cb();
+    }
+  }
+
 };
 

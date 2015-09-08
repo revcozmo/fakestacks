@@ -32,9 +32,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'static/index'
-  },
+  '/': 'StaticController.index',
   '/account': 'TransactionController.show',
   '/league': 'UserController.index'
 

@@ -34,12 +34,12 @@ module.exports = {
     win: {
       type: 'boolean',
       required: false,
-      defaultTo: null
+      defaultsTo: null
     },
     complete: {
       type: 'boolean',
       required: true,
-      defaultTo: false
+      defaultsTo: false
     },
 
   	toJSON: function() {
