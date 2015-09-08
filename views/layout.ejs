@@ -57,7 +57,7 @@
           <div class="nav navbar-right">
             <% if (session.authenticated) { %>
               <li><a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> <%= session.User.lastName %></a> </li>
-              <li class="money"><a href="/account" id="account-balance" class="money">$<%= sails.config.cache.user_money[req.session.User.id] %>.00</a></li>
+              <li class="money"><a href="/account" id="account-balance" class="money">$<%= session.User.money %>.00</a></li>
               <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">sign-out</a>
             <% } %>
           </div>

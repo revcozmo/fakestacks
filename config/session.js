@@ -23,6 +23,7 @@ module.exports.session = {
   ***************************************************************************/
   secret: 'e53a838df5593ab735ea0855b7c5e475',
 
+
   // adapter: 'redis',
   // host: process.env.REDIS_HOST,
   // port: process.env.REDIS_PORT,

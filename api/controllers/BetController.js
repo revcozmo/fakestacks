@@ -52,6 +52,7 @@ module.exports = {
 						}
 						console.log("Bet Created!");
 						createdBets++;
+						req.session.User.money += createdTransaction.amount;
 						if (createdBets == req.session.cart.length) {
 							req.session.cart = [];
 							res.redirect('/bettable');
@@ -72,7 +73,7 @@ module.exports = {
 			if (bet.win === true) {
 				console.log("Logging winning transaction");
 				transaction = {
-					user: bet.user,
+					user: req.session.User,
 					amount: 2*parseInt(bet.amount),
 					bet: bet,
 					bettable: bet.bettable
