@@ -5,6 +5,7 @@
   "description": "Fake Stacks - Put your fake money where your mouth is",
   "keywords": [],
   "dependencies": {
+    "connect-redis": "1.4.5",
     "cheerio": "latest",
     "ejs": "~0.8.8",
     "express": "latest",
@@ -26,6 +27,7 @@
     "rc": "0.5.5",
     "request": "latest",
     "sails": "~0.11.0",
+    "socket.io-redis": "^0.1.4",
     "sails-postgresql": "^0.10.16"
   },
   "scripts": {
