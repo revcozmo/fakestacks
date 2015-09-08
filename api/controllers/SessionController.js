@@ -96,7 +96,7 @@ module.exports = {
 						}
 						return res.redirect('/');
 					}
-					req.session.User.money = transactionsWithTally.total;
+					sails.config.cache.user_money[req.session.User.id] = transactionsWithTally.total;
 					if (req.session.User.admin) {
 						if (req.session.returnTo) {
 						   res.redirect(req.session.returnTo);
