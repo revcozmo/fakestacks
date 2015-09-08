@@ -27,23 +27,23 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  '*': ['setUserMoney', 'flash', 'ensureReturnToUrl'],
+  '*': ['flash', 'ensureReturnToUrl'],
   SessionController: {
     '*': ['flash']
   },
   TransactionController: {
-    '*': ["setUserMoney", "sessionAuth"]
+    '*': "sessionAuth"
   },
 
   bet: {
-    'index': ["setUserMoney", "sessionAuth"],
+    'index': "sessionAuth",
     'update': "admin",
     'create': ["sessionAuth", "flash"],
     '*': "sessionAuth"
   },
 
   user: {
-    'index': ["setUserMoney", "sessionAuth"],
+    'index': "sessionAuth",
     'new': ["admin", "flash"],
     'create': ["admin", "flash"],
     'show': "userCanSeeProfile",
