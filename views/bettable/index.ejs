@@ -10,14 +10,19 @@
 				<td><%= bettable.team1 %></td>
 				<td><%= bettable.team1Spread %></td>
 				<td>
-					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="Bet"/>
+					<% if (!bettable.off) { %> 
+						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="Bet"/>
+					<% } %>
 				</td>
+
 			</tr>
 			<tr data-id="<%= bettable.id %>" data-model="bettable">
 				<td><%= bettable.team2 %></td>
 				<td><%= bettable.team2Spread %></td>
 				<td>
-					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="Bet"/>
+					<% if (!bettable.off) { %>
+						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="Bet"/>
+					<% } %>
 				</td>
 			</tr>
 

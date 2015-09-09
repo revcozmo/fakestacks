@@ -22,7 +22,7 @@ module.exports = {
 		var request = require('request');
 		var cheerio = require('cheerio');
     
-    	url = 'http://topbet.eu/sportsbook/college-football/ncaa';
+    	url = sails.config.sports[sails.config.league.sport].url;
 
 	    request (url, function(error, response, html) {
 	        if(!error){
@@ -47,8 +47,12 @@ module.exports = {
 						var team2 = games.eq(i).find(".row1 .name").text().trim();
 						var spread1 = games.eq(i).find(".row0 .spread").text();
 						var spread2 = games.eq(i).find(".row1 .spread").text();
+						var spread_bet1 = games.eq(i).find(".row0 .spread_bet").text();
+						var spread_bet2 = games.eq(i).find(".row1 .spread_bet").text();
+						var bet_is_off = (spread_bet1.indexOf("Off") > -1) || (spread_bet1.indexOf("Off") > -1);
 						if (spread1 != null && spread1.trim().length !== 0) {
 							var bettable = {};
+							bettable.off = bet_is_off;
 							bettable.gameKey = gameKey;
 							bettable.gameTime = gameTime;
 							bettable.team1 = team1;

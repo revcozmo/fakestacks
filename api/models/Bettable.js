@@ -49,6 +49,11 @@ module.exports = {
   	team2Spread: {
   		type: 'string'
   	},
+    off: {
+      type: 'boolean',
+      required: true,
+      defaultsTo: false
+    },
 
   	toJSON: function() {
   		var obj = this.toObject();
