@@ -1,7 +1,7 @@
 //This contains all of the league settings
 module.exports.league = {
-  sport: "CFB",
+  sport: "NFL",
   startingAccount: 500,
-  weeklyBetAccountRatio: .5,
-  weeklyBetCountMax: 4
+  weeklyBetAccountRatio: 1,
+  weeklyBetCountMax: 5
 };
