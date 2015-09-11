@@ -47,7 +47,7 @@ module.exports = {
 				}
 				totalBetAmount += alreadyPendingBetAmount;
 				for (var i=0; i<bets.length; i++) {
-					console.log("New Bet: " bets[i].id);
+					console.log("New Bet: " + bets[i].id);
 					totalBetAmount += parseInt(bets[i].amount);
 				}
 				var weeklyAllowedBetAmount = (sails.config.league.weeklyBetAccountRatio * (totalFunds + alreadyPendingBetAmount));
