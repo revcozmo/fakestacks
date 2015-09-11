@@ -8,7 +8,7 @@ module.exports = {
 		var errors = [];
 		
 		//Validate the entered bet amounts
-		console.log("Validating bets");
+		console.log("Validating bets...");
 		for (var i=0; i<bets.length; i++) {
 			var amount = bets[i].amount;
 			if (isNaN(amount)) {
@@ -39,18 +39,19 @@ module.exports = {
 
 			    //Validate the total amount of the bets
 				var totalFunds = transactionsWithTotal.total;
+				var alreadyPendingBetAmount = 0;
 				var totalBetAmount = 0;
 				for (var i=0; i<pendingBets.length; i++) {
-					console.log(pendingBets[i]);
-					totalBetAmount += parseInt(pendingBets[i].amount);
+					console.log("Pending Bet: " + pendingBets[i].id);
+					alreadyPendingBetAmount += parseInt(pendingBets[i].amount);
 				}
+				totalBetAmount += alreadyPendingBetAmount;
 				for (var i=0; i<bets.length; i++) {
-					console.log(bets[i]);
+					console.log("New Bet: " bets[i].id);
 					totalBetAmount += parseInt(bets[i].amount);
 				}
-				var weeklyAllowedBetAmount = (sails.config.league.weeklyBetAccountRatio * totalFunds);
+				var weeklyAllowedBetAmount = (sails.config.league.weeklyBetAccountRatio * (totalFunds + alreadyPendingBetAmount));
 				if (totalBetAmount > weeklyAllowedBetAmount) {
-					console.log(totalBetAmount);
 					errors.push("You cannot exceed your bet limit of $" + weeklyAllowedBetAmount + ". This would put you at $" + totalBetAmount + " for the week");
 				}
 
