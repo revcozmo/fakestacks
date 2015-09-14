@@ -15,9 +15,11 @@
 								<%= bet.user.firstName %> <%= bet.user.lastName %>
 							<p>
 							<% if (bet.sideId == bet.bettable.sideId1) { %>
-								<%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %>
+								<%= bet.bettable.team1 %> <%= bet.line %>
+							<% } else if (bet.sideId == bet.bettable.sideId2) { %>
+								<%= bet.bettable.team2 %> <%= bet.line %>
 							<% } else { %>
-								<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
+								<%= bet.over ? "Over" : "Under" %> <%= bet.line %>
 							<% } %>
 							</p>
 							<p class="gametime">

@@ -12,9 +12,11 @@
 		<tr data-id="<%= bet.id %>" data-model="transaction">
 			<td>
 				<% if (bet.sideId == bet.bettable.sideId1) { %>
-					<%= bet.bettable.team1 %><%= bet.bettable.team1Spread %> @ <%= bet.bettable.team2 %>
+					<%= bet.bettable.team1 %><%= bet.line %> @ <%= bet.bettable.team2 %>
+				<% } else if (bet.sideId == bet.bettable.sideId2) { %>
+					<%= bet.bettable.team2 %><%= bet.line %> vs <%= bet.bettable.team1 %>
 				<% } else { %>
-					<%= bet.bettable.team2 %><%= bet.bettable.team2Spread %> vs <%= bet.bettable.team1 %>
+					<%= bet.over ? "Over" : "Under" %> <%= bet.line %> (<%= bet.bettable.team2 %> vs <%= bet.bettable.team1 %>)
 				<% } %>
 			</td>
 			<% if (bet.win === true) { %>

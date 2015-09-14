@@ -18,7 +18,8 @@ var betButtonHandler = function( event ) {
   	var el = $(event.target);
   	var bettableId = el.data('bettableId');
   	var sideId = el.data('sideId');
-  	var bet = {bettableId: bettableId, sideId: sideId};
+    var over = el.data('over');
+  	var bet = {bettableId: bettableId, sideId: sideId, over:over};
   	$.ajax({
         type: 'GET',
         url: "cart/create",
@@ -26,7 +27,7 @@ var betButtonHandler = function( event ) {
         contentType: 'application/json',
         context: this,
         success: function(data) {
-        	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data});
+        	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data, confirmation: false});
     		$( ".no-games-info-message" ).hide();
     		$(tpl).appendTo(".potential-bet-list");
     		$( "#num-bets" ).text($(".bet-amount").length);
@@ -36,7 +37,6 @@ var betButtonHandler = function( event ) {
     		$( "button.close" ).click(closeHandler);
             $( ".gametime" ).text(replaceDates);
             $( ".gametime" ).removeClass("gametime");
-
         },
         statusCode: {
 		    403: function() {
@@ -53,13 +53,11 @@ var betButtonHandler = function( event ) {
 }
 
 var blurHandler = function( event ) {
-	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
-	var value = event.target.value;
-	//Do some validation on the amount here
-	var data = {amount: value};
+	var data = getBetInfoFromCard(event)
+    data.amount = event.target.value;
 	$.ajax({
         type: 'GET',
-        url: "cart/edit/"+sideId,
+        url: "cart/edit/",
         data: data,
         contentType: 'application/json',
         context: this,
@@ -81,11 +79,10 @@ var blurHandler = function( event ) {
 }
 
 var closeHandler = function( event ) {
-	var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
-	var value = event.target.value;
 	$.ajax({
         type: 'GET',
-        url: "cart/destroy/"+sideId,
+        data: getBetInfoFromCard(event),
+        url: "cart/destroy/",
         contentType: 'application/json',
         context: this,
         complete: function() {
@@ -97,6 +94,13 @@ var closeHandler = function( event ) {
         	$( "#bets-total-amount" ).text(getTotalBetAmount());
         }
     });
+}
+
+var getBetInfoFromCard = function(event) {
+    var bettableId = $(event.target).closest('.list-group-item')[0].dataset.bettableId;
+    var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
+    var over = $(event.target).closest('.list-group-item')[0].dataset.over;
+    return {bettableId: bettableId, sideId:sideId, over:over};
 }
 
 var reviewBets = function(event) {

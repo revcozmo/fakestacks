@@ -37,6 +37,7 @@ module.exports = {
 			}
 			console.log("Cart size: " + req.session.cart.length);
 			return res.view({
+				confirmation: true,
 				potentialBets: req.session.cart,
 				totalAmount: totalAmount
 			});

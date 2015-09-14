@@ -16,27 +16,8 @@
 		<div class="panel-body">
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>
-				<li class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
-					<p>
-					<% if (bet.sideId == bet.bettable.sideId1) { %>
-						<%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %>
-					<% } else { %>
-						<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
-					<% } %>
-					</p>
-					<p class="gametime"><%= bet.bettable.gameTime %></p>
-					<p>
-					<% if (bet.sideId == bet.bettable.sideId1) { %>
-						<%= bet.bettable.team1 %> @ <%= bet.bettable.team2 %>
-					<% } else { %>
-						<%= bet.bettable.team2 %> vs <%= bet.bettable.team1 %>
-					<% } %>
-					</p>
-					<p>
-					Amount: $<%= bet.amount %>
-				  	</p>
-				</li>
-				<% }) %>
+		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>		
+			<% }) %>
 			</ul>
 			<ul class="list-group ul-total-tally"
 				<li class="list-group-item total-tally">

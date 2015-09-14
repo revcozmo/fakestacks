@@ -49,6 +49,14 @@ module.exports = {
   	team2Spread: {
   		type: 'string'
   	},
+    overunder: {
+      type: 'string'
+    },
+    ouoff: {
+      type: 'boolean',
+      required: true,
+      defaultsTo: false
+    },
     off: {
       type: 'boolean',
       required: true,

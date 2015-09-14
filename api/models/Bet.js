@@ -29,6 +29,15 @@ module.exports = {
   	},
     sideId: {
       type: 'integer',
+      required: false
+    },
+    over: {
+      type: 'boolean',
+      required: false,
+      defaultsTo: null
+    },
+    line: {
+      type: 'string',
       required: true
     },
     win: {

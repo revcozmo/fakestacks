@@ -47,12 +47,16 @@ module.exports = {
 						var team2 = games.eq(i).find(".row1 .name").text().trim();
 						var spread1 = games.eq(i).find(".row0 .spread").text();
 						var spread2 = games.eq(i).find(".row1 .spread").text();
+						var over_under = games.eq(i).find(".row0 .over_under").eq(1).text();
+						var over_under_bet = games.eq(i).find(".row0 .over_under_bet").eq(0).text();
 						var spread_bet1 = games.eq(i).find(".row0 .spread_bet").text();
 						var spread_bet2 = games.eq(i).find(".row1 .spread_bet").text();
 						var bet_is_off = (spread_bet1.indexOf("Off") > -1) || (spread_bet1.indexOf("Off") > -1);
+						var over_under_bet_is_off = over_under_bet.indexOf("Off") > -1;
 						if (spread1 != null && spread1.trim().length !== 0) {
 							var bettable = {};
 							bettable.off = bet_is_off;
+							bettable.ouoff = over_under_bet_is_off;
 							bettable.gameKey = gameKey;
 							bettable.gameTime = gameTime;
 							bettable.team1 = team1;
@@ -61,6 +65,7 @@ module.exports = {
 							bettable.sideId2 = sideId2;
 							bettable.team1Spread = spread1;
 							bettable.team2Spread = spread2;
+							bettable.overunder = over_under;
 							Bettable.updateOrCreate(gameKey, bettable);
 				    	}
 				    }
@@ -82,6 +87,7 @@ module.exports = {
 				total += parseInt(req.session.cart[i].amount);
 			}
 			res.view({
+				confirmation: false,
 				bettables: bettables,
 				potentialBets: req.session.cart,
 				totalAmount: total
