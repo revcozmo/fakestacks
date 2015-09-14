@@ -14,13 +14,15 @@
 						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="Bet"/>
 					<% } %>
 				</td>
+				<% if (!bettable.ouoff) { %>
 				<td>Over</td>
 				<td><%= bettable.overunder %></td>
 				<td>
-					<% if (!bettable.ouoff) { %> 
-						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="true" value="Bet"/>
-					<% } %>
+					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="true" value="Bet"/>
 				</td>
+				<% } else { %>
+					<td></td><td></td><td></td>
+				<% } %>
 			</tr>
 			<tr data-id="<%= bettable.id %>" data-model="bettable">
 				<td><%= bettable.team2 %></td>
@@ -30,13 +32,15 @@
 						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="Bet"/>
 					<% } %>
 				</td>
+				<% if (!bettable.ouoff) { %>
 				<td>Under</td>
 				<td><%= bettable.overunder %></td>
 				<td>
-					<% if (!bettable.ouoff) { %> 
-						<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="false" value="Bet"/>
-					<% } %>
+					<input type="submit" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="false" value="Bet"/>
 				</td>
+				<% } else { %>
+					<td></td><td></td><td></td>
+				<% } %>
 			</tr>
 
 			<% }) %>
