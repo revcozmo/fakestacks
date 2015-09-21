@@ -23,7 +23,7 @@ module.exports.connections = {
 
   heroku_postgres: {
     adapter: 'sails-postgresql',
-    url: process.env.DATABASE_URL
+    url: process.env.DATABASE_URL || "postgres://jgoetz@localhost:5432/jgoetz"
   }
 
 };

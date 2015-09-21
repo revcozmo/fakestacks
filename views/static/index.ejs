@@ -5,4 +5,16 @@
 		<h2>Getting your gambling fix while continuing to put food on your family</h2>
 		<a href="/bettable" class="btn btn-outline btn-lg">Start Betting</a>
 	</div>
+	<div class="media">
+	  <div class="media-body">
+	    <h4 class="media-heading">The Rules:</h4>
+	    <ol>
+		<li>You start out with <%= sails.config.league.startingAccount %> imaginary dollars in your account. Whoever has the most imaginary dollars in their account at the end of the season wins.
+		</li>
+		<li>You can make up to <%= sails.config.league.weeklyBetCountMax %> bets per week</li>
+		<li>You cannot bet more than <%= 100 * sails.config.league.weeklyBetAccountRatio %>% of the stash you started the week with. In other words, no betting early winnings on late games. If you come into the week with $100, then the most you can spread over your bets is $<%= 100 * sails.config.league.weeklyBetAccountRatio %>.</li>
+		<li>You don't have to make bets in any given week if you don't want to. In fact, you will probably gain on the competition by staying put.</li>
+		<li>Lines do move, so please be aware that you are locked into whatever point spread or over/under you initially place your wager on. If you don't understand how line spreads work then you better ask somebody.</li>
+	  </div>
+	</div>
 </div>

@@ -159,7 +159,7 @@ var replaceDates = function(index, text) {
     var timeInSeconds = Date.parse(text);
     var m = moment(timeInSeconds);
     var niceDate = m.format("dddd, MMM Do, h:mma z");
-    $(".gametime")[index].innerText = niceDate;
+    $(".gametime").eq(index).text(niceDate);
 }
 
 var getTotalBetAmount = function() {
