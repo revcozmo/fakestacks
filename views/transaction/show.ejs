@@ -1,5 +1,7 @@
 <div class="container">
-	<h3>Account: $<%= total %></h3>
+	<h3>Account: $<%= money - pending %></h4>
+	<h4>Money: $<%= money %> Pending: $<%= pending %></h4>
+	<h4>Record: <%= record %></h4>
 	<table class='table'>
 		<tr>
 			<th>Transaction</th>
@@ -7,7 +9,7 @@
 			<th>Amount</th>
 			<th>Tally</th>
 		</tr>
-		<tr><td>Account Creation</td><td></td><td><%= start %></td><td><%= start %></td></tr>
+		<tr><td>Account Creation</td><td></td><td><%= sails.config.league.startingAccount %></td><td><%= sails.config.league.startingAccount %></td></tr>
 		<% _.each(bets, function(bet) { %>
 		<tr data-id="<%= bet.id %>" data-model="transaction">
 			<td>

@@ -22,7 +22,7 @@ module.exports = {
 			}
 		}
 
-		Bet.find().where({user: req.session.User.id, win: null}).exec(function(err, pendingBets) {
+		Bet.find().where({user: req.session.User.id, complete: false}).exec(function(err, pendingBets) {
 			Transaction.getTransactionsWithTally(req.session.User.id, function(err, transactionsWithTotal) {
 				//Validate the number of bets
 				var numPendingBets = pendingBets.length;

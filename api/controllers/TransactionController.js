@@ -22,11 +22,9 @@ module.exports = {
 				}
 				bet.tally = runningTally;
 			}
-			res.view({
-				bets: bets,
-				total: bets.length==0 ? sails.config.league.startingAccount : bets[bets.length-1].tally,
-				start: sails.config.league.startingAccount
-			});
+			var tallies = BetService.getBetTallies(bets);
+			tallies.bets = bets;
+			res.view(tallies);
 		});
 	}
 };
