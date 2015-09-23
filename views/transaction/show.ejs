@@ -1,8 +1,10 @@
 <div class="container">
-	<h3>Account: $<%= money - pending %></h4>
-	<h4>Money: $<%= money %> Pending: $<%= pending %></h4>
-	<h4>Record: <%= record %></h4>
-	<table class='table'>
+	<h3>Account</h3>
+	<div class="user-stats">
+		Account Balance: $<%= money - pending %> (Money: $<%= money %> Pending: $<%= pending %>)
+		<span class="user-record">Record: <%= record %></span>
+	</div>
+	<table class='table user-account-table'>
 		<tr>
 			<th>Transaction</th>
 			<th>Win/Loss</th>
@@ -11,7 +13,17 @@
 		</tr>
 		<tr><td>Account Creation</td><td></td><td><%= sails.config.league.startingAccount %></td><td><%= sails.config.league.startingAccount %></td></tr>
 		<% _.each(bets, function(bet) { %>
-		<tr data-id="<%= bet.id %>" data-model="transaction">
+		<tr data-id="<%= bet.id %>" data-model="transaction" class="
+			<% if (bet.win === true) { %>
+				success
+			<% } else if (bet.win === false) { %>
+				danger
+			<% } else if (bet.complete === true) { %>
+				warning
+			<% } else { %>
+				active
+			<% } %>
+		">
 			<td>
 				<% if (bet.sideId == bet.bettable.sideId1) { %>
 					<%= bet.bettable.team1 %><%= bet.line %> @ <%= bet.bettable.team2 %>

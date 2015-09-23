@@ -38,9 +38,9 @@
 						  	<% if (session.authenticated && session.User.admin) { %>
 				            <p>
 				            <div class="btn-group" role="group">
-							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-default win-button">Win</button>
-							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-default push-button">Push</button>
-							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-default loss-button">Loss</button>
+							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-primary win-button">Win</button>
+							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-warning push-button">Push</button>
+							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-danger loss-button">Loss</button>
 							</div>
 							</p>
 				            <% } %>

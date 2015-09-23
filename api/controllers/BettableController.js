@@ -83,14 +83,21 @@ module.exports = {
 				req.session.cart = [];
 			}
 			var total = 0;
+			var disabledButtons = [];
 			for (var i=0; i<req.session.cart.length; i++) {
+				var bet = req.session.cart[i];
+				disabledButtons[i] = bet.bettable.id + "-" + (bet.over != null ? bet.over : bet.sideId);
 				total += parseInt(req.session.cart[i].amount);
 			}
 			res.view({
 				confirmation: false,
 				bettables: bettables,
 				potentialBets: req.session.cart,
-				totalAmount: total
+				disabledButtons: disabledButtons,
+				totalAmount: total,
+				buttonIsDisabled: function(button, disabledButtons) {
+					return (disabledButtons.indexOf(button) != -1);
+				}
 			});
 		});
 	},

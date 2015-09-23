@@ -119,15 +119,25 @@ module.exports = {
 	index: function(req, res, next) {
 		User.find().populate('bets').exec(function foundUsers(err, users) {
 			if (err) return next(err);
+			var totalMoney = 0;
+			var totalWins = 0;
+			var totalLosses = 0;
+			var totalPushes = 0;
 			for (var i=0; i<users.length; i++) {
 				var tallies = BetService.getBetTallies(users[i].bets);
 				for (var prop in tallies) {
 					users[i][prop]=tallies[prop];
 				}
+				totalMoney += users[i].money;
+				totalWins += users[i].wins;
+				totalLosses += users[i].losses;
+				totalPushes += users[i].pushes;
 			}
 			users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.wins-user1.wins) : (user2.money-user1.money)});
 			res.view({
-				users: users
+				users: users,
+				totalMoney: totalMoney,
+				totalRecord: totalWins+"-"+totalLosses+"-"+totalPushes
 			});
 		});
 	},

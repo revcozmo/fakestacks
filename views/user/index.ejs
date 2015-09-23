@@ -1,6 +1,6 @@
 <div class="container">
-	<h3>Users</h3>
-	<table class='table'>
+	<h3>League</h3>
+	<table class='table standings'>
 		<tr>
 			<th>Rank</th>
 			<th>Name</th>
@@ -8,7 +8,6 @@
 			<th>Pending</th>
 			<th>Record</th>
 			<% if (req.session.User.admin) { %>
-			<th></th>
 			<th></th>
 			<th></th>
 			<% } %>
@@ -31,18 +30,22 @@
 				<% } else { %>
 					<td><img src="/images/pawn.png"></td>
 				<% } %>
-				<td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
-				<td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
 				<td>
-					<form action="/user/destroy/<%= user.id %>" method="POST">
-					<input type="hidden" name="_method" value="delete"/>
-					<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
-					<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-					</form>
+					<span><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></span>
+					<span><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></span>
+					<span>
+						<form action="/user/destroy/<%= user.id %>" method="POST">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+						</form>
+					</span>
 				</td>
 			<% } %>
 		</tr>
 
 		<% }) %>
 	</table>
+	<div>Average Money: $<%= (totalMoney / users.length).toFixed(0) %></div>
+	<div>Total Record: <%= totalRecord %></div>
 </div>

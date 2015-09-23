@@ -16,6 +16,7 @@ $(document).ready(function(){
 var betButtonHandler = function( event ) {
   	event.preventDefault();
   	var el = $(event.target);
+    el.prop('disabled', true);
   	var bettableId = el.data('bettableId');
   	var sideId = el.data('sideId');
     var over = el.data('over');
@@ -27,6 +28,7 @@ var betButtonHandler = function( event ) {
         contentType: 'application/json',
         context: this,
         success: function(data) {
+            el.removeClass('btn-primary');
         	var tpl = new EJS({url : 'templates/potentialBetTemplate.ejs' }).render(tpl, {bet: data, confirmation: false});
     		$( ".no-games-info-message" ).hide();
     		$(tpl).appendTo(".potential-bet-list");
@@ -79,13 +81,17 @@ var blurHandler = function( event ) {
 }
 
 var closeHandler = function( event ) {
-	$.ajax({
+	var betInfo = getBetInfoFromCard(event);
+    $.ajax({
         type: 'GET',
-        data: getBetInfoFromCard(event),
+        data: betInfo,
         url: "cart/destroy/",
         contentType: 'application/json',
         context: this,
         complete: function() {
+            var el = getButtonFromBetInfo(betInfo);
+            el.prop('disabled', false);
+            el.addClass('btn-primary');
         	if ($( ".bet-amount" ).length == 0) {
         		$( ".no-games-info-message" ).show();
         		$( ".ul-total-tally" ).hide();
@@ -101,6 +107,15 @@ var getBetInfoFromCard = function(event) {
     var sideId = $(event.target).closest('.list-group-item')[0].dataset.sideId;
     var over = $(event.target).closest('.list-group-item')[0].dataset.over;
     return {bettableId: bettableId, sideId:sideId, over:over};
+}
+
+var getButtonFromBetInfo = function(betInfo) {
+    if (!betInfo.over || betInfo.over.length == 0) {
+        return $('[data-bettable-id="'+betInfo.bettableId+'"]').filter('[data-side-id="'+betInfo.sideId+'"]');
+    }
+    else {
+        return $('[data-bettable-id="'+betInfo.bettableId+'"]').filter('[data-over="'+betInfo.over+'"]');
+    }
 }
 
 var reviewBets = function(event) {

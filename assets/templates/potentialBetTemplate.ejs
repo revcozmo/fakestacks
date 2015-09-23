@@ -1,4 +1,11 @@
-<li class="list-group-item" data-bettable-id="<%= bet.bettable.id %>" data-side-id="<%= bet.sideId %>" data-over=<%= bet.over %>  >
+<li class="list-group-item" data-bettable-id="<%= bet.bettable.id %>" 
+<% if (bet.sideId!=null) { %>
+	data-side-id="<%= bet.sideId %>" 
+<% } %>
+<% if (bet.over!=null) { %>
+	data-over=<%= bet.over %>
+<% } %>
+>
 	<% if (!confirmation) { %>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<% } %>
