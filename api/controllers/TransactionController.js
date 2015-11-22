@@ -8,7 +8,7 @@
 module.exports = {
 	show: function(req, res, next) {
 		var userId = req.param('id');
-		Bet.find().where({user: userId ? userId : req.session.User.id}).populate('bettable').exec(function foundBets(err, bets) {
+		Bet.find().where({user: userId ? userId : req.session.User.id}).populate('bettable').populate('user').exec(function foundBets(err, bets) {
 			if (err) return next(err);
 			if (!bets) return next();
 			var runningTally = sails.config.league.startingAccount;
@@ -24,6 +24,7 @@ module.exports = {
 			}
 			var tallies = BetService.getBetTallies(bets);
 			tallies.bets = bets;
+			tallies.user = bets[0].user;
 			res.view(tallies);
 		});
 	}
