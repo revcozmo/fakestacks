@@ -24,7 +24,7 @@ module.exports = {
 			return res.redirect("/bettable");
 		}
 		ValidationService.validateBets(req, req.session.cart, function(errors) {
-			console.log("Callback errors: " + errors);
+			console.log("Confirmation validation errors: " + errors);
 			if (errors.length > 0) {
 		      	req.session.flash = {
 					err: errors

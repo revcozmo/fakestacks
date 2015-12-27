@@ -77,6 +77,6 @@ module.exports = {
     var encryptedPassword = require('password-hash').generate(values.password);
     values.encryptedPassword = encryptedPassword;
     next();
-  },
+  }
 
 };

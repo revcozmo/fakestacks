@@ -19,6 +19,7 @@ module.exports = {
 			}
 			if (errors.length > 0) {
 				cb(errors);
+				return;
 			}
 		}
 
