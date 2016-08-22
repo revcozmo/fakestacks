@@ -1,0 +1,59 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+		<h3>Games</h3>
+				<% _.each(bettables, function(bettable) { %>
+					<div class="row">
+						<div class="col-md-3">Game Time</div>
+						<div class="col-md-9">
+							<div class="row">
+								<div class="col-md-2">
+									Michigan
+								</div>
+								<div class="col-md-2">
+									-18
+								</div>
+								<div class="col-md-2">
+									<button></button>
+								</div>
+								<div class="col-md-2">
+									Over
+								</div>
+								<div class="col-md-2">
+									55.5
+								</div>
+								<div class="col-md-2">
+									<button></button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									Maryland
+								</div>
+								<div class="col-md-2">
+									+18
+								</div>
+								<div class="col-md-2">
+									<button></button>
+								</div>
+								<div class="col-md-2">
+									Under
+								</div>
+								<div class="col-md-2">
+									55.5
+								</div>
+								<div class="col-md-2">
+									<button></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% }) %>
+		</div>
+		<div class="col-md-4 sidebar-outer">
+			<%- include ../cart/index.ejs %>
+		</div>
+	</div>
+</div>
+
+	

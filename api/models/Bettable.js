@@ -12,8 +12,12 @@ module.exports = {
   schema: true,
 
   attributes: {
-  	
-  	gameKey: {
+    sport: {
+      type: "string",
+      enum: Object.keys(sails.config.sports),
+      required: true
+    },
+    gameKey: {
   		type: 'string',
   		required: true
   	},
@@ -67,7 +71,7 @@ module.exports = {
   		var obj = this.toObject();
   		return obj;
   	}
-    
+
   },
 
   beforeCreate: function(values, next) {

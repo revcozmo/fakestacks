@@ -11,7 +11,7 @@
 			<th>Amount</th>
 			<th>Tally</th>
 		</tr>
-		<tr><td>Account Creation</td><td></td><td><%= sails.config.league.startingAccount %></td><td><%= sails.config.league.startingAccount %></td></tr>
+		<tr><td>Account Creation</td><td></td><td><%= session.User.league.startingAccount %></td><td><%= session.User.league.startingAccount %></td></tr>
 		<% _.each(bets, function(bet) { %>
 		<tr data-id="<%= bet.id %>" data-model="transaction" class="
 			<% if (bet.win === true) { %>

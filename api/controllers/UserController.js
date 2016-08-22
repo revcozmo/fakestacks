@@ -16,17 +16,19 @@
  */
 
 module.exports = {
-    
-  
-	'new': function (req, res) {
+
+	'new': function(req, res) {
 		res.view();
 	},
 
-	create: function (req, res, next) {
+  'invite': function(req, res) {
+	  res.view();
+  },
+
+	create: function(req, res, next) {
 		var user = req.params.all();
-		user.admin = req.session.emptyLeague ? true : false;
+    user.league = req.session.User.league;
 		User.create( user, function userCreated (err, user) {
-			req.session.emptyLeague = false;
 			if (err) {
 				console.log(err);
 				req.session.flash = {
@@ -35,11 +37,11 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
-			newAccountTransaction = {
-				user: user,
-				amount: 500,
-				bet: null
-			};
+      var newAccountTransaction = {
+        user: user,
+        amount: req.session.User.league.startingAccount,
+        bet: null
+      };
 			Transaction.create(newAccountTransaction, function accountCreated(err, account) {
 				if (err) {
 					console.log(err);
@@ -117,14 +119,15 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-		User.find().populate('bets').exec(function foundUsers(err, users) {
+	  var league = req.session.User.league;
+		User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {
 			if (err) return next(err);
 			var totalMoney = 0;
 			var totalWins = 0;
 			var totalLosses = 0;
 			var totalPushes = 0;
 			for (var i=0; i<users.length; i++) {
-				var tallies = BetService.getBetTallies(users[i].bets);
+				var tallies = BetService.getBetTallies(users[i].bets, league.startingAccount);
 				for (var prop in tallies) {
 					users[i][prop]=tallies[prop];
 				}
@@ -144,5 +147,5 @@ module.exports = {
 
   _config: {}
 
-  
+
 };

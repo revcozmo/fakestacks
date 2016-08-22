@@ -34,7 +34,8 @@ module.exports.routes = {
 
   '/': 'StaticController.index',
   '/account': 'TransactionController.show',
-  '/league': 'UserController.index'
+  '/league': 'UserController.index',
+  '/login': 'SessionController.new'
 
   /***************************************************************************
   *                                                                          *

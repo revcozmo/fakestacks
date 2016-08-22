@@ -6,7 +6,7 @@ module.exports = {
 
 	validateBets: function(req, bets, cb) {
 		var errors = [];
-		
+
 		//Validate the entered bet amounts
 		console.log("Validating bets...");
 		for (var i=0; i<bets.length; i++) {
@@ -27,8 +27,9 @@ module.exports = {
 			Transaction.getTransactionsWithTally(req.session.User.id, function(err, transactionsWithTotal) {
 				//Validate the number of bets
 				var numPendingBets = pendingBets.length;
-				if ((bets.length + pendingBets.length) > parseInt(sails.config.league.weeklyBetCountMax)) {
-					var errorString = "You cannot exceed " + sails.config.league.weeklyBetCountMax + " bets for the week.";
+        var league = req.session.User.league;
+				if ((bets.length + pendingBets.length) > parseInt(league.weeklyBetCountMax)) {
+					var errorString = "You cannot exceed " + league.weeklyBetCountMax + " bets for the week.";
 					if (numPendingBets != 0) {
 						errorString += " You already have " + numPendingBets + " pending bets and are about to add " + bets.length + " more.";
 					}
@@ -51,7 +52,7 @@ module.exports = {
 					console.log("New Bet: " + bets[i].id);
 					totalBetAmount += parseInt(bets[i].amount);
 				}
-				var weeklyAllowedBetAmount = (sails.config.league.weeklyBetAccountRatio * (totalFunds + alreadyPendingBetAmount));
+				var weeklyAllowedBetAmount = (league.weeklyBetAccountRatio * (totalFunds + alreadyPendingBetAmount));
 				if (totalBetAmount > weeklyAllowedBetAmount) {
 					errors.push("You cannot exceed your bet limit of $" + weeklyAllowedBetAmount + ". This would put you at $" + totalBetAmount + " for the week");
 				}
@@ -71,7 +72,7 @@ module.exports = {
 			});
 		});
 
-	} 
-	
+	}
+
 };
 

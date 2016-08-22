@@ -4,8 +4,8 @@
 
 module.exports = {
 
-	getBetTallies: function(bets) {
-		var runningTally = sails.config.league.startingAccount;
+	getBetTallies: function(bets, startingAccount) {
+		var runningTally = startingAccount;
 		var pendingTally = 0;
 		var winTally = 0;
 		var lossTally = 0;

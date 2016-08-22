@@ -1,0 +1,21 @@
+<form action="/user/sendinvites" method="POST" id="sign-up-form" class="form-signin">
+  <h2 class="form-signin-heading">Create an account</h2>
+
+  <% if (flash && flash.err) { %>
+  <ul class="alert alert-success">
+    <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+
+  <br/>
+  <div class="form-group">
+    <label for="inviteList">Invite List</label>
+    <textarea id="inviteList" class="form-control" name="inviteList"></textarea>
+    <small class="form-text text-muted">Enter the email addresses of the users you want to invite, separated by a comma (,) between each entry</small>
+  </div>
+  <br/>
+  <input type="submit" class="btn btn-lg btn-primary btn-block" value="Send Invites"/>
+  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>

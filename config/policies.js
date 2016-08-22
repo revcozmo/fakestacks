@@ -27,7 +27,10 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  '*': ['setUserMoney', 'flash', 'ensureReturnToUrl'],
+  '*': ["sessionAuth", 'setUserMoney', 'flash', 'ensureReturnToUrl'],
+  RegisterController: {
+    '*': ["noSession", "flash"]
+  },
   SessionController: {
     '*': ['flash']
   },
@@ -45,6 +48,7 @@ module.exports.policies = {
   user: {
     'index': ["setUserMoney", "sessionAuth"],
     'new': ["admin", "flash"],
+    'invite': ["admin", "flash"],
     'create': ["admin", "flash"],
     'show': "userCanSeeProfile",
     'edit': "userCanSeeProfile",
