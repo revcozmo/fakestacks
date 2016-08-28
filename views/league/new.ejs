@@ -16,8 +16,9 @@
   <div class="form-group">
     <label for="leagueSport">Sport</label>
     <select id="leagueSport" name="sport" placeholder="Sport" class="form-control custom-select">
-      <option value="CFB">College Football</option>
-      <option value="NFL">NFL</option>
+      <% Object.keys(sails.config.sports).forEach(function(sportKey) { %>
+      <option value="<%= sportKey %>"><%= sails.config.sports[sportKey].name %></option>
+      <% }) %>
     </select>
   </div>
   <div class="form-group">
@@ -33,7 +34,7 @@
     <input id="weeklyBetAccountRatio" type="number" class="form-control" min="10" step="1" max="100" value="50" name="weeklyBetAccountRatio">
   </div>
   <div class="form-group">
-    <label for="landingMessage">Landing Message</label>
+    <label for="landingMessage">Landing Message (Tagline)</label>
     <input name="landingMessage" type="text" class="form-control" name="landingMessage">
   </div>
 	<br/>

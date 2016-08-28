@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	$( ".bet-btn" ).click(betButtonHandler);
 	$( ".bet-amount" ).blur(blurHandler);
 	$( "button.close" ).click(closeHandler);
@@ -42,7 +42,7 @@ var betButtonHandler = function( event ) {
         },
         statusCode: {
 		    403: function() {
-		      	window.location.href = 'session/new';
+		      	window.location.href = '/login';
 		    },
 		    400: function(data) {
 		    	alert("Error", data);
@@ -68,7 +68,7 @@ var blurHandler = function( event ) {
         },
         statusCode: {
 		    403: function() {
-		      window.location.href = 'session/new';
+		      window.location.href = '/login';
 		    },
 		    400: function(data) {
 		    	alert("Error", data);

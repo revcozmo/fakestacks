@@ -50,8 +50,11 @@
           <ul class="nav navbar-nav">
             <% if (session.authenticated && session.User && session.User.league) { %>
               <li><a href="/bettable">Games</a></li>
-              <li><a href="/user">League</a></li>
+              <li><a href="/standings">Standings</a></li>
               <li><a href="/bet">Weekly Bets</a></li>
+              <% if (session.User.admin) { %>
+                <li><a href="/league/settings">Manage League</a></li>
+              <% } %>
             <% } %>
           </ul>
           <div class="nav navbar-right">

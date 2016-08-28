@@ -1,0 +1,32 @@
+<div class="container">
+  <h3>League Settings</h3>
+  <h5>League: <%= league.name %></h5>
+  <h5>Sport: <%= sails.config.sports[league.sport].name %></h5>
+  <h5>Starting Account Balance: <%= league.startingAccount %></h5>
+  <h5>Weekly Bet Balance Ratio: <%= league.weeklyBetAccountRatio %></h5>
+  <h5>Weekly Bet Count Max: <%= league.weeklyBetCountMax %></h5>
+  <h5>Landing Message (Tagline): <%= league.landingMessage %></h5>
+  <a href="/league/edit/<%= league.id %>" class="btn btn-sm btn-primary">Edit Settings</a>
+  <br/><br/>
+  <h3>Users</h3>
+    <% _.each(users, function(user, index) { %>
+    <div class="row">
+      <% if (user.admin) { %>
+      <div class="col-md-1"><img src="/images/admin.png"></div>
+      <% } else { %>
+      <div class="col-md-1"><img src="/images/pawn.png"></div>
+      <% } %>
+      <div class="col-md-3"><h5><%= user.firstName %> <%= user.lastName %></h5></div>
+      <form action="/user/destroy/<%= user.id %>" method="POST">
+      <div class="col-md-2">
+        <a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a>
+        <input type="hidden" name="_method" value="delete"/>
+        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </div>
+      </form>
+    </div>
+
+    <% }) %>
+  <a href="/user/new/" class="btn btn-sm btn-primary">Add User</a>
+</div>

@@ -11,9 +11,9 @@ module.exports = {
 		var confirmedBets = req.session.cart;
 		var createdBets = 0;
 		if (req.session.User == null) {
-			res.redirect('/session/new');
+			res.redirect('/login');
 		}
-		
+
 		ValidationService.validateBets(req, confirmedBets, function(errors) {
 			console.log("Callback errors: " + errors);
 			if (errors.length > 0) {
@@ -132,6 +132,6 @@ module.exports = {
 	},
 
 	_config: {}
-	
+
 };
 

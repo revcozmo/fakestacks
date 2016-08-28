@@ -7,10 +7,8 @@
 			<th>Money</th>
 			<th>Pending</th>
 			<th>Record</th>
-			<% if (req.session.User.admin) { %>
-			<th></th>
-			<th></th>
-			<% } %>
+      <th></th>
+      <th></th>
 		</tr>
 
 		<% _.each(users, function(user, index) { %>
@@ -24,24 +22,8 @@
 			</td>
 			<td>$<%= user.pending %></td>
 			<td><%= user.record %></td>
-			<% if (req.session.User.admin) { %>
-				<% if (user.admin) { %>
-					<td><img src="/images/admin.png"></td>
-				<% } else { %>
-					<td><img src="/images/pawn.png"></td>
-				<% } %>
-				<td>
-					<span><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></span>
-					<span><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></span>
-					<span>
-						<form action="/user/destroy/<%= user.id %>" method="POST">
-						<input type="hidden" name="_method" value="delete"/>
-						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
-						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-						</form>
-					</span>
-				</td>
-			<% } %>
+      <td></td>
+      <td></td>
 		</tr>
 
 		<% }) %>

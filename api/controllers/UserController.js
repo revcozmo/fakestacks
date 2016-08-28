@@ -21,10 +21,6 @@ module.exports = {
 		res.view();
 	},
 
-  'invite': function(req, res) {
-	  res.view();
-  },
-
 	create: function(req, res, next) {
 		var user = req.params.all();
     user.league = req.session.User.league;
@@ -34,7 +30,6 @@ module.exports = {
 				req.session.flash = {
 					err: err
 				}
-
 				return res.redirect('/user/new');
 			}
       var newAccountTransaction = {
@@ -48,10 +43,9 @@ module.exports = {
 					req.session.flash = {
 						err: err
 					}
-
 					return res.redirect('/user/new');
 				}
-				res.redirect('/user/show/'+user.id);
+				res.redirect('/league/settings');
 			});
 		});
 	},
@@ -112,9 +106,14 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-		User.update(req.param('id'), req.params.all(), function userUpdated(err) {
+		User.update(req.param('id'), req.params.all(), function userUpdated(err, updatedUsers) {
 			if (err) return res.redirect('/user/edit/' + req.param('id'));
-			res.redirect('/user/show/' + req.param('id'));
+      if (updatedUsers[0].id == req.session.User.id) {
+        res.redirect('/user/show/' + req.param('id'));
+      }
+      else {
+        res.redirect('/league/settings/');
+      }
 		});
 	},
 

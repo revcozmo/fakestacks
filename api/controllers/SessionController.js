@@ -31,7 +31,7 @@ module.exports = {
 				err: usernamePasswordRequiredError
 			}
 
-			res.redirect('/session/new');
+			res.redirect('/login');
 			return;
 		}
 
@@ -50,7 +50,7 @@ module.exports = {
 				req.session.flash = {
 					err: noAccountError
 				}
-				res.redirect('/session/new');
+				res.redirect('/login');
 				return;
 			}
 
@@ -65,7 +65,7 @@ module.exports = {
 				req.session.flash = {
 					err: usernamePasswordMismatchError
 				}
-				res.redirect('/session/new');
+				res.redirect('/login');
 				return;
 			}
 
@@ -143,7 +143,7 @@ module.exports = {
 					req.session.destroy();
 
 					// Redirect the browser to the sign-in screen
-					res.redirect('/session/new');
+					res.redirect('/login');
 				});
 			} else {
 
@@ -151,7 +151,7 @@ module.exports = {
 				req.session.destroy();
 
 				// Redirect the browser to the sign-in screen
-				res.redirect('/session/new');
+				res.redirect('/login');
 			}
 		});
 	}

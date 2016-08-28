@@ -1,0 +1,25 @@
+<form action="/league/update/<%= league.id %>" method="POST" class="form-signin">
+  <h2>Update League Settings</h2>
+
+  <div class="form-group">
+    <label for="leagueName">League Name</label>
+    <input id="leagueName" type="text" class="form-control" name="name" value="<%= league.name %>" >
+  </div>
+  <div class="form-group">
+    <label for="leagueSport">Sport</label>
+    <select id="leagueSport" name="sport" placeholder="Sport" class="form-control custom-select">
+      <% Object.keys(sails.config.sports).forEach(function(sportKey) { %>
+      <option value="<%= sportKey %>"><%= sails.config.sports[sportKey].name %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="landingMessage">Landing Message (Tagline)</label>
+    <input name="landingMessage" type="text" class="form-control" name="landingMessage" value="<%= league.landingMessage %>" >
+  </div>
+  <br/>
+  <input type="submit" class="btn btn-lg btn-primary btn-block" value="Update League"/>
+  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  <input type="hidden" name="admin" value="<%= currentuser.id %>" />
+
+</form>

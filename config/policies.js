@@ -48,7 +48,6 @@ module.exports.policies = {
   user: {
     'index': ["setUserMoney", "sessionAuth"],
     'new': ["admin", "flash"],
-    'invite': ["admin", "flash"],
     'create': ["admin", "flash"],
     'show': "userCanSeeProfile",
     'edit': "userCanSeeProfile",
@@ -57,6 +56,10 @@ module.exports.policies = {
     'updatepass': "password",
     '*': "admin"
   },
+
+  league: {
+    'new': ["userHasNoLeague", "sessionAuth", "flash"]
+  }
 
   /***************************************************************************
   *                                                                          *

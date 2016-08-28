@@ -2,12 +2,15 @@
 	<div class="jumbotron">
 		<h1>Fake Stacks</h1>
 
+    <% if (session.User.league) { %>
+    <h2><%= session.User.league.name %></h2>
+    <% } else { %>
 		<h2>Getting your gambling fix while continuing to put food on your family</h2>
+    <% } %>
 		<% if (session.authenticated && session.User.league) { %>
 		  <a href="/bettable" class="btn btn-outline btn-lg">Start Betting</a>
     <% } else { %>
       <a href="/league/new" class="btn btn-outline btn-lg">Create League</a>
-      <a href="/league/join" class="btn btn-outline btn-lg">Join League</a>
     <% } %>
 	</div>
 	<div class="media">
