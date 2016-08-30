@@ -17,11 +17,11 @@ module.exports = {
 		ValidationService.validateBets(req, confirmedBets, function(errors) {
 			console.log("Callback errors: " + errors);
 			if (errors.length > 0) {
-		      	req.session.flash = {
+        req.session.flash = {
 					err: errors
 				}
 				return res.redirect('/confirmation');
-		    }
+      }
 
 			for (var i=0; i<confirmedBets.length; i++) {
 				var bet = confirmedBets[i];
@@ -36,7 +36,7 @@ module.exports = {
 						}
 						return res.redirect('/bettable');
 					}
-					transaction = {
+					var transaction = {
 						user: req.session.User,
 						amount: 0-parseInt(createdBet.amount),
 						bet: createdBet,
@@ -71,7 +71,7 @@ module.exports = {
 			var bet = updatedBets[0];
 			if (bet.win === true) {
 				console.log("Logging winning transaction");
-				transaction = {
+				var transaction = {
 					user: bet.user,
 					amount: 2*parseInt(bet.amount),
 					bet: bet,
@@ -117,8 +117,13 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-		Bet.find().where({complete:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
-			var betsByUser = {};
+	  var leagueId = req.session.User.league.id;
+    Bet.find().where({complete:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
+      //TODO: Need to fix this league filtering thing at some point but I don't want to update the database schema again
+      var bets = bets.filter(function(bet) {
+			  return bet.user.league == leagueId;
+      });
+      var betsByUser = {};
 			for (var i=0; i<bets.length; i++) {
 				if (!betsByUser[bets[i].user.id]) {
 					betsByUser[bets[i].user.id] = [];

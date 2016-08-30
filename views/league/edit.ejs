@@ -9,7 +9,7 @@
     <label for="leagueSport">Sport</label>
     <select id="leagueSport" name="sport" placeholder="Sport" class="form-control custom-select">
       <% Object.keys(sails.config.sports).forEach(function(sportKey) { %>
-      <option value="<%= sportKey %>"><%= sails.config.sports[sportKey].name %></option>
+      <option value="<%= sportKey %>" <%= (league.sport == sportKey) ? "selected" : "" %>><%= sails.config.sports[sportKey].name %></option>
       <% }) %>
     </select>
   </div>

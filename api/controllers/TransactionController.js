@@ -6,11 +6,11 @@
  */
 
 module.exports = {
-	show: function(req, res, next) {
-		var userId = req.param('id');
+  show: function (req, res, next) {
+    var userId = req.param('id');
     var league = req.session.User.league;
     var userId = userId ? userId : req.session.User.id;
-        Bet.find().where({user: userId}).sort({ time: 'asc' }).populate('bettable').populate('user').exec(function foundBets(err, bets) {
+    Bet.find().where({user: userId}).sort({time: 'asc'}).populate('bettable').populate('user').exec(function foundBets(err, bets) {
       if (err) return next(err);
       if (!bets) return next();
       var runningTally = league.startingAccount;
@@ -36,7 +36,7 @@ module.exports = {
         tallies.user = bets[0].user;
         res.view(tallies);
       }
-		});
-	}
+    });
+  }
 };
 

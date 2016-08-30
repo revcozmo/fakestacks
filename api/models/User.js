@@ -51,7 +51,7 @@ module.exports = {
 
   },
 
-  beforeCreate: function (values, next) {
+  beforeCreate: function(values, next) {
     delete values.id;
     if (!values.password || values.password != values.confirmation) {
       return next({err: ["Password doesn't match password confirmation"]});
@@ -63,7 +63,7 @@ module.exports = {
     next();
   },
 
-  beforeUpdate: function (values, next) {
+  beforeUpdate: function(values, next) {
     if (!values.password_update) {
       return next();
     }

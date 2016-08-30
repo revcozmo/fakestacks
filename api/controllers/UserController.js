@@ -80,20 +80,6 @@ module.exports = {
 		});
 	},
 
-	updatepass: function(req, res, next) {
-		var user = req.params.all();
-		user.password_update = true;
-		User.update(req.param('id'), req.params.all(), function updatedPassword(err) {
-			if (err) {
-				req.session.flash = {
-					err: err
-				}
-				return res.redirect('/user/password/' + req.param('id'));
-			}
-			res.redirect('/user/show/' + req.param('id'));
-		});
-	},
-
 	destroy: function(req, res, next) {
 		User.findOne(req.param('id'), function foundUser(err, user) {
 			if (err) return next(err);
