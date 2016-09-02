@@ -4,6 +4,9 @@
 module.exports = function (req, res, ok) {
 
   var userId = req.param('id');
+  if (!userId) {
+    return ok();
+  }
   var leagueId = req.session.User.league.id;
   User.findOne(userId, function foundUser(err, user) {
     if (err) {
