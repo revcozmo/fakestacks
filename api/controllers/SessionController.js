@@ -73,86 +73,40 @@ module.exports = {
 			req.session.authenticated = true;
 			req.session.User = user;
 
-			// Change status to online
-			user.online = true;
-			user.save(function(err, user) {
-				if (err) return next(err);
+      if (err) return next(err);
 
-				// Inform other sockets (e.g. connected sockets that are subscribed) that this user is now logged in
-				User.publishUpdate(user.id, {
-					loggedIn: true,
-					id: user.id,
-					name: user.name,
-					action: ' has logged in.'
-				});
+      // If the user is also an admin redirect to the user list (e.g. /views/user/index.ejs)
+      // This is used in conjunction with config/policies.js file
+      Transaction.getTransactionsWithTally(user.id, function(err, transactionsWithTally) {
+        if (err) {
+          console.log(err);
+          req.session.flash = {
+            err: err
+          }
+          return res.redirect('/');
+        }
+        sails.config.cache.user_money[req.session.User.id] = transactionsWithTally.total;
+        if (req.session.User.admin) {
+          if (req.session.returnTo) {
+             res.redirect(req.session.returnTo);
+          } else {
+             res.redirect('/');
+          }
+          return;
+        }
 
-				// If the user is also an admin redirect to the user list (e.g. /views/user/index.ejs)
-				// This is used in conjunction with config/policies.js file
-				Transaction.getTransactionsWithTally(user.id, function(err, transactionsWithTally) {
-					if (err) {
-						console.log(err);
-						req.session.flash = {
-							err: err
-						}
-						return res.redirect('/');
-					}
-					sails.config.cache.user_money[req.session.User.id] = transactionsWithTally.total;
-					if (req.session.User.admin) {
-						if (req.session.returnTo) {
-						   res.redirect(req.session.returnTo);
-						} else {
-						   res.redirect('/');
-						}
-						return;
-					}
-
-					//Redirect to their profile page (e.g. /views/user/show.ejs)
-					if (req.session.returnTo) {
-					   res.redirect(req.session.returnTo);
-					} else {
-					   res.redirect('/');
-					}
-				});
-
-			});
-		});
+        //Redirect to their profile page (e.g. /views/user/show.ejs)
+        if (req.session.returnTo) {
+           res.redirect(req.session.returnTo);
+        } else {
+           res.redirect('/');
+        }
+      });
+    });
 	},
 
 	destroy: function(req, res, next) {
-
-		User.findOne(req.session.User.id, function foundUser(err, user) {
-
-			var userId = req.session.User.id;
-
-			if (user) {
-				// The user is "logging out" (e.g. destroying the session) so change the online attribute to false.
-				User.update(userId, {
-					online: false
-				}, function(err) {
-					if (err) return next(err);
-
-					// Inform other sockets (e.g. connected sockets that are subscribed) that the session for this user has ended.
-					User.publishUpdate(userId, {
-						loggedIn: false,
-						id: userId,
-						name: user.name,
-						action: ' has logged out.'
-					});
-
-					// Wipe out the session (log out)
-					req.session.destroy();
-
-					// Redirect the browser to the sign-in screen
-					res.redirect('/login');
-				});
-			} else {
-
-				// Wipe out the session (log out)
-				req.session.destroy();
-
-				// Redirect the browser to the sign-in screen
-				res.redirect('/login');
-			}
-		});
+    req.session.destroy();
+    res.redirect('/login');
 	}
 };
