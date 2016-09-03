@@ -39,16 +39,16 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  transports: [
-    'websocket'
-  ],
-
-  adapter: 'socket.io-redis',
-
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  db: process.env.REDIS_DB,
-  pass: process.env.REDIS_PASS,
+  // transports: [
+  //   'websocket'
+  // ],
+  //
+  // adapter: 'socket.io-redis',
+  //
+  // host: process.env.REDIS_HOST,
+  // port: process.env.REDIS_PORT,
+  // db: process.env.REDIS_DB,
+  // pass: process.env.REDIS_PASS,
 
 
   // adapter: 'memory',
