@@ -103,7 +103,21 @@ module.exports = {
 		});
 	},
 
-	index: function(req, res, next) {
+  updatepass: function(req, res, next) {
+    var user = req.params.all();
+    user.password_update = true;
+    User.update(req.param('id'), req.params.all(), function updatedPassword(err) {
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+        return res.redirect('/user/password/' + req.param('id'));
+      }
+      res.redirect('/user/show/' + req.param('id'));
+    });
+  },
+
+  index: function(req, res, next) {
 	  var league = req.session.User.league;
 		User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {
 			if (err) return next(err);
