@@ -35,7 +35,8 @@ module.exports.routes = {
   '/': 'StaticController.index',
   '/account': 'TransactionController.show',
   '/standings': 'UserController.index',
-  '/login': 'SessionController.new'
+  '/login': 'SessionController.new',
+  '/logout': 'SessionController.destroy'
 
   /***************************************************************************
   *                                                                          *

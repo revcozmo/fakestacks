@@ -12,6 +12,7 @@
 body {
 	padding-top: 60px;
 	padding-bottom: 60px;
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
 }
 
 .jumbotron {
@@ -54,6 +55,30 @@ body {
 	}
 }
 
+.navbar-inverse {
+  background-color: @lightGray;
+  border-color: @lightGray;
+  .navbar-toggle {
+    border-color: @gray;
+    .icon-bar {
+      background-color: @gray;
+    }
+  }
+}
+
+.navbar-brand {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  margin: auto;
+}
+
+.navbar-toggle {
+  z-index:3;
+}
+
 .navbar-right {
 	li {
 		float: left;
@@ -67,6 +92,24 @@ body {
     		background-color: transparent;
 	    }
 	}
+}
+
+.panel {
+  border-radius: 0px;
+}
+
+.panel-heading {
+  border-bottom: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.panel-default > .panel-body {
+  background-color: @lightGray;
+}
+
+.panel-default > .panel-heading {
+  background-color: @lightGray;
 }
 
 .media-body ol li {
@@ -89,12 +132,75 @@ body {
 	}
 }
 
+.team-name {
+  text-align: right;
+  padding-top: 5px;
+}
+
+.game-time {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.game-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid @gray;
+}
+
+.team-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.bet-amount-container {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 30%;
+}
+
+.bet-amount-container {
+  text-align: right;
+}
+
+.bet-amount-addon {
+  background-color: @white;
+}
+
+.potential-bet {
+  background-color: @lightGray;
+  border-radius: 0px;
+  border-bottom: 0px;
+  border-top: 1px solid;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.total-tally {
+  background-color: @lightGray;
+  border: 0px;
+}
+
+.bet-slip-title {
+  padding-top: 10px;
+}
+
+.list-group-item:first-child {
+  border-top: 0px;
+}
+
 #close {
     display:block;
     float:right;
     width:30px;
     height:29px;
     background:url(http://digitalsbykobke.com/images/close.png) no-repeat center center;
+}
+
+.close {
+  font-weight: normal;
+  opacity: .5;
 }
 
 .validation-error {

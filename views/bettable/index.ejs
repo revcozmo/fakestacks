@@ -2,65 +2,62 @@
 	<div class="row">
 		<div class="col-md-8">
 		<h3>Games</h3>
-		<table class='table'>
+      <% _.each(bettables, function(bettable) { %>
+          <div class="row game-row">
+            <div class="col-md-4 gametime game-time">
+              <%= bettable.gameTime %>
+            </div>
+            <div class="col-md-8">
+              <div class="row team-row">
+                <div class="col-xs-4 team-name">
+                  <%= bettable.team1 %>
+                </div>
+                <div class="col-xs-4">
+                  <% if (!bettable.off) { %>
+                  <% if (buttonIsDisabled(bettable.id + "-" + bettable.sideId1, disabledButtons)) { %>
+                  <input type="submit" disabled="false" class="bet-btn btn btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="<%= bettable.team1Spread %>"/>
+                  <% } else { %>
+                  <input type="submit" class="bet-btn btn btn-primary btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="<%= bettable.team1Spread %>"/>
+                  <% } %>
+                  <% } %>
+                </div>
+                <div class="col-xs-4">
+                  <% if (!bettable.ouoff) { %>
+                  <% if (buttonIsDisabled(bettable.id + "-true", disabledButtons)) { %>
+                  <input type="submit" disabled="false" class="bet-btn btn btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-over="true" value="Over <%= bettable.overunder %>"/>
+                  <% } else { %>
+                  <input type="submit" class="bet-btn btn btn-primary btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-over="true" value="Over <%= bettable.overunder %>"/>
+                  <% } %>
+                  <% } %>
+                </div>
+              </div>
+              <div class="row team-row">
+                <div class="col-xs-4 team-name">
+                  <%= bettable.team2 %>
+                </div>
+                <div class="col-xs-4">
+                  <% if (!bettable.off) { %>
+                  <% if (buttonIsDisabled(bettable.id + "-" + bettable.sideId2, disabledButtons)) { %>
+                  <input type="submit" disabled="false" class="bet-btn btn btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="<%= bettable.team2Spread %>"/>
+                  <% } else { %>
+                  <input type="submit" class="bet-btn btn btn-primary btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="<%= bettable.team2Spread %>"/>
+                  <% } %>
+                  <% } %>
+                </div>
+                <div class="col-xs-4">
+                  <% if (!bettable.ouoff) { %>
+                  <% if (buttonIsDisabled(bettable.id + "-false", disabledButtons)) { %>
+                  <input type="submit" disabled="false" class="bet-btn btn btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-over="false" value="Under <%= bettable.overunder %>"/>
+                  <% } else { %>
+                  <input type="submit" class="bet-btn btn btn-primary btn-sm btn-block" data-bettable-id="<%= bettable.id %>" data-over="false" value="Under <%= bettable.overunder %>"/>
+                  <% } %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% }) %>
 
-			<% _.each(bettables, function(bettable) { %>
-			<tr data-id="<%= bettable.id %>" data-model="bettable">
-				<td class="gametime" rowspan="2"><%= bettable.gameTime %></td>
-				<td><%= bettable.team1 %></td>
-				<td><%= bettable.team1Spread %></td>
-				<td>
-					<% if (!bettable.off) { %> 
-						<% if (buttonIsDisabled(bettable.id + "-" + bettable.sideId1, disabledButtons)) { %>
-							<input type="submit" disabled="false" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="Bet"/>
-						<% } else { %>
-							<input type="submit" class="bet-btn btn btn-primary btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId1 %>" value="Bet"/>
-						<% } %>
-					<% } %>
-				</td>
-				<% if (!bettable.ouoff) { %>
-				<td>Over</td>
-				<td><%= bettable.overunder %></td>
-				<td>
-					<% if (buttonIsDisabled(bettable.id + "-true", disabledButtons)) { %>
-						<input type="submit" disabled="false" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="true" value="Bet"/>
-					<% } else { %>
-						<input type="submit" class="bet-btn btn btn-primary btn-sm" data-bettable-id="<%= bettable.id %>" data-over="true" value="Bet"/>
-					<% } %>
-				</td>
-				<% } else { %>
-					<td></td><td></td><td></td>
-				<% } %>
-			</tr>
-			<tr data-id="<%= bettable.id %>" data-model="bettable">
-				<td><%= bettable.team2 %></td>
-				<td><%= bettable.team2Spread %></td>
-				<td>
-					<% if (!bettable.off) { %>
-						<% if (buttonIsDisabled(bettable.id + "-" + bettable.sideId2, disabledButtons)) { %>
-							<input type="submit" disabled="false" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="Bet"/>
-						<% } else { %>
-							<input type="submit" class="bet-btn btn btn-primary btn-sm" data-bettable-id="<%= bettable.id %>" data-side-id="<%= bettable.sideId2 %>" value="Bet"/>
-						<% } %>
-					<% } %>
-				</td>
-				<% if (!bettable.ouoff) { %>
-				<td>Under</td>
-				<td><%= bettable.overunder %></td>
-				<td>
-					<% if (buttonIsDisabled(bettable.id + "-false", disabledButtons)) { %>
-						<input type="submit" disabled="false" class="bet-btn btn btn-sm" data-bettable-id="<%= bettable.id %>" data-over="false" value="Bet"/>
-					<% } else { %>
-						<input type="submit" class="bet-btn btn btn-primary btn-sm" data-bettable-id="<%= bettable.id %>" data-over="false" value="Bet"/>
-					<% } %>
-				</td>
-				<% } else { %>
-					<td></td><td></td><td></td>
-				<% } %>
-			</tr>
-
-			<% }) %>
-		</table>
 		</div>
 		<div class="col-md-4 sidebar-outer">
 			<%- include ../cart/index.ejs %>
@@ -68,4 +65,3 @@
 	</div>
 </div>
 
-	

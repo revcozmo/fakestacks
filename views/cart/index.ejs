@@ -1,30 +1,30 @@
 <% if (potentialBets != null) { %>
 	<div id="bet-slip" class="panel panel-default potential-bet-panel">
 		<div class="panel-heading">
-			<h3 class="panel-title">
-				Bet Slip
+			<h3 class="panel-title bet-slip-title">
+				BET SLIP
 			</h3>
 		</div>
 		<div class="panel-body">
-			<span class="no-games-info-message" 
+			<span class="no-games-info-message"
 				<% if (potentialBets.length > 0) { %>
-				hidden="true" 
+				hidden="true"
 				<% } %>
 				>Add games to your bet slip
 			</span>
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>
-		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>		
+		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>
 			<% }) %>
 			</ul>
 			<ul class="list-group ul-total-tally"
 				<% if (potentialBets.length == 0) { %>
-				hidden="true" 
+				hidden="true"
 				<% } %>
 			>
-			<div id="betting-errors" class="alert alert-danger" role="alert" 
+			<div id="betting-errors" class="alert alert-danger" role="alert"
 				<% if (!flash || !flash.err) { %>
-					hidden="true" 
+					hidden="true"
 				<% } %>
 			>
 				<% if (flash && flash.err) { %>
@@ -33,17 +33,11 @@
 				<% }) %>
 				<% } %>
   			</div>
-			<li class="list-group-item total-tally">
-					<div class="num-bets-selected">
-					<span id="num-bets"><%= potentialBets.length %></span> BETS SELECTED
-					</div>
-					<div class="total-tally-risk">
-					Total Risk: $<span id="bets-total-amount"><%= totalAmount %></span>
-					</div>
-				  	<button id="review-bets" class="btn btn-primary btn-default center-block" type="button">
-				    Review Bets
-				  	</button>
-				</li>
+        <li class="list-group-item total-tally">
+          <button id="review-bets" class="btn btn-primary btn-default center-block" type="button">
+            Review <span id="num-bets"><%= potentialBets.length %></span> Bet<span id="num-bets-plural"><%= ((potentialBets.length == 1) ? "" : "s") %></span> for $<span id="bets-total-amount"><%= totalAmount %></span>
+          </button>
+        </li>
 			</ul>
 		</div>
 	</div>

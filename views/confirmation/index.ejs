@@ -2,7 +2,7 @@
 <% if (potentialBets != null) { %>
 	<div class="panel panel-default potential-bet-panel">
 		<div class="panel-heading">
-			<h3 class="panel-title">
+			<h3 class="panel-title bet-slip-title">
 				Bet Confirmation
 			</h3>
 		</div>
@@ -16,21 +16,17 @@
 		<div class="panel-body">
 			<ul class="list-group potential-bet-list">
 			<% _.each(potentialBets, function(bet) { %>
-		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>		
+		    	<%- include ../../assets/templates/potentialBetTemplate.ejs %>
 			<% }) %>
 			</ul>
-			<ul class="list-group ul-total-tally"
-				<li class="list-group-item total-tally">
-					<div class="num-bets-selected">
-					<span id="num-bets"><%= potentialBets.length %></span> BETS
-					</div>
-					<div class="total-tally-risk">
-					Total Risk: $<span id="bets-total-amount"><%= totalAmount %></span>
-					</div>
-				  	<button id="confirm-bets" class="btn btn-default center-block" type="button">
-				    Confirm
-				  	</button>
-				</li>
+      <ul class="list-group ul-total-tally">
+      <li class="list-group-item total-tally">
+        <button id="confirm-bets" class="btn btn-primary btn-default center-block" type="button">
+          Confirm <span id="num-bets"><%= potentialBets.length %></span> Bet<span
+            id="num-bets-plural"><%= ((potentialBets.length == 1) ? "" : "s") %></span> for $<span
+            id="bets-total-amount"><%= totalAmount %></span>
+        </button>
+      </li>
 			</ul>
 		</div>
 	</div>

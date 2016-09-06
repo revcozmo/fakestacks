@@ -40,12 +40,17 @@ module.exports = {
       via: 'user'
     },
 
+    getFullName: function() {
+      return this.firstName + " " + this.lastName;
+    },
+
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       delete obj.confirmation;
       delete obj.encryptedPassword;
       delete obj._csrf;
+      obj.fullName = this.getFullName();
       return obj;
     }
 
