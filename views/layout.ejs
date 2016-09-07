@@ -38,20 +38,6 @@
 
     <%- include navbar %>
     <%- body %>
-    <div class="container">
-      <hr>
-      <footer class="footer pull-right">
-        <div>
-          <% if (session.authenticated && session.User && session.User.league && session.User.league.landingMessage) { %>
-          <div><%= session.User.league.landingMessage %></div>
-          <% } else { %>
-          <div>Put your fake money where your mouth is!</div>
-          <% } %>
-        </div>
-      </footer>
-    </div>
-
-
 
     <!--
         Client-side Templates
@@ -75,7 +61,7 @@
     -->
 
     <!--TEMPLATES-->
-    
+
     <!--TEMPLATES END-->
 
 

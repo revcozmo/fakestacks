@@ -39,20 +39,58 @@ body {
 }
 
 .form-signin {
-	max-width: 30%;
-	padding: 19px 29px 29px;
+  z-index: 1030;
+	padding: 25px 15px;
 	margin: 0 auto 20px;
 	margin-top: 20px;
 	background-color: @lightGray;
-	border: 1px solid @green;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
+
+  .form-control {
+    border-radius: 0px;
+  }
 
 	h2 {
 		text-align: center;
 		margin-top: 0px;
 	}
+
+  .btn {
+    border-radius: 0px;
+  }
+}
+
+.signin-page {
+  width: 100%;
+  background: url(/images/um_psu_stack.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  z-index: -5;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.signin-page-overlay {
+  width: 100%;
+  background-color: black;
+  opacity: .6;
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.signin-headline {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: @white;
 }
 
 .navbar-inverse {
@@ -132,6 +170,17 @@ body {
 	}
 }
 
+.jumbotron {
+  background-color: @white;
+}
+
+#bet-slip {
+  .total-tally {
+    background-color: @lightGray;
+    border: 0px;
+  }
+}
+
 .team-name {
   text-align: right;
   padding-top: 5px;
@@ -177,9 +226,12 @@ body {
   border-right: 0px;
 }
 
-.total-tally {
-  background-color: @lightGray;
-  border: 0px;
+.list-group-item:first-child {
+  border-top: 0px;
+}
+
+.sign-in-form {
+  margin: 0 auto;
 }
 
 .bet-slip-title {
@@ -190,34 +242,26 @@ body {
   border-top: 0px;
 }
 
-#close {
-    display:block;
-    float:right;
-    width:30px;
-    height:29px;
-    background:url(http://digitalsbykobke.com/images/close.png) no-repeat center center;
-}
-
 .close {
   font-weight: normal;
   opacity: .5;
 }
 
 .validation-error {
-	padding: 10px 2px;
+  padding: 10px 2px;
 }
 
 .standings td form {
-	display: inherit;
+  display: inherit;
 }
 
 .user-record {
-	float: right;
-	padding-right: 5px;
-	padding-bottom: 10px;
+  float: right;
+  padding-right: 5px;
+  padding-bottom: 10px;
 }
 
 .user-stats {
-	padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 

@@ -1,6 +1,6 @@
 <div class="container">
 <% if (betsByUser != null) { %>
-	<div class="panel panel-default potential-bet-panel">
+	<div class="panel potential-bet-panel pending-bet-panel">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				Pending Bets
@@ -10,7 +10,7 @@
 			<ul class="list-group pending-bet-list">
 				<% _.each(betsByUser, function(bets) { %>
 					<% _.each(bets, function(bet) { %>
-						<li id="bet-<%= bet.id %>" class="list-group-item" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
+						<li id="bet-<%= bet.id %>" class="list-group-item potential-bet" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
 							<p>
 								<%= bet.user.firstName %> <%= bet.user.lastName %>
 							<p>
