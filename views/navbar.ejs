@@ -18,10 +18,33 @@
         <li><a href="/league/settings">MANAGE</a></li>
         <% } %>
         <% } %>
+        <% if (session.authenticated) { %>
+        <li class="dropdown mobile-left">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= session.User.fullName.toUpperCase() %>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/user/edit/<%= session.User.id %>">EDIT</a></li>
+            <li><a href="/user/password/<%= session.User.id %>">UPDATE PASSWORD</a></li>
+          </ul>
+        </li>
+        <% if (session.authenticated && session.User && session.User.league) { %>
+        <li class="money mobile-left"><a href="/account" id="account-balance" class="money">$<%= sails.config.cache.user_money[req.session.User.id] %>.00</a></li>
+        <% } %>
+        <li class="mobile-left"><a href="/logout">SIGN OUT</a></li>
+        <% } %>
       </ul>
       <div class="nav navbar-right">
         <% if (session.authenticated) { %>
-        <li><a href="/user/show/<%= session.User.id %>"><%= session.User.fullName.toUpperCase() %></a> </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= session.User.fullName.toUpperCase() %>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/user/edit/<%= session.User.id %>">EDIT</a></li>
+            <li><a href="/user/password/<%= session.User.id %>">UPDATE PASSWORD</a></li>
+          </ul>
+        </li>
         <% if (session.authenticated && session.User && session.User.league) { %>
         <li class="money"><a href="/account" id="account-balance" class="money">$<%= sails.config.cache.user_money[req.session.User.id] %>.00</a></li>
         <% } %>

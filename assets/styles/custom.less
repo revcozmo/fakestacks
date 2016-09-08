@@ -3,6 +3,7 @@
 @orange: #F48744;
 @blue: #189ECA;
 @gray: #777574;
+@darkerGray: #c0c0c0;
 @lightGray: #ececec;
 @black: #1C1C1C;
 @darkBlue: #106E8D;
@@ -38,6 +39,10 @@ body {
 	}
 }
 
+.btn {
+  border-radius: 0px;
+}
+
 .form-signin {
   z-index: 1030;
 	padding: 25px 15px;
@@ -53,10 +58,6 @@ body {
 		text-align: center;
 		margin-top: 0px;
 	}
-
-  .btn {
-    border-radius: 0px;
-  }
 }
 
 .signin-page {
@@ -170,15 +171,68 @@ body {
 	}
 }
 
+.dropdown-menu {
+  background-color: @lightGray;
+  border-radius: 0px;
+  border: 0px;
+}
+
+@media (min-width: 768px) {
+  .navbar-toggle {
+    display: none;
+  }
+
+  .mobile-left {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-right {
+    display: none;
+  }
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+  color: @black;
+  background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  color: @black;
+  background-color: transparent;
+}
+
+.navbar-right li a:hover {
+  color: @black;
+  background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  color: @black;
+  background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: @black;
+  background-color: transparent;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+  background-color: @darkerGray;
+}
+
+.no-games-info-message {
+  color: @gray;
+}
+
 .jumbotron {
   background-color: @white;
 }
 
-#bet-slip {
-  .total-tally {
-    background-color: @lightGray;
-    border: 0px;
-  }
+.total-tally {
+  background-color: @lightGray;
+  border: 0px;
 }
 
 .team-name {

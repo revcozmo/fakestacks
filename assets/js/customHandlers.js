@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	$( ".bet-btn" ).click(betButtonHandler);
 	$( ".bet-amount" ).blur(blurHandler);
+  $( ".bet-amount" ).keyup(keyUpHandler);
 	$( "button.close" ).click(closeHandler);
 	$( "#review-bets" ).click(reviewBets);
 	$( "#confirm-bets" ).click(confirmBets);
@@ -78,6 +79,12 @@ var blurHandler = function( event ) {
 		    }
 		}
     });
+}
+
+var keyUpHandler = function( event ) {
+  var data = getBetInfoFromCard(event)
+  data.amount = event.target.value;
+  $( "#bets-total-amount" ).text(getTotalBetAmount());
 }
 
 var closeHandler = function( event ) {
