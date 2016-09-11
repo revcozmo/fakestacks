@@ -8,7 +8,7 @@ module.exports = function (req, res, ok) {
     return ok();
   }
   else {
-    var requireAdminError = [{name: 'User already has a league', message: 'You have already created a league'}]
+    var requireAdminError = [{name: 'leagueExists', message: 'You have already created a league'}]
     req.session.flash = {
       err: requireAdminError
     }

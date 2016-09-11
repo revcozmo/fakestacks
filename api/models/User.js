@@ -56,6 +56,20 @@ module.exports = {
 
   },
 
+  validationMessages: { //hand for i18n & l10n
+    email: {
+      required: 'Email is required',
+      email: 'Provide valid email address',
+      unique: 'This email address is already taken'
+    },
+    firstName: {
+      required: 'First name is required'
+    },
+    lastName: {
+      required: 'Last name is required'
+    }
+  },
+
   beforeCreate: function(values, next) {
     delete values.id;
     if (!values.password || values.password != values.confirmation) {

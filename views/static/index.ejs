@@ -15,7 +15,7 @@
 	</div>
 	<div class="media">
     <% if (session.authenticated && session.User.league) { %>
-      <div class="media-body">
+      <div class="media-body col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
         <h4 class="media-heading">The Rules:</h4>
         <ol>
       <li>You start out with <%= session.User.league.startingAccount %> imaginary dollars in your account. Whoever has the most imaginary dollars in their account at the end of the season wins.
