@@ -24,7 +24,7 @@ module.exports = {
 
     request(sport.url, function (error, response, html) {
       if (!error) {
-        var $ = cheerio.load(html);
+        var $ = cheerio.load(eval(html)[0].content);
 
         $('#events').filter(function () {
 
