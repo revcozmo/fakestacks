@@ -1,15 +1,17 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <button type="button" class="navbar-toggle navbar-menu-button" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/">FAKE STACKS</a>
     </div>
-    <div class="navbar-collapse collapse">
+    <div class="navbar-collapse collapse mobile-menu">
+      <button type="button" class="menu-close mobile-show" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <ul class="nav navbar-nav">
+        <li class="mobile-show"><a href="/">HOME</a></li>
         <% if (session.authenticated && session.User && session.User.league) { %>
         <li><a href="/bettable">GAMES</a></li>
         <li><a href="/standings">STANDINGS</a></li>
@@ -20,20 +22,16 @@
         <% } %>
         <% if (session.authenticated) { %>
         <li class="dropdown mobile-left">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <%= session.User.fullName.toUpperCase() %>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="/user/edit/<%= session.User.id %>">EDIT</a></li>
-            <li><a href="/user/password/<%= session.User.id %>">UPDATE PASSWORD</a></li>
-          </ul>
+          <a href="/user/show/<%= session.User.id %>">ACCOUNT</a>
         </li>
-        <% if (session.authenticated && session.User && session.User.league) { %>
-        <li class="money mobile-left"><a href="/account" id="account-balance" class="money">$<%= sails.config.cache.user_money[req.session.User.id] %>.00</a></li>
-        <% } %>
         <li class="mobile-left"><a href="/logout">SIGN OUT</a></li>
         <% } %>
       </ul>
+      <% if (session.authenticated && session.User && session.User.league) { %>
+        <div class="menu-bottom">
+        <a class="menu-account-bottom mobile-show" href="/account" id="account-balance" class="money">You have $<%= sails.config.cache.user_money[req.session.User.id] %>.00</a>
+        </div>
+      <% } %>
       <div class="nav navbar-right">
         <% if (session.authenticated) { %>
         <li class="dropdown">

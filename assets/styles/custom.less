@@ -6,7 +6,8 @@
 @darkerGray: #c0c0c0;
 @lightGray: #ececec;
 @black: #1C1C1C;
-@darkBlue: #106E8D;
+@lighterDarkBlue: #003D63;
+@darkBlue: #000B26;
 @darkGray: #4A4A4A;
 @red: #D16565;
 
@@ -114,6 +115,12 @@ body {
   margin: auto;
 }
 
+.navbar-menu-button {
+  border: 0px;
+  float: left;
+  margin-left: 15px;
+}
+
 .navbar-toggle {
   z-index:3;
 }
@@ -131,6 +138,77 @@ body {
     		background-color: transparent;
 	    }
 	}
+}
+
+@media (max-width: 767px) {
+  .mobile-menu {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
+    padding-top: 50px;
+    z-index: 5;
+    font-size: 28px;
+    font-weight: lighter;
+    opacity: .97;
+    background: -webkit-linear-gradient(@lighterDarkBlue, @darkBlue);
+    background: -o-linear-gradient(@lighterDarkBlue, @darkBlue);
+    background: -moz-linear-gradient(@lighterDarkBlue, @darkBlue);
+    background: linear-gradient(@lighterDarkBlue, @darkBlue);
+    color: @white;
+  }
+
+  .mobile-menu > .navbar-nav > li > a {
+    color: @white;
+  }
+
+  .mobile-menu > .navbar-nav > li {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .mobile-menu > .nav > li > a {
+    display: inline;
+  }
+
+  .navbar-fixed-top {
+    .navbar-collapse {
+      min-height: 100vh;
+    }
+  }
+
+  .navbar-inverse {
+    .navbar-collapse {
+      border-color: @darkBlue;
+    }
+  }
+}
+
+@media (min-width: 767px) {
+  .nav > .mobile-show {
+    display: none;
+  }
+
+  .mobile-show {
+    display: none;
+  }
+}
+
+.menu-bottom {
+  display: flex;
+}
+
+.menu-account-bottom {
+  color: white;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
 }
 
 .panel {
@@ -241,8 +319,6 @@ body {
 }
 
 .alert-danger {
-  //background-color: inherit;
-  //border: 0px;
   li {
     list-style-type: none;
   }
@@ -307,6 +383,14 @@ body {
 .close {
   font-weight: normal;
   opacity: .5;
+}
+
+.menu-close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+  margin-top: 0px;
 }
 
 .validation-error {
