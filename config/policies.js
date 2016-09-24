@@ -31,6 +31,9 @@ module.exports.policies = {
   RegisterController: {
     '*': ["noSession", "flash"]
   },
+  BettableController: {
+    'create': []
+  },
   SessionController: {
     '*': ['flash']
   },
