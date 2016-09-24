@@ -6,7 +6,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <button type="button" class="navbar-toggle navbar-bet-slip-button" data-toggle="collapse" data-target=".navbar-bet-slip">
+        <span class="badge bet-slip-badge"></span><img src="images/bets-menu.svg">
+      </button>
       <a class="navbar-brand" href="/">FAKE STACKS</a>
+    </div>
+    <div class="navbar-bet-slip collapse mobile-bet-slip">
+      <% if (session.authenticated && session.User && session.User.league && session.cart) { %>
+      <% potentialBets = session.cart; %>
+      <% totalAmount = 0; %>
+      <% confirmation = false; %>
+      <% for (var i = 0; i < req.session.cart.length; i++) { totalAmount += parseInt(req.session.cart[i].amount); }%>
+      <%- include cart/index.ejs %>
+      <% } %>
     </div>
     <div class="navbar-collapse collapse mobile-menu">
       <button type="button" class="menu-close mobile-show" aria-label="Close"><span aria-hidden="true">&times;</span></button>

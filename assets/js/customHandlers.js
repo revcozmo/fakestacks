@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+  placeBetSlip();
   $(".bet-btn").click(betButtonHandler);
   $(".bet-amount").blur(blurHandler);
   $(".bet-amount").keyup(keyUpHandler);
@@ -14,6 +15,26 @@ $(document).ready(function () {
   $(".menu-close").click(hideMenu);
 
 });
+
+$(window).resize(function() {
+  placeBetSlip();
+});
+
+function placeBetSlip() {
+  var betSlip = $("#bet-slip");
+  if ($(window).width() < 767) {
+    //Mobile Menu
+    $(".mobile-bet-slip").append(betSlip);
+  }
+  else {
+    //Side Bar
+    $(".sidebar-outer").append(betSlip);
+  }
+}
+
+function getNumBets() {
+  return $(".mobile-bet-slip .bet-amount").length;
+}
 
 var betButtonHandler = function (event) {
   event.preventDefault();
@@ -34,7 +55,9 @@ var betButtonHandler = function (event) {
       var tpl = new EJS({url: 'templates/potentialBetTemplate.ejs'}).render(tpl, {bet: data, confirmation: false});
       $(".no-games-info-message").hide();
       $(tpl).appendTo(".potential-bet-list");
-      $("#num-bets").text($(".bet-amount").length);
+      var numBets = getNumBets();
+      $("#num-bets").text(numBets);
+      $(".bet-slip-badge").text(numBets);
       $("#bets-total-amount").text(getTotalBetAmount());
       $(".ul-total-tally").show();
       $(".bet-amount").blur(blurHandler);
@@ -100,11 +123,13 @@ var closeHandler = function (event) {
       var el = getButtonFromBetInfo(betInfo);
       el.prop('disabled', false);
       el.addClass('btn-primary');
-      if ($(".bet-amount").length == 0) {
+      var numBets = getNumBets();
+      if (numBets == 0) {
         $(".no-games-info-message").show();
         $(".ul-total-tally").hide();
       }
-      $("#num-bets").text($(".bet-amount").length);
+      $(".bet-slip-badge").text(numBets == 0 ? "" : numBets);
+      $("#num-bets").text(numBets);
       $("#bets-total-amount").text(getTotalBetAmount());
     }
   });
@@ -137,7 +162,6 @@ var reviewBets = function (event) {
 }
 
 var validateBets = function () {
-  var totalAmount = getTotalBetAmount();
   $(".bet-amount").each(function (index) {
     if (isNaN(this.value)) {
       $("#betting-errors").show();

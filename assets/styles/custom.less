@@ -121,6 +121,29 @@ body {
   margin-left: 15px;
 }
 
+.navbar-bet-slip-button {
+  height: 30px;
+  width: 35px;
+  border: 0px;
+  background-size: cover;
+  margin-top: 10px;
+  padding: 0px 5px 0px 0px;
+  margin-right: 10px;
+}
+
+.badge {
+  padding: 3px 4px 4px 4px;
+  font-size: 10px;
+  line-height: .8;
+  background-color: @red;
+}
+
+.bet-slip-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
 .navbar-toggle {
   z-index:3;
 }
@@ -186,12 +209,47 @@ body {
   }
 }
 
+@media (max-width: 767px) {
+  .mobile-bet-slip {
+    width: 100%;
+    z-index: 4;
+    background: white;
+    overflow: scroll;
+    position: absolute;
+    max-height: calc(~"100vh - 50px");
+    top: 50px;
+    left: 0px;
+  }
+
+  .mobile-bet-slip > .potential-bet-panel {
+    margin-top: 0px;
+  }
+
+  .mobile-bet-slip > .navbar-nav > li {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .mobile-bet-slip > .nav > li > a {
+    display: inline;
+  }
+
+  .sidebar-outer {
+    display:none;
+  }
+
+}
+
 @media (min-width: 767px) {
   .nav > .mobile-show {
     display: none;
   }
 
   .mobile-show {
+    display: none;
+  }
+
+  .navbar > .container > .mobile-bet-slip {
     display: none;
   }
 }
@@ -217,15 +275,18 @@ body {
 
 .panel-heading {
   border-bottom: 0px;
+  border-color: @lightGray;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
 
 .panel-default > .panel-body {
+  border-color: @lightGray;
   background-color: @lightGray;
 }
 
 .panel-default > .panel-heading {
+  border-color: @lightGray;
   background-color: @lightGray;
 }
 
@@ -244,6 +305,7 @@ body {
 
 .potential-bet-panel {
 	margin-top: 20px;
+  background-color: @lightGray;
 	.panel-body {
 		padding: 10px;
 	}
@@ -296,7 +358,11 @@ body {
   background-color: transparent;
 }
 
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+.navbar-inverse .navbar-toggle:hover {
+  background-color: @darkerGray;
+}
+
+.navbar-inverse .navbar-toggle:focus {
   background-color: @darkerGray;
 }
 
@@ -391,6 +457,8 @@ body {
   left: 0;
   margin-left: 18px;
   margin-top: 0px;
+  background-color: transparent;
+  border: 0;
 }
 
 .validation-error {
@@ -411,3 +479,14 @@ body {
   padding-bottom: 20px;
 }
 
+:focus {
+  outline: none;
+}
+
+.mobile-menu > .navbar-nav > li > a:hover, .mobile-menu > .navbar-nav > li > a:focus {
+  color: @white;
+}
+
+.navbar-header > .navbar-menu-button:focus, .navbar-header > .navbar-menu-button:hover, .navbar-header > .navbar-bet-slip-button:focus, .navbar-header > .navbar-bet-slip-button:hover {
+  background-color: transparent;
+}
