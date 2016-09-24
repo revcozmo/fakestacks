@@ -23,11 +23,11 @@
 				<% } %>
 			>
 			<div id="betting-errors" class="alert alert-danger" role="alert"
-				<% if (!flash || !flash.err) { %>
+				<% if (!locals.flash || !locals.flash.err) { %>
 					hidden="true"
 				<% } %>
 			>
-				<% if (flash && flash.err) { %>
+				<% if (locals.flash && locals.flash.err) { %>
 				<% Object.keys(flash.err).forEach(function(error) { %>
 					<span class="sr-only">Error:</span><div class="validation-error"><%= flash.err[error] %></div>
 				<% }) %>
