@@ -3,7 +3,7 @@ $(document).ready(function () {
   placeBetSlip();
   $(".bet-btn").click(betButtonHandler);
   $(".bet-amount").blur(blurHandler);
-  $(".bet-amount").keyup(keyUpHandler);
+  $(".bet-amount").on("change paste keyup", changeHandler);
   $("button.close").click(closeHandler);
   $("#review-bets").click(reviewBets);
   $("#confirm-bets").click(confirmBets);
@@ -33,7 +33,7 @@ function placeBetSlip() {
 }
 
 function getNumBets() {
-  return $(".mobile-bet-slip .bet-amount").length;
+  return $(".bet-amount").length;
 }
 
 var betButtonHandler = function (event) {
@@ -61,6 +61,7 @@ var betButtonHandler = function (event) {
       $("#bets-total-amount").text(getTotalBetAmount());
       $(".ul-total-tally").show();
       $(".bet-amount").blur(blurHandler);
+      $(".bet-amount").on("change paste keyup", changeHandler);
       $("button.close").click(closeHandler);
       $(".gametime").text(replaceDates);
       $(".gametime").removeClass("gametime");
@@ -105,7 +106,8 @@ var blurHandler = function (event) {
   });
 }
 
-var keyUpHandler = function (event) {
+var changeHandler = function (event) {
+  console.log("key: " + event.target.value);
   var data = getBetInfoFromCard(event)
   data.amount = event.target.value;
   $("#bets-total-amount").text(getTotalBetAmount());

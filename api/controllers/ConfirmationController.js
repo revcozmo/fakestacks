@@ -26,7 +26,7 @@ module.exports = {
 		ValidationService.validateBets(req, req.session.cart, function(errors) {
 			console.log("Confirmation validation errors: " + errors);
 			if (errors.length > 0) {
-		      	req.session.flash = {
+        req.session.flash = {
 					err: errors
 				}
 				return res.redirect('/bettable');
@@ -43,6 +43,6 @@ module.exports = {
 			});
 		});
 	}
-	
+
 };
 

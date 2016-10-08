@@ -106,7 +106,7 @@ module.exports = {
   updatepass: function(req, res, next) {
     var user = req.params.all();
     user.password_update = true;
-    User.update(req.param('id'), req.params.all(), function updatedPassword(err) {
+    User.update(req.param('id'), user, function updatedPassword(err) {
       if (err) {
         req.session.flash = {
           err: err
