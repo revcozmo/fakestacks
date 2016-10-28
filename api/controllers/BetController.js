@@ -15,7 +15,6 @@ module.exports = {
 		}
 
 		ValidationService.validateBets(req, confirmedBets, function(errors) {
-			console.log("Callback errors: " + errors);
 			if (errors.length > 0) {
         req.session.flash = {
 					err: errors
@@ -50,7 +49,6 @@ module.exports = {
 							}
 							return res.redirect('/bettable');
 						}
-						console.log("Bet Created!");
 						createdBets++;
 						if (createdBets == req.session.cart.length) {
 							req.session.cart = [];
@@ -86,6 +84,7 @@ module.exports = {
 						console.log("TRANSACTION UPDATE FAILED: " + err);
 						return res.badRequest();
 					}
+          NotificationService.sendBetNotification(bet);
 					return res.ok();
 				});
 			}
@@ -106,11 +105,13 @@ module.exports = {
 						console.log("TRANSACTION UPDATE FAILED: " + err);
 						return res.badRequest();
 					}
-					return res.ok();
+          NotificationService.sendBetNotification(bet);
+          return res.ok();
 				});
 			}
 			else {
 				console.log("Logging losing transaction");
+        NotificationService.sendBetNotification(bet);
 				return res.ok();
 			}
 		});

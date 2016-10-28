@@ -75,7 +75,7 @@ module.exports = {
 
       if (err) return next(err);
 
-      // If the user is also an admin redirect to the user list (e.g. /views/user/index.ejs)
+      // If the user is also an admin redirect to the user list (e.g. /views/user/rules.ejs)
       // This is used in conjunction with config/policies.js file
       Transaction.getTransactionsWithTally(user.id, function(err, transactionsWithTally) {
         if (err) {

@@ -92,7 +92,9 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-		User.update(req.param('id'), req.params.all(), function userUpdated(err, updatedUsers) {
+	  user = req.params.all();
+    user.notifyprocessedbets = user.notifyprocessedbets == "on";
+		User.update(req.param('id'), user, function userUpdated(err, updatedUsers) {
 			if (err) return res.redirect('/user/edit/' + req.param('id'));
       if (updatedUsers[0].id == req.session.User.id) {
         res.redirect('/user/show/' + req.param('id'));

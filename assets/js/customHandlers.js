@@ -13,6 +13,11 @@ $(document).ready(function () {
   $(".gametime").text(replaceDates);
   $(".gametime").removeClass("gametime");
   $(".menu-close").click(hideMenu);
+  var numBets = getNumBets();
+  $(".bet-slip-badge").text(numBets == 0 ? "" : numBets);
+  if ($(".validation-error").length > 0 && $(window).width() < 767) {
+    $(".mobile-bet-slip").show();
+  }
 
 });
 
@@ -159,7 +164,7 @@ var getButtonFromBetInfo = function (betInfo) {
 
 var reviewBets = function (event) {
   if (validateBets()) {
-    location.href = "confirmation";
+    location.href = "/confirmation";
   }
 }
 

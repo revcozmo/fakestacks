@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-	
+
 	create: function (req, res, next) {
 		var bet = req.params.all();
 		if (this.indexOfBetInCart(bet, req.session.cart) > -1) {
 			return res.status(204);
 		}
-		Bettable.findOne(bet.bettableId, function foundBettable(err, bettable) { 
+		Bettable.findOne(bet.bettableId, function foundBettable(err, bettable) {
 			if (err) return next(err);
 			if (!bettable) return res.badRequest('Game with ID ' + bet.bettableId + ' doesn\'t exist');
 			var potentialBet = {};
@@ -37,7 +37,6 @@ module.exports = {
 			}
 			req.session.cart.push(potentialBet);
 			req.session.save()
-			console.log("Cart size: " + req.session.cart.length);
 			res.status(201);
 			return res.json(potentialBet);
 		});
@@ -62,13 +61,12 @@ module.exports = {
 		}
 		req.session.save();
 		return res.ok()
-	},	
+	},
 
 	index: function(req, res, next) {
 		if (!req.session.cart) {
 			req.session.cart = [];
 		}
-		console.log("Cart size: " + req.session.cart.length);
 		res.view({
 			confirmation: false,
 			potentialBets: req.session.cart

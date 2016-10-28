@@ -39,6 +39,10 @@ module.exports = {
       collection: 'Bet',
       via: 'user'
     },
+    notifyprocessedbets: {
+      type: 'boolean',
+      defaultsTo: true
+    },
 
     getFullName: function() {
       return this.firstName + " " + this.lastName;

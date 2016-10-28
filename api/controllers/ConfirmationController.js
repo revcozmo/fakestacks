@@ -24,7 +24,6 @@ module.exports = {
 			return res.redirect("/bettable");
 		}
 		ValidationService.validateBets(req, req.session.cart, function(errors) {
-			console.log("Confirmation validation errors: " + errors);
 			if (errors.length > 0) {
         req.session.flash = {
 					err: errors
@@ -35,7 +34,6 @@ module.exports = {
 			for (var i=0; i<req.session.cart.length; i++) {
 				totalAmount += parseInt(req.session.cart[i].amount);
 			}
-			console.log("Cart size: " + req.session.cart.length);
 			return res.view({
 				confirmation: true,
 				potentialBets: req.session.cart,

@@ -17,13 +17,17 @@
 
 module.exports = {
 
-  buildBettablesForUrl: function (sportKey) {
+  buildBettablesForSport: function (sportKey) {
     var sport = sails.config.sports[sportKey];
     var request = require('request');
     var cheerio = require('cheerio');
 
     request(sport.url, function (error, response, html) {
       if (!error) {
+        if (html.indexOf("463 Restricted Client")) {
+          console.log("463 Restricted Client. Skipping update...");
+          return;
+        }
         var $ = cheerio.load(eval(html)[0].content);
 
         $('#events').filter(function () {
@@ -75,7 +79,7 @@ module.exports = {
 
   create: function (req, res, next) {
     for (var sportKey in sails.config.sports) {
-      this.buildBettablesForUrl(sportKey)
+      this.buildBettablesForSport(sportKey)
     }
 
     res.redirect('/bettable');
