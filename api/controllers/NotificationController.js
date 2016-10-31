@@ -20,7 +20,7 @@ module.exports = {
             callback(err, bet);
           });
         }, function (err, bets) {
-          var user = bets[0].user;
+          var user = notificationsByUserHash[bets[0].user][0].user;
           if (user.notifyprocessedbets == true) {
             sails.hooks.email.send(
               "processedBets",
