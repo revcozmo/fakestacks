@@ -44,8 +44,10 @@ module.exports = {
             );
           }
           else {
-            Notification.update({scope: Bet.tableName, refId: bet.id}, {sent: true}).exec(function (err) {
-              console.log("User has opted out of email. Notification marked as sent");
+            _.each(bets, function (bet) {
+              Notification.update({scope: Bet.tableName, refId: bet.id}, {sent: true}).exec(function (err) {
+                console.log("User has opted out of email. Notification marked as sent");
+              });
             });
           }
           res.ok();
