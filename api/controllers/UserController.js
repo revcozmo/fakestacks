@@ -27,9 +27,9 @@ module.exports = {
 		User.create( user, function userCreated (err, user) {
 			if (err) {
 				console.log(err);
-				req.session.flash = {
-					err: err
-				}
+        req.session.flash = {
+          err: err
+        };
 				return res.redirect('/user/new');
 			}
       var newAccountTransaction = {
@@ -42,7 +42,7 @@ module.exports = {
 					console.log(err);
 					req.session.flash = {
 						err: err
-					}
+					};
 					return res.redirect('/user/new');
 				}
 				res.redirect('/league/settings');
@@ -95,7 +95,12 @@ module.exports = {
 	  user = req.params.all();
     user.notifyprocessedbets = user.notifyprocessedbets == "on";
 		User.update(req.param('id'), user, function userUpdated(err, updatedUsers) {
-			if (err) return res.redirect('/user/edit/' + req.param('id'));
+			if (err) {
+        req.session.flash = {
+          err: err
+        };
+			  return res.redirect('/user/edit/' + req.param('id'));
+      }
       if (updatedUsers[0].id == req.session.User.id) {
         res.redirect('/user/show/' + req.param('id'));
       }
@@ -112,7 +117,7 @@ module.exports = {
       if (err) {
         req.session.flash = {
           err: err
-        }
+        };
         return res.redirect('/user/password/' + req.param('id'));
       }
       res.redirect('/user/show/' + req.param('id'));

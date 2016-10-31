@@ -34,6 +34,9 @@ module.exports.policies = {
   BettableController: {
     'create': []
   },
+  NotificationController: {
+    'processedbets': []
+  },
   SessionController: {
     '*': ['flash']
   },
@@ -54,7 +57,7 @@ module.exports.policies = {
     'new': ["admin", "flash"],
     'create': ["admin", "flash"],
     'show': "userCanSeeProfile",
-    'edit': "userCanSeeProfile",
+    'edit': ["userCanSeeProfile", "flash"],
     'update': "userCanSeeProfile",
     'password': ["password", "flash"],
     'updatepass': "password",

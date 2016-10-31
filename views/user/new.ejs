@@ -2,13 +2,15 @@
   <form action="/user/create" method="POST" id="sign-up-form" class="form-signin">
     <h2 class="form-signin-heading">Create an account</h2>
 
-	<% if (flash && flash.err) { %>
-		<ul class="alert alert-success">
-	<% Object.keys(flash.err).forEach(function(error) { %>
-		<li><%= flash.err[error] %></li>
-	<% }) %>
-		</ul>
-	<% } %>
+    <% if (flash && flash.err) { %>
+    <ul class="alert alert-danger">
+      <% Object.keys(flash.err.Errors).forEach(function(error) { %>
+        <% flash.err.Errors[error].forEach(function(errorDesc) { %>
+        <li><%= errorDesc.message %></li>
+        <% }) %>
+      <% }) %>
+    </ul>
+    <% } %>
 
     <input type="text" class="form-control" placeholder="First Name" name="firstName">
     <input type="text" class="form-control" placeholder="Last Name" name="lastName">

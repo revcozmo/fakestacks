@@ -23,7 +23,8 @@ module.exports = {
     email: {
       type: 'email',
       required: true,
-      unique: true
+      unique: true,
+      confirmationmatch: true
     },
     league: {
       model: 'League'
@@ -60,11 +61,18 @@ module.exports = {
 
   },
 
+  types: {
+    confirmationmatch: function() {
+      return this.password === this.confirmation;
+    }
+  },
+
   validationMessages: { //hand for i18n & l10n
     email: {
       required: 'Email is required',
       email: 'Provide valid email address',
-      unique: 'This email address is already taken'
+      unique: 'This email address is already taken',
+      confirmationmatch: 'Password does not match password confirmation' //This is a hack, but need this check to happen on password matches
     },
     firstName: {
       required: 'First name is required'
@@ -76,9 +84,6 @@ module.exports = {
 
   beforeCreate: function(values, next) {
     delete values.id;
-    if (!values.password || values.password != values.confirmation) {
-      return next({err: ["Password doesn't match password confirmation"]});
-    }
     values.email = values.email.toLowerCase();
 
     var encryptedPassword = require('password-hash').generate(values.password);
@@ -89,9 +94,6 @@ module.exports = {
   beforeUpdate: function(values, next) {
     if (!values.password_update) {
       return next();
-    }
-    if (!values.password || values.password != values.confirmation) {
-      return next({err: ["Password doesn't match password confirmation"]});
     }
 
     var encryptedPassword = require('password-hash').generate(values.password);

@@ -21,26 +21,33 @@ module.exports = {
           });
         }, function (err, bets) {
           var user = bets[0].user;
-          sails.hooks.email.send(
-            "processedBets",
-            {
-              bets: bets
-            },
-            {
-              to: user.email,
-              subject: "Your bets have been processed"
-            },
-            function (err) {
-              if (err) {
-                console.log("Could not send email: " + err);
+          if (user.notifyprocessedbets == true) {
+            sails.hooks.email.send(
+              "processedBets",
+              {
+                bets: bets
+              },
+              {
+                to: user.email,
+                subject: "Your bets have been processed"
+              },
+              function (err) {
+                if (err) {
+                  console.log("Could not send email: " + err);
+                }
+                _.each(bets, function (bet) {
+                  Notification.update({scope: Bet.tableName, refId: bet.id}, {sent: true}).exec(function (err) {
+                    console.log("Notification sent");
+                  });
+                })
               }
-              _.each(bets, function(bet) {
-                Notification.update({scope: Bet.tableName, refId: bet.id},{sent: true}).exec(function(err) {
-                  console.log("Notification sent");
-                });
-              })
-            }
-          );
+            );
+          }
+          else {
+            Notification.update({scope: Bet.tableName, refId: bet.id}, {sent: true}).exec(function (err) {
+              console.log("User has opted out of email. Notification marked as sent");
+            });
+          }
           res.ok();
         });
 
