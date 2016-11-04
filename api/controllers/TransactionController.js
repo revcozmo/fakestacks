@@ -7,6 +7,7 @@
 
 module.exports = {
   show: function (req, res, next) {
+    var moment = require('moment');
     var userId = req.param('id');
     var league = req.session.User.league;
     var userId = userId ? userId : req.session.User.id;
@@ -29,11 +30,13 @@ module.exports = {
       if (bets.length == 0) {
         User.findOne(userId, function foundUser(err, user) {
           tallies.user = user;
+          tallies.moment = moment;
           res.view(tallies);
         });
       }
       else {
         tallies.user = bets[0].user;
+        tallies.moment = moment;
         res.view(tallies);
       }
     });

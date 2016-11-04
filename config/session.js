@@ -28,7 +28,8 @@ module.exports.session = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   db: process.env.REDIS_DB,
-  pass: process.env.REDIS_PASSWORD
+  pass: process.env.REDIS_PASSWORD,
+  ttl: 240 * 60 * 60,
 
   /***************************************************************************
   *                                                                          *
@@ -37,9 +38,9 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // cookie: {
-  //   maxAge: 24 * 60 * 60 * 1000
-  // },
+  cookie: {
+    maxAge: 240 * 60 * 60 * 1000
+  },
 
   /***************************************************************************
   *                                                                          *

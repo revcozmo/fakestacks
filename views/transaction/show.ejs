@@ -6,12 +6,13 @@
 	</div>
 	<table class='table user-account-table'>
 		<tr>
-			<th>Transaction</th>
+			<th>Date</th>
+      <th>Transaction</th>
 			<th>Win/Loss</th>
 			<th>Amount</th>
 			<th>Tally</th>
 		</tr>
-		<tr><td>Account Creation</td><td></td><td><%= session.User.league.startingAccount %></td><td><%= session.User.league.startingAccount %></td></tr>
+		<tr><td><%= moment(session.User.createdAt).format("dddd, MMMM Do") %></td><td>Account Creation</td><td></td><td><%= session.User.league.startingAccount %></td><td><%= session.User.league.startingAccount %></td></tr>
 		<% _.each(bets, function(bet) { %>
 		<tr data-id="<%= bet.id %>" data-model="transaction" class="
 			<% if (bet.win === true) { %>
@@ -24,7 +25,10 @@
 				active
 			<% } %>
 		">
-			<td>
+      <td>
+        <%= moment(bet.bettable.gameTime).format("dddd, MMMM Do") %>
+      </td>
+      <td>
 				<% if (bet.sideId == bet.bettable.sideId1) { %>
 					<%= bet.bettable.team1 %><%= bet.line %> @ <%= bet.bettable.team2 %>
 				<% } else if (bet.sideId == bet.bettable.sideId2) { %>
