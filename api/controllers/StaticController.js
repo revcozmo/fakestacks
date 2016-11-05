@@ -25,21 +25,15 @@ module.exports = {
     });
     var p2 = new Promise(function(resolve, reject) {
       var leagueId = req.session.User.league.id;
-      Bet.find().where({complete:false}).populate('bettable').populate('user').sort('amount DESC').limit(4).exec(function(err,bets) {
-        if (err) {
-          reject(err);
-        }
-        var bets = bets.filter(function(bet) {
-          return bet.user.league == leagueId;
-        });
-        var betsByUser = {};
-        for (var i=0; i<bets.length; i++) {
-          if (!betsByUser[bets[i].user.id]) {
-            betsByUser[bets[i].user.id] = [];
+      User.query('SELECT id FROM users where league = ' + leagueId, function(err, results) {
+        if (err) return res.serverError(err);
+        var userIds = results.rows.map(function(row) { return row.id });
+        Bet.find().where({complete:false, user:userIds}).populate('bettable').populate('user').sort('amount DESC').limit(4).exec(function(err,bets) {
+          if (err) {
+            reject(err);
           }
-          betsByUser[bets[i].user.id].push(bets[i]);
-        }
-        resolve(betsByUser);
+          resolve(bets);
+        });
       });
     });
 
@@ -54,7 +48,7 @@ module.exports = {
 
     Promise.all([p1, p2])
       .then(function(results) {
-        return res.view({users: results[0], betsByUser: results[1], shortenTeamName: shortenTeamName});
+        return res.view({users: results[0], bets: results[1], shortenTeamName: shortenTeamName});
       })
       .catch(function(err) {
         console.log("Failed:", err);

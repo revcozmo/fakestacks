@@ -1,9 +1,7 @@
 <div class="inner-home-page-panel">
   <h3 class="home-page-panel-heading">Pending Big Bets</h3>
   <div class="home-page-panel-content">
-  <% if (betsByUser != null) { %>
   <div class="panel pending-bet-panel">
-    <% _.each(betsByUser, function(bets) { %>
     <% _.each(bets, function(bet) { %>
     <div class="pending-bet-card">
       <div class="bet-headline">
@@ -23,9 +21,7 @@
       </div>
     </div>
     <% }) %>
-    <% }) %>
   </div>
-  <% } %>
   </div>
   <div class="panel-action-row">
   <form action="/bet" method="get">
