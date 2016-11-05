@@ -1,0 +1,35 @@
+<div class="inner-home-page-panel">
+  <h3 class="home-page-panel-heading">Pending Big Bets</h3>
+  <div class="home-page-panel-content">
+  <% if (betsByUser != null) { %>
+  <div class="panel pending-bet-panel">
+    <% _.each(betsByUser, function(bets) { %>
+    <% _.each(bets, function(bet) { %>
+    <div class="pending-bet-card">
+      <div class="bet-headline">
+        $<%= bet.amount %> by <%= bet.user.firstName %> <%= bet.user.lastName %>
+      </div>
+      <div class="">
+        <% if (bet.sideId == bet.bettable.sideId1) { %>
+        <%= bet.bettable.team1 %> <%= bet.line %>
+        <% } else if (bet.sideId == bet.bettable.sideId2) { %>
+        <%= bet.bettable.team2 %> <%= bet.line %>
+        <% } else { %>
+        <%= bet.over ? "Over" : "Under" %> <%= bet.line %>
+        <% } %>
+      </div>
+      <div class="">
+        <%= shortenTeamName(bet.bettable.team1) %> @ <%= shortenTeamName(bet.bettable.team2) %>
+      </div>
+    </div>
+    <% }) %>
+    <% }) %>
+  </div>
+  <% } %>
+  </div>
+  <div class="panel-action-row">
+  <form action="/bet" method="get">
+    <input type="submit" class="btn btn-lg btn-primary btn-block panel-action" value="SEE ALL BETS"/>
+  </form>
+  </div>
+</div>

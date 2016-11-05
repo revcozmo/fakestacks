@@ -40,7 +40,8 @@ module.exports.sockets = {
   ***************************************************************************/
 
   transports: [
-    'websocket'
+    'websocket',
+    'polling'
   ],
 
   adapter: 'socket.io-redis',

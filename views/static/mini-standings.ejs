@@ -1,0 +1,30 @@
+<div class="inner-home-page-panel">
+<h3 class="home-page-panel-heading">Leaderboard</h3>
+<div class="home-page-panel-content">
+<div class="home-page-panel-content-inner">
+<table class='table standings'>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Money</th>
+  </tr>
+  <% _.each(users, function(user, index) { %>
+  <tr data-id="<%= user.id %>" data-model="user">
+    <td><%= index + 1 %></td>
+    <td><%= user.firstName %> <%= user.lastName %></td>
+    <td>
+      <a href="transaction/show/<%= user.id %>">
+        $<%= user.money %>
+      </a>
+    </td>
+  </tr>
+  <% }) %>
+</table>
+</div>
+</div>
+<div class="panel-action-row">
+  <form action="/standings" method="get">
+  <input type="submit" class="btn btn-lg btn-primary btn-block panel-action" value="SEE THE STANDINGS"/>
+  </form>
+</div>
+</div>
