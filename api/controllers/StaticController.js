@@ -9,7 +9,7 @@ module.exports = {
 	'index': function (req, res) {
     var p1 = new Promise(function(resolve, reject) {
       var league = req.session.User.league;
-      User.find().where({league: league.id}).populate('bets').limit(10).exec(function foundUsers(err, users) {
+      User.find().where({league: league.id}).populate('bets').limit(8).exec(function foundUsers(err, users) {
         if (err) {
           reject(err);
         }
