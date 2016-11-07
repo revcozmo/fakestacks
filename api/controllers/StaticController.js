@@ -9,7 +9,7 @@ module.exports = {
 	'index': function (req, res) {
     var p1 = new Promise(function(resolve, reject) {
       var league = req.session.User.league;
-      User.find().where({league: league.id}).populate('bets').limit(8).exec(function foundUsers(err, users) {
+      User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {
         if (err) {
           reject(err);
         }
@@ -20,6 +20,7 @@ module.exports = {
           }
         }
         users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.wins-user1.wins) : (user2.money-user1.money)});
+        users = users.slice(0, 8);
         resolve(users);
       });
     });
