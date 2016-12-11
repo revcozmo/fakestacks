@@ -18,22 +18,31 @@
 module.exports = {
 
   buildBettablesForSport: function (sportKey) {
-    PinnacleGateway.getBettables(sportKey, function(error, bettables) {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      else {
-        bettables.forEach(function(bettable) {
-          Bettable.updateOrCreate(bettable.gameKey, bettable);
-        });
-      }
-    });
+    try {
+      console.log("Retrieving bettables for " + sportKey);
+      SportsBookGateway.getBettables(sportKey, function (error, bettables) {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        else {
+          bettables.forEach(function (bettable) {
+            Bettable.updateOrCreate(bettable.gameKey, bettable);
+          });
+        }
+      });
+    }
+    catch (err) {
+      console.log("ERROR RETRIEVING BETTABLES: " + err);
+      return;
+    }
   },
 
   create: function (req, res, next) {
+    var interval = 0;
     for (var sportKey in sails.config.sports) {
-      this.buildBettablesForSport(sportKey)
+      setTimeout(this.buildBettablesForSport, interval, sportKey);
+      interval += 60000;
     }
 
     res.redirect('/bettable');

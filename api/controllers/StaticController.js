@@ -7,6 +7,9 @@
 
 module.exports = {
 	'index': function (req, res) {
+	  if (!req.session.User.league) {
+	    return res.view();
+    }
     var p1 = new Promise(function(resolve, reject) {
       var league = req.session.User.league;
       User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {

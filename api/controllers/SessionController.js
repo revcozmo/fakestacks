@@ -8,9 +8,13 @@
 var passwordHash = require('password-hash');
 
 module.exports = {
-
 	'new': function(req, res) {
-		res.view('session/new');
+    if (req.session.authenticated) {
+      res.redirect('/');
+    }
+    else {
+      res.view('session/new');
+    }
 	},
 
 	create: function(req, res, next) {

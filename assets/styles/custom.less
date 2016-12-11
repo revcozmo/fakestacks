@@ -44,21 +44,24 @@ body {
   border-radius: 0px;
 }
 
-.form-signin {
+.fs-form {
   z-index: 1030;
-	padding: 25px 15px;
-	margin: 0 auto 20px;
-	margin-top: 20px;
-	background-color: @lightGray;
+  padding: 25px 15px;
+  margin: 20px auto;
+  background-color: @lightGray;
 
   .form-control {
     border-radius: 0px;
   }
 
-	h2 {
-		text-align: center;
-		margin-top: 0px;
-	}
+  h2 {
+    text-align: center;
+    margin-top: 0px;
+  }
+}
+
+.form-signin {
+  padding-bottom: 15px;
 }
 
 .signin-page {
@@ -295,8 +298,8 @@ body {
 	margin-bottom: 5px;
 }
 
-.form-signin input[type="text"],
-.form-signin input[type="password"] {
+.fs-form input[type="text"],
+.fs-form input[type="password"] {
 	font-size: 16px;
 	height: auto;
 	margin-bottom: 15px;
@@ -618,4 +621,19 @@ body {
 
 .rules-panel-rule {
   margin-bottom: 10px;
+}
+
+.register-invite {
+  margin-top: 10px;
+}
+
+.or-between-buttons {
+  text-align: center;
+  padding: 10px 0px 15px;
+}
+
+@media (max-width: 420px) {
+  h1 {
+    font-size: 26px;
+  }
 }

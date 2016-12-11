@@ -66,6 +66,10 @@ module.exports = {
     });
   },
 
+  join: function(req, res, next) {
+    res.redirect('/');
+  },
+
   'settings': function (req, res) {
     var league = req.session.User.league;
     User.find().where({league: league.id}).exec(function foundUsers(err, users) {

@@ -36,7 +36,9 @@ module.exports.routes = {
   '/account': 'TransactionController.show',
   '/standings': 'UserController.index',
   '/login': 'SessionController.new',
-  '/logout': 'SessionController.destroy'
+  '/logout': 'SessionController.destroy',
+  '/newleague': 'LeagueController.new',
+  '/joinleague': 'LeagueController.join'
 
   /***************************************************************************
   *                                                                          *

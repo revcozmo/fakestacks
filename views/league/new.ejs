@@ -1,5 +1,8 @@
-<form action="/league/create" method="POST" id="sign-up-form" class="form-signin">
-	<h2 class="form-signin-heading">Create a new Fake Stacks league</h2>
+<div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 signin-headline">
+  <h1>PUT YOUR FAKE MONEY WHERE YOUR MOUTH IS.</h1>
+</div>
+<div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 col-lg-offset-4 col-lg-4">
+<form action="/league/create" method="POST" id="sign-up-form" class="fs-form">
 
 	<% if (flash && flash.err) { %>
 		<ul class="alert alert-danger">
@@ -9,36 +12,69 @@
 		</ul>
 	<% } %>
   <br/>
-  <div class="form-group">
-    <label for="leagueName">League Name</label>
-    <input id="leagueName" type="text" class="form-control" name="name">
-  </div>
-  <div class="form-group">
-    <label for="leagueSport">Sport</label>
-    <select id="leagueSport" name="sport" placeholder="Sport" class="form-control custom-select">
-      <% Object.keys(sails.config.sports).forEach(function(sportKey) { %>
-      <option value="<%= sportKey %>"><%= sails.config.sports[sportKey].name %></option>
-      <% }) %>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="startingAccount">Starting Account</label>
-	  <input id="startingAccount" type="number" min="0" step="10" max="2000" value="500" class="form-control" name="startingAccount">
-  </div>
-  <div class="form-group">
-    <label for="weeklyBetCountMax">Weekly Bet Count Max</label>
-    <input id="weeklyBetCountMax" type="number" class="form-control" min="0" step="1" max="10" value="4" name="weeklyBetCountMax">
-  </div>
-  <div class="form-group">
-    <label for="weeklyBetAccountRatio">Weekly Bet Ratio (%)</label>
-    <input id="weeklyBetAccountRatio" type="number" class="form-control" min="10" step="1" max="100" value="50" name="weeklyBetAccountRatio">
-  </div>
-  <div class="form-group">
-    <label for="landingMessage">Landing Message (Tagline)</label>
-    <input name="landingMessage" type="text" class="form-control" name="landingMessage">
-  </div>
-	<br/>
-	<input type="submit" class="btn btn-lg btn-primary btn-block" value="Create League"/>
+  <input type="text" class="form-control" placeholder="League Name" name="leagueName">
+  <input type="text" class="form-control" placeholder="Landing Message (Tagline)" name="landingMessage">
+  <select id="leagueSport" name="sport" placeholder="Sport" class="form-control custom-select">
+    <% Object.keys(sails.config.sports).forEach(function(sportKey) { %>
+    <option value="<%= sportKey %>"><%= sails.config.sports[sportKey].name %></option>
+    <% }) %>
+  </select>
+  <select id="startingAccount" name="startingAccount" placeholder="Starting Account Balance" class="form-control custom-select">
+    <option value="100">$100</option>
+    <option value="250">$250</option>
+    <option value="500">$500</option>
+    <option value="1000">$1000</option>
+  </select>
+  <select id="weeklyBetCountMax" name="weeklyBetCountMax" placeholder="Weekly Maximum Bets" class="form-control custom-select">
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="10">10</option>
+  </select>
+  <select id="weeklyBetAccountRatio" name="weeklyBetAccountRatio" placeholder="Weekly Bet Ratio (%)" class="form-control custom-select">
+    <option value="25">25%</option>
+    <option value="50">50%</option>
+    <option value="75">75%</option>
+    <option value="100">100%</option>
+  </select>
+
+  <!--<div class="form-group">-->
+    <!--<label for="weeklyBetAccountRatio">Weekly Bet Ratio (%)</label>-->
+    <!--<input id="weeklyBetAccountRatio" type="number" class="form-control" min="10" step="1" max="100" value="50" name="weeklyBetAccountRatio">-->
+  <!--</div>-->
+
+  <!--<input type="text" class="form-control" placeholder="Last Name" name="lastName">-->
+  <!--<input type="text" class="form-control" placeholder="Email Address" name="email">-->
+  <!--<input type="password" class="form-control" placeholder="Password" name="password">-->
+  <!--<input type="password" class="form-control" placeholder="Re-type Password" name="confirmation">-->
+  <!--&lt;!&ndash; DELETE BELOW &ndash;&gt;-->
+  <!--<div class="form-group">-->
+    <!--<label for="leagueName">League Name</label>-->
+    <!--<input id="leagueName" type="text" class="form-control" name="name">-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+    <!--<label for="startingAccount">Starting Account</label>-->
+	  <!--<input id="startingAccount" type="number" min="0" step="10" max="2000" value="500" class="form-control" name="startingAccount">-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+    <!--<label for="weeklyBetCountMax">Weekly Bet Count Max</label>-->
+    <!--<input id="weeklyBetCountMax" type="number" class="form-control" min="0" step="1" max="10" value="4" name="weeklyBetCountMax">-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+    <!--<label for="weeklyBetAccountRatio">Weekly Bet Ratio (%)</label>-->
+    <!--<input id="weeklyBetAccountRatio" type="number" class="form-control" min="10" step="1" max="100" value="50" name="weeklyBetAccountRatio">-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+    <!--<label for="landingMessage">Landing Message (Tagline)</label>-->
+    <!--<input name="landingMessage" type="text" class="form-control" name="landingMessage">-->
+  <!--</div>-->
+	<!--<br/>-->
+	<input type="submit" class="btn btn-lg btn-primary btn-block" value="CREATE LEAGUE"/>
 	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 	<input type="hidden" name="admin" value="<%= currentuser.id %>" />
 </form>
+</div>
+<div class="signin-page">
+</div>
+<div class="signin-page-overlay"></div>
