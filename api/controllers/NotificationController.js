@@ -7,7 +7,38 @@
 
 module.exports = {
 
+  //TODO: This name should change in the future, since this is now for all notifications
   processedbets: function (req, res) {
+    Notification.find().where({
+      sent: false,
+      scope: User.tableName
+    }).populate('user').exec(function foundNotifications(err, notifications) {
+      _.each(notifications, function (notification) {
+        User.findOne(notification.refId).exec(function (err, invitedUser) {
+          var admin = notification.user;
+          sails.hooks.email.send(
+            "welcome",
+            {
+              admin: admin,
+              user: invitedUser
+            },
+            {
+              to: invitedUser.email,
+              subject: "Welcome to Fake Stacks"
+            },
+            function (err) {
+              if (err) {
+                console.log("Could not send email: " + err);
+              }
+              Notification.update({scope: User.tableName, refId: invitedUser.id}, {sent: true}).exec(function (err) {
+                console.log("Notification sent");
+              });
+            }
+          );
+        })
+      })
+    })
+
     Notification.find().where({
       sent: false,
       scope: Bet.tableName

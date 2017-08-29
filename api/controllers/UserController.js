@@ -45,6 +45,7 @@ module.exports = {
 					};
 					return res.redirect('/user/new');
 				}
+				NotificationService.sendWelcomeNotification(user, req.session.User);
 				res.redirect('/league/settings');
 			});
 		});
@@ -126,7 +127,7 @@ module.exports = {
 
   index: function(req, res, next) {
 	  var league = req.session.User.league;
-		User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {
+		User.find().where({league: league.id}).populate('bets', {where: {archived: false}}).exec(function foundUsers(err, users) {
 			if (err) return next(err);
 			var totalMoney = 0;
 			var totalWins = 0;

@@ -24,6 +24,10 @@ module.exports = {
     },
     bettable: {
       model: 'Bettable'
+    },
+    archived: {
+      type: 'boolean',
+      defaultsTo: false
     }
   },
 
@@ -34,7 +38,7 @@ module.exports = {
 
   getTransactionsWithTally: function (userId, cb) {
     Transaction.find()
-      .where({'user': userId})
+      .where({'user': userId, archived: false})
       .sort('createdAt asc')
       .populate('bet')
       .populate('bettable')

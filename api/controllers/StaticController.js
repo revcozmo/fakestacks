@@ -12,7 +12,7 @@ module.exports = {
     }
     var p1 = new Promise(function(resolve, reject) {
       var league = req.session.User.league;
-      User.find().where({league: league.id}).populate('bets').exec(function foundUsers(err, users) {
+      User.find().where({league: league.id}).populate('bets', {where: {archived: false}}).exec(function foundUsers(err, users) {
         if (err) {
           reject(err);
         }

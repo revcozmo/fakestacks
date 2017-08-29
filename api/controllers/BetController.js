@@ -118,8 +118,8 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-	  var leagueId = req.session.User.league.id;
-    Bet.find().where({complete:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
+		var leagueId = req.session.User.league.id;
+    	Bet.find().where({complete:false, archived:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
       //TODO: Need to fix this league filtering thing at some point but I don't want to update the database schema again
       var bets = bets.filter(function(bet) {
 			  return bet.user.league == leagueId;

@@ -50,6 +50,10 @@ module.exports = {
       required: true,
       defaultsTo: false
     },
+    archived: {
+      type: 'boolean',
+      defaultsTo: false
+    },
 
   	toJSON: function() {
   		var obj = this.toObject();
