@@ -23,7 +23,7 @@
     "grunt-sync": "~0.0.4",
     "include-all": "^0.1.6",
     "moment": "^2.18.1",
-    "password-hash": "1.2.2",
+    "password-hash": "^1.2.2",
     "pg": "4.4.1",
     "rc": "0.5.5",
     "request": "^2.81.0",

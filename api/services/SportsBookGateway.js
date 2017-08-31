@@ -94,8 +94,8 @@ module.exports = {
           var sideId1 = SportsBookGateway.getTeamIdFromId(data.find(".spread a").first().attr().id).hashCode();
           var sideId2 = SportsBookGateway.getTeamIdFromId(data.find(".spread a").last().attr().id).hashCode();
           var over_under = SportsBookGateway.removeMoneyLineFromOverUnder(data.find(".money a").last().text().trim());
-          var bet_is_off = isNaN(spread1) || isNaN(spread2);
-          var over_under_bet_is_off = isNaN(over_under);
+          var bet_is_off = isNaN(parseInt(spread1)) || isNaN(parseInt(spread2));
+          var over_under_bet_is_off = isNaN(parseInt(over_under));
           var gameKey = data.attr().id;
           var bettable = SportsBookGateway.createBettable(bet_is_off, over_under_bet_is_off, gameKey, gameTime, team1, team2, sideId1, sideId2, spread1, spread2, over_under, sportKey, bettables);
 
