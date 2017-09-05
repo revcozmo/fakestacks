@@ -133,21 +133,30 @@ module.exports = {
 			var totalWins = 0;
 			var totalLosses = 0;
 			var totalPushes = 0;
+			var totalVigLoss = 0;
 			for (var i=0; i<users.length; i++) {
 				var tallies = BetService.getBetTallies(users[i].bets, league.startingAccount);
 				for (var prop in tallies) {
 					users[i][prop]=tallies[prop];
 				}
+				totalVigLoss += users[i].vigLoss;
 				totalMoney += users[i].money;
 				totalWins += users[i].wins;
 				totalLosses += users[i].losses;
 				totalPushes += users[i].pushes;
 			}
 			users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.wins-user1.wins) : (user2.money-user1.money)});
+			var totalVigLoss = Math.round(totalVigLoss);
+			var startingLeagueMoney = req.session.User.league.startingAccount * users.length;
+			var houseMoney = startingLeagueMoney - totalMoney;
+			var houseMoneyWithVig = houseMoney + totalVigLoss;
 			res.view({
 				users: users,
 				totalMoney: totalMoney,
-				totalRecord: totalWins+"-"+totalLosses+"-"+totalPushes
+				totalRecord: totalWins+"-"+totalLosses+"-"+totalPushes,
+				houseMoney: houseMoney,
+				totalVigLoss: totalVigLoss,
+				houseMoneyWithVig: houseMoneyWithVig
 			});
 		});
 	},
