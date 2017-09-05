@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
   var images = ['um_psu_stack.jpg', 'stmifb.jpg', 'seafb.jpg', 'pudfb.jpg', 'gibrfb.jpg', 'bepafb.jpg'];
-  $('.signin-page').css({'background-image': 'url(images/' + images[Math.floor(Math.random() * images.length)] + ')'});
+  $('.signin-page').css({
+    'background-image': 'url(images/' + images[Math.floor(Math.random() * images.length)] + ')',
+    'background-position': 'center center'
+  });
 
 });
