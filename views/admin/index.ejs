@@ -1,0 +1,47 @@
+<div class="container">
+    <h3>Completed Transactions</h3>
+	<table class='table user-account-table'>
+		<tr>
+			<th>Date</th>
+            <th>Transaction</th>
+			<th>Win/Loss</th>
+            <th>Amount</th>
+            <th>Undo</th>
+		</tr>
+		<% _.each(bets, function(bet) { %>
+		<tr data-id="<%= bet.id %>" data-model="transaction" class="
+			<% if (bet.win === true) { %>
+				success
+			<% } else if (bet.win === false) { %>
+				danger
+			<% } else { %>
+				warning
+			<% } %>
+		">
+      <td>
+        <%= moment(bet.bettable.gameTime).format("dddd, MMMM Do") %>
+      </td>
+      <td>
+            <% if (bet.sideId == bet.bettable.sideId1) { %>
+                <%= bet.bettable.team1 %><%= bet.line %> @ <%= bet.bettable.team2 %>
+            <% } else if (bet.sideId == bet.bettable.sideId2) { %>
+                <%= bet.bettable.team2 %><%= bet.line %> vs <%= bet.bettable.team1 %>
+            <% } else { %>
+                <%= bet.over ? "Over" : "Under" %> <%= bet.line %> (<%= bet.bettable.team2 %> vs <%= bet.bettable.team1 %>)
+            <% } %>
+        </td>
+        <% if (bet.win === true) { %>
+            <td>WIN</td>
+            <td><%= bet.amount %></td>
+        <% } else if (bet.win === false) { %>
+            <td>LOSS</td>
+            <td>-<%= bet.amount %></td>
+        <% } else { %>
+            <td>PUSH</td>
+            <td>-</td>
+        <% } %>
+        <td><a href="/admin/undoTransaction/<%= bet.id %>" class="btn btn-sm btn-danger">Undo</a></td>
+    </tr>
+    <% }) %>
+	</table>
+</div>

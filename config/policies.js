@@ -66,6 +66,10 @@ module.exports.policies = {
 
   league: {
     'new': ["userHasNoLeague", "sessionAuth", "flash"]
+  },
+
+  admin: {
+    '*': "admin"
   }
 
   /***************************************************************************

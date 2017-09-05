@@ -63,6 +63,12 @@ module.exports = {
     Transaction.updateUserMoney(transaction.user, transaction.amount, cb);
   },
 
+  afterDestroy: function (transactions, cb) {
+    transactions.forEach(function(transaction) {
+      Transaction.updateUserMoney(transaction.user, -transaction.amount, cb);
+    })
+  },
+
   updateUserMoney: function (userId, amount, cb) {
     if (!sails.config.cache.user_money[userId]) {
       Transaction.getTransactionsWithTally(userId, function (err, transactionsWithTally) {
