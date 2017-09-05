@@ -1,5 +1,5 @@
 {
-  "name": "playmoney",
+  "name": "fakestacks",
   "private": true,
   "version": "1.0.0",
   "engines": {
@@ -45,7 +45,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jgoetz/playmoney.git"
+    "url": "git://github.com/jgoetz/fakestacks.git"
   },
   "author": "jgoetz",
   "license": ""
