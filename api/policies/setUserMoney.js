@@ -1,12 +1,13 @@
 
 module.exports = function(req, res, next) {
 
-  if (req.session.authenticated && !sails.config.cache.user_money[req.session.User.id]) {
-    Transaction.getTransactionsWithTally(req.session.User.id, function(err, transactionsWithTally) {
+  if (req.session.authenticated && req.session.Gambler && !req.session.gambler_money) {
+    Transaction.getTransactionsWithTally(req.session.Gambler.id, function(err, transactionsWithTally) {
       if (err) {
-        console.log("Unable to get transactions for user");
+        console.error("Unable to get transactions for user");
+        return next();
       }
-      sails.config.cache.user_money[req.session.User.id] = transactionsWithTally.total;
+      req.session.gambler_money = transactionsWithTally.total;
       return next();
     })
   }

@@ -10,7 +10,7 @@ module.exports = {
 	create: function (req, res, next) {
 		var confirmedBets = req.session.cart;
 		var createdBets = 0;
-		if (req.session.User == null) {
+		if (req.session.Gambler == null) {
 			res.redirect('/login');
 		}
 
@@ -18,27 +18,27 @@ module.exports = {
 			if (errors.length > 0) {
         req.session.flash = {
 					err: errors
-				}
+				};
 				return res.redirect('/confirmation');
       }
 
 			for (var i=0; i<confirmedBets.length; i++) {
 				var bet = confirmedBets[i];
-				bet.bettable = bet.bettable;
-				bet.user = req.session.User;
+				bet.bettable = bet.bettable.id;
+				bet.gambler = req.session.Gambler.id;
 				bet.time = new Date();
 				Bet.create( bet, function betCreated(err, createdBet) {
 					if (err) {
 						console.log(err);
 						req.session.flash = {
 							err: err
-						}
-						return res.redirect('/bettable');
+						};
+						return res.redirect('/games');
 					}
 					var transaction = {
-						user: req.session.User,
+						gambler: req.session.Gambler.id,
 						amount: 0-parseInt(createdBet.amount),
-						bet: createdBet,
+						bet: createdBet.id,
 						bettable: createdBet.bettable
 					};
 					Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
@@ -46,14 +46,17 @@ module.exports = {
 							console.log(err);
 							req.session.flash = {
 								err: err
+							};
+							return res.redirect('/games');
+						}
+						//TODO: Move all these updateUserMoney things into a helper method
+						Transaction.updateUserMoney(req.session, createdTransaction.amount, function() {
+							createdBets++;
+							if (createdBets == req.session.cart.length) {
+								req.session.cart = [];
+								res.redirect('/games');
 							}
-							return res.redirect('/bettable');
-						}
-						createdBets++;
-						if (createdBets == req.session.cart.length) {
-							req.session.cart = [];
-							res.redirect('/bettable');
-						}
+						});
 					});
 				});
 	    	}
@@ -61,18 +64,22 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-		Bet.update(req.param('id'), req.params.all(), function betUpdated(err, updatedBets) {
+		Bet.update(req.param('id'), req.allParams(), function betUpdated(err, updatedBets) {
 			if (err) {
 				console.log("BET UPDATE FAILED: " + err);
 				return res.badRequest();
 			}
 			var bet = updatedBets[0];
-			if (bet.win === true) {
-				console.log("Logging winning transaction");
-				var transaction = {
-					user: bet.user,
-					amount: 2*parseInt(bet.amount),
-					bet: bet,
+			if (bet.outcome === 'WIN' || bet.outcome === 'PUSH') {
+				console.log("Logging " + bet.outcome + " transaction");
+        let amount = parseInt(bet.amount);
+        if (bet.outcome === 'WIN') {
+          amount = amount*2;
+        }
+				let transaction = {
+					gambler: bet.gambler,
+					amount: amount,
+					bet: bet.id,
 					bettable: bet.bettable
 				};
 				Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
@@ -84,29 +91,10 @@ module.exports = {
 						console.log("TRANSACTION UPDATE FAILED: " + err);
 						return res.badRequest();
 					}
-          NotificationService.sendBetNotification(bet);
-					return res.ok();
-				});
-			}
-			else if (bet.win == null) {
-				console.log("Logging push transaction");
-				transaction = {
-					user: bet.user,
-					amount: parseInt(bet.amount),
-					bet: bet,
-					bettable: bet.bettable
-				};
-				Transaction.create(transaction, function transactionCreated(err, createdTransaction) {
-					if (err) {
-						console.log(err);
-						req.session.flash = {
-							err: err
-						}
-						console.log("TRANSACTION UPDATE FAILED: " + err);
-						return res.badRequest();
-					}
-          NotificationService.sendBetNotification(bet);
-          return res.ok();
+					Transaction.updateUserMoney(req.session, createdTransaction.amount, function() {
+            NotificationService.sendBetNotification(bet);
+						return res.ok();
+          });
 				});
 			}
 			else {
@@ -118,18 +106,18 @@ module.exports = {
 	},
 
 	index: function(req, res, next) {
-		var leagueId = req.session.User.league.id;
-    	Bet.find().where({complete:false, archived:false}).populate('bettable').populate('user').sort('user DESC').exec(function(err,bets) {
-      //TODO: Need to fix this league filtering thing at some point but I don't want to update the database schema again
-      var bets = bets.filter(function(bet) {
-			  return bet.user.league == leagueId;
+		var leagueId = req.session.League.id;
+    	Bet.find().where({complete:false, archived:false}).populate('bettable').populate('gambler').exec(function(err,bets) {
+      //TODO: Sort by gambler programatically
+      bets = bets.filter(function(bet) {
+			  return bet.gambler.league == leagueId;
       });
       var betsByUser = {};
-			for (var i=0; i<bets.length; i++) {
-				if (!betsByUser[bets[i].user.id]) {
-					betsByUser[bets[i].user.id] = [];
+			for (let i=0; i<bets.length; i++) {
+				if (!betsByUser[bets[i].gambler.id]) {
+					betsByUser[bets[i].gambler.id] = [];
 				}
-				betsByUser[bets[i].user.id].push(bets[i]);
+				betsByUser[bets[i].gambler.id].push(bets[i]);
 			}
 			res.view({
 				betsByUser: betsByUser

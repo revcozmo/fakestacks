@@ -11,12 +11,12 @@ module.exports = {
   schema: true,
 
   attributes: {
-    user: {
-      model: 'User',
+    gambler: {
+      model: 'Gambler',
       required: true
     },
     amount: {
-      type: 'integer',
+      type: 'number',
       required: true
     },
     bet: {
@@ -36,9 +36,9 @@ module.exports = {
     next();
   },
 
-  getTransactionsWithTally: function (userId, cb) {
+  getTransactionsWithTally: function (gamblerId, cb) {
     Transaction.find()
-      .where({'user': userId, archived: false})
+      .where({gambler: gamblerId, archived: false})
       .sort('createdAt asc')
       .populate('bet')
       .populate('bettable')
@@ -55,32 +55,18 @@ module.exports = {
       });
   },
 
-  afterUpdate: function (transaction, cb) {
-    Transaction.updateUserMoney(transaction.user, transaction.amount, cb);
-  },
-
-  afterCreate: function (transaction, cb) {
-    Transaction.updateUserMoney(transaction.user, transaction.amount, cb);
-  },
-
-  afterDestroy: function (transactions, cb) {
-    transactions.forEach(function(transaction) {
-      Transaction.updateUserMoney(transaction.user, -transaction.amount, cb);
-    })
-  },
-
-  updateUserMoney: function (userId, amount, cb) {
-    if (!sails.config.cache.user_money[userId]) {
-      Transaction.getTransactionsWithTally(userId, function (err, transactionsWithTally) {
+  updateUserMoney: function (session, amount, cb) {
+    if (!session.gambler_money) {
+      Transaction.getTransactionsWithTally(session.Gambler.id, function (err, transactionsWithTally) {
         if (err) {
-          //TODO: handle error
+          console.error("Bad stuff man. No transactions");
         }
-        sails.config.cache.user_money[userId] = transactionsWithTally.total;
+        session.gambler_money = transactionsWithTally.total;
         cb();
       })
     }
     else {
-      sails.config.cache.user_money[userId] += amount;
+      session.gambler_money += amount;
       cb();
     }
   }

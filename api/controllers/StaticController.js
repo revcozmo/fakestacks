@@ -7,32 +7,32 @@
 
 module.exports = {
 	'index': function (req, res) {
-	  if (!req.session.User.league) {
+	  if (!req.session.League) {
 	    return res.view();
     }
     var p1 = new Promise(function(resolve, reject) {
-      var league = req.session.User.league;
-      User.find().where({league: league.id}).populate('bets', {where: {archived: false}}).exec(function foundUsers(err, users) {
+      var league = req.session.League;
+      Gambler.find().where({league: league.id}).populate('bets', {where: {archived: false}}).populate('user').exec(function (err, gamblers) {
         if (err) {
           reject(err);
         }
-        for (var i=0; i<users.length; i++) {
-          var tallies = BetService.getBetTallies(users[i].bets, league.startingAccount);
+        for (var i=0; i<gamblers.length; i++) {
+          var tallies = BetService.getBetTallies(gamblers[i].bets, league.startingAccount);
           for (var prop in tallies) {
-            users[i][prop]=tallies[prop];
+            gamblers[i][prop]=tallies[prop];
           }
         }
-        users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.wins-user1.wins) : (user2.money-user1.money)});
-        users = users.slice(0, 8);
-        resolve(users);
+        gamblers.sort(function(gambler1, gambler2){return (gambler2.money-gambler1.money==0) ? (gambler2.wins-gambler1.wins) : (gambler2.money-gambler1.money)});
+        gamblers = gamblers.slice(0, 8);
+        resolve(gamblers);
       });
     });
     var p2 = new Promise(function(resolve, reject) {
-      var leagueId = req.session.User.league.id;
-      User.query('SELECT id FROM users where league = ' + leagueId, function(err, results) {
+      var leagueId = req.session.League.id;
+      Gambler.find().where({league: leagueId}).exec(function (err, gamblers) {
         if (err) return res.serverError(err);
-        var userIds = results.rows.map(function(row) { return row.id });
-        Bet.find().where({complete:false, user:userIds}).populate('bettable').populate('user').sort('amount DESC').limit(4).exec(function(err,bets) {
+        var gamblerIds = gamblers.map(g => g.id);
+        Bet.find().where({complete:false, gambler:gamblerIds}).populate('bettable').populate('gambler').sort('amount DESC').limit(4).exec(function(err,bets) {
           if (err) {
             reject(err);
           }
@@ -43,7 +43,7 @@ module.exports = {
 
     var shortenTeamName = function(teamName) { return teamName; };
 
-    if (req.session.User.league.sport == "NFL") {
+    if (req.session.League.sport == "NFL") {
       shortenTeamName = function(teamName) {
         var lastIndex = teamName.lastIndexOf(" ");
         return teamName.substring(0, lastIndex);
@@ -52,7 +52,7 @@ module.exports = {
 
     Promise.all([p1, p2])
       .then(function(results) {
-        return res.view({users: results[0], bets: results[1], shortenTeamName: shortenTeamName});
+        res.view({gamblers: results[0], bets: results[1], shortenTeamName: shortenTeamName});
       })
       .catch(function(err) {
         console.log("Failed:", err);

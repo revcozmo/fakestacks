@@ -35,10 +35,21 @@ module.exports.routes = {
   '/': 'StaticController.index',
   '/account': 'TransactionController.show',
   '/standings': 'UserController.index',
+  '/games': 'BettableController.index',
+  '/bets': 'BetController.index',
   '/login': 'SessionController.new',
   '/logout': 'SessionController.destroy',
   '/newleague': 'LeagueController.new',
-  '/joinleague': 'LeagueController.join'
+  '/joinleague': 'LeagueController.join',
+  '/user/edit/:id': 'UserController.edit',
+  '/user/password/:id': 'UserController.password',
+  '/user/updatepass/:id': 'UserController.updatepass',
+  '/user/update/:id': 'UserController.update',
+  '/user/show/:id': 'UserController.show',
+  '/league/edit/:id': 'LeagueController.edit',
+  '/league/update/:id': 'LeagueController.update',
+  '/transaction/show/:id': 'TransactionController.show',
+
 
   /***************************************************************************
   *                                                                          *

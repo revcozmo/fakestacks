@@ -12,14 +12,14 @@
 					<% _.each(bets, function(bet) { %>
 						<li id="bet-<%= bet.id %>" class="list-group-item potential-bet" data-bettable-id="<%= bet.bettableId %>" data-bet-id="<%= bet.sideId %>">
 							<p>
-								<%= bet.user.firstName %> <%= bet.user.lastName %>
+								<%= bet.gambler.user.firstName %> <%= bet.gambler.user.lastName %>
 							<p>
 							<% if (bet.sideId == bet.bettable.sideId1) { %>
 								<%= bet.bettable.team1 %> <%= bet.line %>
 							<% } else if (bet.sideId == bet.bettable.sideId2) { %>
 								<%= bet.bettable.team2 %> <%= bet.line %>
 							<% } else { %>
-								<%= bet.over ? "Over" : "Under" %> <%= bet.line %>
+								<%= bet.overunder === 'OVER' ? "Over" : "Under" %> <%= bet.line %>
 							<% } %>
 							</p>
 							<p class="gametime">
@@ -35,7 +35,7 @@
 							<p>
 							Amount: $<%= bet.amount %>
 						  	</p>
-						  	<% if (session.authenticated && session.User.admin) { %>
+						  	<% if (session.authenticated && session.Gambler && session.League && session.League.admin === session.Gambler.id) { %>
 				            <p>
 				            <div class="btn-group" role="group">
 							  <button data-bet-id="<%= bet.id %>" type="button" class="btn btn-primary win-button">Win</button>

@@ -15,20 +15,20 @@ module.exports = {
 			req.session.flash = {
 				err: ["You must login to place bets"]
 			}
-			return res.redirect("/bettable");
+			return res.redirect("/games");
 		}
 		if (req.session.cart.length == 0) {
 			req.session.flash = {
 				err: ["You have no bets to confirm"]
 			}
-			return res.redirect("/bettable");
+			return res.redirect("/games");
 		}
 		ValidationService.validateBets(req, req.session.cart, function(errors) {
 			if (errors.length > 0) {
         req.session.flash = {
 					err: errors
 				}
-				return res.redirect('/bettable');
+				return res.redirect('/games');
 		    }
 			var totalAmount = 0;
 			for (var i=0; i<req.session.cart.length; i++) {

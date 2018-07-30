@@ -11,8 +11,8 @@ module.exports = {
 
   attributes: {
 
-  	user: {
-      model: 'User',
+  	gambler: {
+      model: 'Gambler',
   		required: true
   	},
   	bettable: {
@@ -20,45 +20,41 @@ module.exports = {
   		required: true
   	},
   	time: {
-  		type: 'datetime',
+      type: 'ref',
+      columnType: 'timestamp',
   		required: true
   	},
   	amount: {
-  		type: 'integer',
+  		type: "number",
+      columnType: "integer",
   		required: true
   	},
     sideId: {
-      type: 'integer',
+      type: "string",
       required: false
     },
-    over: {
-      type: 'boolean',
-      required: false,
-      defaultsTo: null
+    overunder: {
+      type: 'string',
+      isIn: ['OVER','UNDER'],
+      required: false
     },
     line: {
       type: 'string',
       required: true
     },
-    win: {
-      type: 'boolean',
-      required: false,
-      defaultsTo: null
+    outcome: {
+      type: 'string',
+      isIn: ['WIN','LOSS','PUSH'],
+      required: false
     },
     complete: {
       type: 'boolean',
-      required: true,
       defaultsTo: false
     },
     archived: {
       type: 'boolean',
       defaultsTo: false
     },
-
-  	toJSON: function() {
-  		var obj = this.toObject();
-  		return obj;
-  	}
   }
 };
 

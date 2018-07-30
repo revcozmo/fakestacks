@@ -6,21 +6,21 @@
  */
 
 module.exports = {
-  show: function (req, res, next) {
+  show: async function (req, res, next) {
     var moment = require('moment');
-    var userId = req.param('id');
-    var league = req.session.User.league;
-    var userId = userId ? userId : req.session.User.id;
-    Bet.find().where({user: userId, archived: false}).sort({time: 'asc'}).populate('bettable').populate('user').exec(function foundBets(err, bets) {
+    var gamblerId = req.param('id');
+    var league = req.session.League;
+    var gambler = gamblerId ? gamblerId : req.session.Gambler.id;
+    Bet.find().where({gambler: gamblerId, archived: false}).sort('time asc').populate('bettable').populate('gambler').exec(async function foundBets(err, bets) {
       if (err) return next(err);
       if (!bets) return next();
       var runningTally = league.startingAccount;
       for (var i = 0; i < bets.length; i++) {
         var bet = bets[i];
-        if (bet.win === true) {
+        if (bet.outcome === 'WIN') {
           runningTally += bet.amount;
         }
-        else if (bet.win === false) {
+        else if (bet.outcome === 'LOSS') {
           runningTally -= bet.amount;
         }
         bet.tally = runningTally;
@@ -28,14 +28,13 @@ module.exports = {
       var tallies = BetService.getBetTallies(bets, league.startingAccount);
       tallies.bets = bets;
       if (bets.length == 0) {
-        User.findOne(userId, function foundUser(err, user) {
-          tallies.user = user;
-          tallies.moment = moment;
-          res.view(tallies);
-        });
+        var gamblers = await Gambler.find().limit(1).where({id: gamblerId}).populate('user');
+        tallies.gambler = gamblers[0];
+        tallies.moment = moment;
+        res.view(tallies);
       }
       else {
-        tallies.user = bets[0].user;
+        tallies.gambler = bets[0].gambler;
         tallies.moment = moment;
         res.view(tallies);
       }

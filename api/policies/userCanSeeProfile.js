@@ -10,7 +10,7 @@ module.exports = function(req, res, ok) {
     	return;
 	}
 	var sessionUserMatchesId = (req.session.User.id == req.param('id'));
-	var isAdmin = req.session.User.admin;
+	var isAdmin = req.session.Gambler && req.session.League && req.session.League.admin === req.session.Gambler.id;
 
 	// The requested id does not match the user's id,
 	// and this is not an admin

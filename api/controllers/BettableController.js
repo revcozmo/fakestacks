@@ -17,49 +17,30 @@
 
 module.exports = {
 
-  buildBettablesForSport: function (sportKey) {
-    try {
-      console.log("Retrieving bettables for " + sportKey);
-      SportsBookGateway.getBettables(sportKey, function (error, bettables) {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        else {
-          bettables.forEach(function (bettable) {
-            Bettable.updateOrCreate(bettable.gameKey, bettable);
-          });
-        }
-      });
-    }
-    catch (err) {
-      console.log("ERROR RETRIEVING BETTABLES: " + err);
-      return;
-    }
-  },
-
   create: function (req, res, next) {
-    var interval = 0;
-    for (var sportKey in sails.config.sports) {
-      setTimeout(this.buildBettablesForSport, interval, sportKey);
+    let interval = 0;
+    for (const sportKey in sails.config.sports) {
+      setTimeout(() => {
+        BettablesBuilder.buildBettablesForSport(sportKey)
+      }, interval);
       interval += 60000;
     }
 
-    res.redirect('/bettable');
+    res.redirect('/games');
   },
 
   index: function (req, res, next) {
-    var rightnow = new Date();
-    Bettable.find().where({gameTime: {'>=': rightnow}, sport: req.session.User.league.sport}).sort({gameTime: 'asc'}).exec(function foundBettables(err, bettables) {
+    const rightnow = new Date();
+    Bettable.find().where({gameTime: {'>=': rightnow}, sport: req.session.League.sport}).sort('gameTime asc').exec(function foundBettables(err, bettables) {
       if (err) return next(err);
       if (!req.session.cart) {
         req.session.cart = [];
       }
-      var total = 0;
-      var disabledButtons = [];
-      for (var i = 0; i < req.session.cart.length; i++) {
-        var bet = req.session.cart[i];
-        disabledButtons[i] = bet.bettable.id + "-" + (bet.over != null ? bet.over : bet.sideId);
+      let total = 0;
+      let disabledButtons = [];
+      for (let i = 0; i < req.session.cart.length; i++) {
+        const bet = req.session.cart[i];
+        disabledButtons[i] = bet.bettable.id + "-" + (bet.overunder != null ? bet.overunder : bet.sideId);
         total += parseInt(req.session.cart[i].amount);
       }
       res.view({
@@ -69,7 +50,7 @@ module.exports = {
         disabledButtons: disabledButtons,
         totalAmount: total,
         buttonIsDisabled: function (button, disabledButtons) {
-          return (disabledButtons.indexOf(button) != -1);
+          return (disabledButtons.indexOf(button) !== -1);
         }
       });
     });

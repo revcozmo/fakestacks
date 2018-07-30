@@ -21,51 +21,38 @@ module.exports = {
       required: true
     },
     email: {
-      type: 'email',
+      type: 'string', //TODO: This is no longer email. Need to validate that this checks email address formatting
       required: true,
       unique: true,
-      confirmationmatch: true
     },
-    league: {
-      model: 'League'
-    },
-    admin: {
-      type: 'boolean',
-      defaultsTo: false
+    gamblers: {
+      collection: 'gambler',
+      via: 'user'
     },
     encryptedPassword: {
       type: 'string'
-    },
-    bets: {
-      collection: 'Bet',
-      via: 'user'
     },
     notifyprocessedbets: {
       type: 'boolean',
       defaultsTo: true
     },
-
-    getFullName: function() {
-      return this.firstName + " " + this.lastName;
+    lastVisitedLeague: {
+      model: 'League'
     },
-
-    toJSON: function () {
-      var obj = this.toObject();
-      delete obj.password;
-      delete obj.confirmation;
-      delete obj.encryptedPassword;
-      delete obj._csrf;
-      obj.fullName = this.getFullName();
-      return obj;
-    }
-
   },
 
-  types: {
-    confirmationmatch: function() {
-      return this.password === this.confirmation;
-    }
+  customToJSON: function () {
+    var obj = _.omit(this, ['password', 'confirmation', 'encryptedPassword', '_csrf'])
+    obj.fullName = obj.firstName + " " + obj.lastName;
+    return obj;
   },
+
+  //TODO: Figure out another way to verify that password == confirmation
+  // types: {
+  //   confirmationmatch: function() {
+  //     return this.password === this.confirmation;
+  //   }
+  // },
 
   validationMessages: { //hand for i18n & l10n
     email: {
@@ -86,8 +73,6 @@ module.exports = {
     delete values.id;
     values.email = values.email.toLowerCase();
 
-    var encryptedPassword = require('password-hash').generate(values.password);
-    values.encryptedPassword = encryptedPassword;
     next();
   },
 
@@ -96,9 +81,12 @@ module.exports = {
       return next();
     }
 
-    var encryptedPassword = require('password-hash').generate(values.password);
-    values.encryptedPassword = encryptedPassword;
     next();
-  }
+  },
+
+  visitLeague: async function(userId, leagueId) {
+    let updatedUsers = await User.update({id: userId}).set({lastVisitedLeague: leagueId}).fetch();
+    console.log("VISITED LEAGUE: " + updatedUsers); //TODO: Get rid of this
+  },
 
 };

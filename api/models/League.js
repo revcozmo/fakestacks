@@ -11,27 +11,34 @@ module.exports = {
   	},
   	sport: {
   		type: "string",
-  		enum: Object.keys(sails.config.sports),
+  		isIn: ["CFB","NFL","NBA"],
   		defaultsTo: "NFL"
   	},
   	startingAccount: {
-  		type: "integer",
+      type: "number",
+      columnType: "integer",
   		defaultsTo: 500
   	},
   	weeklyBetAccountRatio: {
   		defaultsTo: 0.5,
-  		type: "float"
+  		type: "number",
+      columnType: "float",
   	},
   	weeklyBetCountMax: {
   		defaultsTo: 4,
-  		type: "integer"
+  		type: "number",
+      columnType: "integer",
   	},
   	landingMessage: {
   		type: "string",
   		defaultsTo: "Getting your gambling fix while continuing to put food on your family"
-  	},
+    },
+    members: {
+      collection: 'gambler',
+      via: 'league'
+    },
     admin: {
-       model: 'user',
+       model: 'gambler',
        required: true
     }
   },

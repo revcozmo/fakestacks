@@ -9,13 +9,13 @@ module.exports = function(req, res, ok) {
     	return;
   }
 
-  User.findOne(req.param('id')).populate('league').exec(function foundUser(err, user) {
-    isAdminForUser = req.session.User.id == user.league.admin;
+  User.findOne(req.param('id')).exec(function foundUser(err, user) {
+    
     var sessionUserMatchesId = (req.session.User.id == req.param('id'));
     
       // The requested id does not match the user's id,
       // and this is not an admin
-      if (!isAdminForUser && !sessionUserMatchesId) {
+      if (!sessionUserMatchesId) {
         var noRightsError = [{name: 'noRights', message: 'You cannot change the password for another user'}]
         req.session.flash = {
           err: noRightsError

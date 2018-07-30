@@ -5,7 +5,7 @@
 		<thead>
 			<tr>
 				<th width=20>Rank</th>
-				<th width=50%>Name</th>
+				<th>Name</th>
 				<th>Money</th>
 				<th>Pending</th>
 				<th>Record</th>
@@ -14,17 +14,17 @@
 			</tr>
 		</thead>
 	<tbody>
-		<% _.each(users, function(user, index) { %>
-		<tr data-id="<%= user.id %>" data-model="user">
+		<% _.each(gamblers, function(gambler, index) { %>
+		<tr data-id="<%= gambler.id %>" data-model="gambler">
 			<td><%= index+1 %></td>
-			<td><%= user.firstName %> <%= user.lastName %></td>
+			<td><%= gambler.user.firstName %> <%= gambler.user.lastName %></td>
 			<td>
-				<a href="transaction/show/<%= user.id %>">
-				$<%= user.money %>
+				<a href="transaction/show/<%= gambler.id %>">
+				$<%= gambler.money %>
 				</a>
 			</td>
-			<td>$<%= user.pending %></td>
-			<td><%= user.record %></td>
+			<td>$<%= gambler.pending %></td>
+			<td><%= gambler.record %></td>
       <td></td>
       <td></td>
 		</tr>
@@ -32,7 +32,7 @@
 		<% }) %>
 	</tbody>
 	</table>
-	<div>Average Money: $<%= (totalMoney / users.length).toFixed(0) %></div>
+	<div>Average Money: $<%= (totalMoney / gamblers.length).toFixed(0) %></div>
 	<div>Total Record: <%= totalRecord %></div>
 	<br>
 	<div>House Earnings: <%= houseMoney %></div>

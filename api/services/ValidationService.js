@@ -22,11 +22,11 @@ module.exports = {
       }
     }
 
-    Bet.find().where({user: req.session.User.id, complete: false}).exec(function (err, pendingBets) {
-      Transaction.getTransactionsWithTally(req.session.User.id, function (err, transactionsWithTotal) {
+    Bet.find().where({gambler: req.session.Gambler.id, complete: false}).exec(function (err, pendingBets) {
+      Transaction.getTransactionsWithTally(req.session.Gambler.id, function (err, transactionsWithTotal) {
         //Validate the number of bets
         var numPendingBets = pendingBets.length;
-        var league = req.session.User.league;
+        var league = req.session.League;
         if ((bets.length + pendingBets.length) > parseInt(league.weeklyBetCountMax)) {
           var errorString = "You cannot exceed " + league.weeklyBetCountMax + " bets for the week.";
           if (numPendingBets != 0) {

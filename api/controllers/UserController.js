@@ -21,9 +21,15 @@ module.exports = {
 		res.view();
 	},
 
-	create: function(req, res, next) {
-		var user = req.params.all();
-    user.league = req.session.User.league;
+	create: async function(req, res, next) {
+		var user = req.allParams();
+		user.league = req.session.League;
+		
+		var encryptedPassword = await sails.helpers.passwords.hashPassword(user.password);
+		//var encryptedPassword = require('password-hash').generate(values.password);
+		user.encryptedPassword = encryptedPassword;
+
+		//TODO: This should go away, but for now...
 		User.create( user, function userCreated (err, user) {
 			if (err) {
 				console.log(err);
@@ -32,12 +38,11 @@ module.exports = {
         };
 				return res.redirect('/user/new');
 			}
-      var newAccountTransaction = {
-        user: user,
-        amount: req.session.User.league.startingAccount,
-        bet: null
+			var newGambler = {
+        user: user.id,
+        league: req.session.League.id
       };
-			Transaction.create(newAccountTransaction, function accountCreated(err, account) {
+			Gambler.create(newGambler, function (err, gambler) {
 				if (err) {
 					console.log(err);
 					req.session.flash = {
@@ -45,8 +50,24 @@ module.exports = {
 					};
 					return res.redirect('/user/new');
 				}
-				NotificationService.sendWelcomeNotification(user, req.session.User);
-				res.redirect('/league/settings');
+				var newAccountTransaction = {
+					user: user.id,
+					amount: req.session.League.startingAccount,
+					bet: null
+				};
+				Transaction.create(newAccountTransaction, function transactionCreated(err, transaction) {
+					if (err) {
+						console.log(err);
+						req.session.flash = {
+							err: err
+						};
+						return res.redirect('/user/new');
+					}
+					Transaction.updateUserMoney(req.session, transaction.amount, function() {
+						NotificationService.sendWelcomeNotification(user, req.session.User);
+						res.redirect('/league/settings');
+					});
+				});
 			});
 		});
 	},
@@ -93,7 +114,7 @@ module.exports = {
 	},
 
 	update: function(req, res, next) {
-	  user = req.params.all();
+	  user = req.allParams();
     user.notifyprocessedbets = user.notifyprocessedbets == "on";
 		User.update(req.param('id'), user, function userUpdated(err, updatedUsers) {
 			if (err) {
@@ -112,7 +133,7 @@ module.exports = {
 	},
 
   updatepass: function(req, res, next) {
-    var user = req.params.all();
+    var user = req.allParams();
     user.password_update = true;
     User.update(req.param('id'), user, function updatedPassword(err) {
       if (err) {
@@ -126,32 +147,32 @@ module.exports = {
   },
 
   index: function(req, res, next) {
-	  var league = req.session.User.league;
-		User.find().where({league: league.id}).populate('bets', {where: {archived: false}}).exec(function foundUsers(err, users) {
+	  var league = req.session.League;
+		Gambler.find().where({league: league.id}).populate('user').populate('bets', {where: {archived: false}}).exec(function foundGamblers(err, gamblers) {
 			if (err) return next(err);
 			var totalMoney = 0;
 			var totalWins = 0;
 			var totalLosses = 0;
 			var totalPushes = 0;
 			var totalVigLoss = 0;
-			for (var i=0; i<users.length; i++) {
-				var tallies = BetService.getBetTallies(users[i].bets, league.startingAccount);
+			for (var i=0; i<gamblers.length; i++) {
+				var tallies = BetService.getBetTallies(gamblers[i].bets, league.startingAccount);
 				for (var prop in tallies) {
-					users[i][prop]=tallies[prop];
+					gamblers[i][prop]=tallies[prop];
 				}
-				totalVigLoss += users[i].vigLoss;
-				totalMoney += users[i].money;
-				totalWins += users[i].wins;
-				totalLosses += users[i].losses;
-				totalPushes += users[i].pushes;
+				totalVigLoss += gamblers[i].vigLoss;
+				totalMoney += gamblers[i].money;
+				totalWins += gamblers[i].wins;
+				totalLosses += gamblers[i].losses;
+				totalPushes += gamblers[i].pushes;
 			}
-			users.sort(function(user1, user2){return (user2.money-user1.money==0) ? (user2.wins-user1.wins) : (user2.money-user1.money)});
+			gamblers.sort(function(gambler1, gambler2){return (gambler2.money-gambler1.money==0) ? (gambler2.wins-gambler1.wins) : (gambler2.money-gambler1.money)});
 			var totalVigLoss = Math.round(totalVigLoss);
-			var startingLeagueMoney = req.session.User.league.startingAccount * users.length;
+			var startingLeagueMoney = req.session.League.startingAccount * gamblers.length;
 			var houseMoney = startingLeagueMoney - totalMoney;
 			var houseMoneyWithVig = houseMoney + totalVigLoss;
 			res.view({
-				users: users,
+				gamblers: gamblers,
 				totalMoney: totalMoney,
 				totalRecord: totalWins+"-"+totalLosses+"-"+totalPushes,
 				houseMoney: houseMoney,

@@ -8,8 +8,8 @@
 module.exports = {
 
 	create: function (req, res, next) {
-		var bet = req.params.all();
-		if (this.indexOfBetInCart(bet, req.session.cart) > -1) {
+		var bet = req.allParams();
+		if (CartHelper.indexOfBetInCart(bet, req.session.cart) > -1) {
 			return res.status(204);
 		}
 		Bettable.findOne(bet.bettableId, function foundBettable(err, bettable) {
@@ -27,8 +27,8 @@ module.exports = {
 				potentialBet.line = bettable.overunder;
 			}
 			potentialBet.sideId = bet.sideId;
-			potentialBet.over = bet.over;
-			if (bettable.sideId1 != bet.sideId && bettable.sideId2 != bet.sideId && bet.over==null) {
+			potentialBet.overunder = bet.overunder;
+			if (bettable.sideId1 != bet.sideId && bettable.sideId2 != bet.sideId && bet.overunder==null) {
 				return res.badRequest(bet.sideId + ' is not a valid sideId for this game');
 			}
 			potentialBet.amount = 0; //Make this an inputtable value later
@@ -36,30 +36,27 @@ module.exports = {
 				req.session.cart = [];
 			}
 			req.session.cart.push(potentialBet);
-			req.session.save()
 			res.status(201);
 			return res.json(potentialBet);
 		});
 	},
 
 	edit: function(req, res, next) {
-		var bet = req.params.all();
-		var index = this.indexOfBetInCart(bet, req.session.cart);
+		var bet = req.allParams();
+		var index = CartHelper.indexOfBetInCart(bet, req.session.cart);
 		if (index > -1) {
 			potentialBet = req.session.cart[index];
 			potentialBet.amount = req.param('amount');
-			req.session.save();
 		}
 		return res.ok();
 	},
 
 	destroy: function(req, res, next) {
-		var bet = req.params.all();
-		var index = this.indexOfBetInCart(bet, req.session.cart);
+		var bet = req.allParams();
+		var index = CartHelper.indexOfBetInCart(bet, req.session.cart);
 		if (index > -1) {
 			req.session.cart.splice(index, 1);
 		}
-		req.session.save();
 		return res.ok()
 	},
 
@@ -72,23 +69,6 @@ module.exports = {
 			potentialBets: req.session.cart
 		});
 	},
-
-	indexOfBetInCart: function(bet, cart) {
-		for (var i=0; i<cart.length; i++) {
-			var existing = cart[i];
-			if (this.betMatches(bet, existing)) {
-				return i;
-			}
-		}
-		return -1;
-	},
-
-	betMatches: function(bet, existing) {
-		var bettableIdMatches = existing.bettable.id == bet.bettableId;
-		var sideIdMatches = existing.sideId!=null && existing.sideId == bet.sideId;
-		var overPickMatches = existing.over!=null && existing.over == bet.over;
-		return bettableIdMatches && (sideIdMatches || overPickMatches);
-	}
 
 };
 

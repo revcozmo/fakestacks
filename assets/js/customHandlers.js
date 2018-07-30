@@ -183,23 +183,23 @@ var confirmBets = function (event) {
 }
 
 var winButtonHandler = function (event) {
-  winLossHandler(event, true);
+  winLossHandler(event, 'WIN');
 }
 
 var lossButtonHandler = function (event) {
-  winLossHandler(event, false);
+  winLossHandler(event, 'LOSS');
 }
 
 var pushButtonHandler = function (event) {
-  winLossHandler(event, null);
+  winLossHandler(event, 'PUSH');
 }
 
-var winLossHandler = function (event, win) {
+var winLossHandler = function (event, outcome) {
   var el = $(event.target);
   var betId = el.data().betId;
   var data = {complete: true};
-  if (win != null) {
-    data.win = win;
+  if (outcome != null) {
+    data.outcome = outcome;
   }
   $.ajax({
     type: 'GET',

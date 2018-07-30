@@ -1,0 +1,547 @@
+/**
+ * importer.less
+ *
+ * By default, new Sails projects are configured to compile this file
+ * from LESS to CSS.  Unlike CSS files, LESS files are not compiled and
+ * included automatically unless they are imported below.
+ *
+ * The LESS files imported below are compiled and included in the order
+ * they are listed.  Mixins, variables, etc. should be imported first
+ * so that they can be accessed by subsequent LESS stylesheets.
+ *
+ * (Just like the rest of the asset pipeline bundled in Sails, you can
+ * always omit, customize, or replace this behavior with SASS, SCSS,
+ * or any other Grunt tasks you like.)
+ */
+body {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+}
+.jumbotron {
+  text-align: center;
+}
+.jumbotron h2 {
+  font-size: 1.5em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: gray;
+}
+.container .gray {
+  color: gray;
+}
+.container .footer {
+  width: 25%;
+}
+.btn {
+  border-radius: 0px;
+}
+.fs-form {
+  z-index: 1030;
+  padding: 25px 15px;
+  margin: 20px auto;
+  background-color: #ececec;
+}
+.fs-form .form-control {
+  border-radius: 0px;
+}
+.fs-form h2 {
+  text-align: center;
+  margin-top: 0px;
+}
+.form-signin {
+  padding-bottom: 15px;
+}
+.signin-page {
+  width: 100%;
+  background: url(/images/um_psu_stack.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  z-index: -5;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.signin-page-overlay {
+  width: 100%;
+  background-color: black;
+  opacity: .6;
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.signin-headline {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+}
+.navbar-inverse {
+  background-color: #ececec;
+  border-color: #ececec;
+}
+.navbar-inverse .navbar-toggle {
+  border-color: #777574;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #777574;
+}
+.navbar-brand {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  margin: auto;
+}
+.navbar-menu-button {
+  border: 0px;
+  float: left;
+  margin-left: 15px;
+}
+.navbar-bet-slip-button {
+  height: 30px;
+  width: 35px;
+  border: 0px;
+  background-size: cover;
+  margin-top: 10px;
+  padding: 0px 5px 0px 0px;
+  margin-right: 10px;
+}
+.badge {
+  padding: 3px 4px 4px 4px;
+  font-size: 10px;
+  line-height: .8;
+  background-color: #d16565;
+}
+.bet-slip-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.navbar-toggle {
+  z-index: 3;
+}
+.navbar-right li {
+  float: left;
+  padding-top: 5px;
+  padding-right: 15px;
+}
+.navbar-right li a {
+  color: #777574;
+}
+.navbar-right li a:hover {
+  color: #fff;
+  background-color: transparent;
+}
+@media (max-width: 767px) {
+  .mobile-menu {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
+    padding-top: 50px;
+    z-index: 5;
+    font-size: 28px;
+    font-weight: lighter;
+    opacity: .97;
+    background: -webkit-linear-gradient(#003d63, #000b26);
+    background: -o-linear-gradient(#003d63, #000b26);
+    background: -moz-linear-gradient(#003d63, #000b26);
+    background: linear-gradient(#003d63, #000b26);
+    color: #ffffff;
+  }
+  .mobile-menu > .navbar-nav > li > a {
+    color: #ffffff;
+  }
+  .mobile-menu > .navbar-nav > li {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .mobile-menu > .nav > li > a {
+    display: inline;
+  }
+  .navbar-fixed-top .navbar-collapse {
+    min-height: 100vh;
+  }
+  .navbar-inverse .navbar-collapse {
+    border-color: #000b26;
+  }
+}
+@media (max-width: 767px) {
+  .mobile-bet-slip {
+    width: 100%;
+    z-index: 4;
+    background: white;
+    overflow: scroll;
+    position: absolute;
+    max-height: calc(100vh - 50px);
+    top: 50px;
+    left: 0px;
+  }
+  .mobile-bet-slip > .potential-bet-panel {
+    margin-top: 0px;
+  }
+  .mobile-bet-slip > .navbar-nav > li {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .mobile-bet-slip > .nav > li > a {
+    display: inline;
+  }
+  .sidebar-outer {
+    display: none;
+  }
+}
+@media (min-width: 767px) {
+  .nav > .mobile-show {
+    display: none;
+  }
+  .mobile-show {
+    display: none;
+  }
+  .navbar > .container > .mobile-bet-slip {
+    display: none;
+  }
+}
+.menu-bottom {
+  display: flex;
+}
+.menu-account-bottom {
+  color: white;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+}
+.panel {
+  border-radius: 0px;
+}
+.panel-heading {
+  border-bottom: 0px;
+  border-color: #ececec;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.panel-default > .panel-body {
+  border-color: #ececec;
+  background-color: #ececec;
+}
+.panel-default > .panel-heading {
+  border-color: #ececec;
+  background-color: #ececec;
+}
+.media-body ol li {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.fs-form input[type="text"],
+.fs-form input[type="password"] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+.form-horizontal input[type="text"] {
+  margin-bottom: 0px;
+}
+.potential-bet-panel {
+  margin-top: 20px;
+  background-color: #ececec;
+}
+.potential-bet-panel .panel-body {
+  padding: 10px;
+}
+.dropdown-menu {
+  background-color: #ececec;
+  border-radius: 0px;
+  border: 0px;
+}
+@media (min-width: 768px) {
+  .navbar-toggle {
+    display: none;
+  }
+  .mobile-left {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .navbar-right {
+    display: none;
+  }
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #1c1c1c;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #1c1c1c;
+  background-color: transparent;
+}
+.navbar-right li a:hover {
+  color: #1c1c1c;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  color: #1c1c1c;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: #1c1c1c;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-toggle:hover {
+  background-color: #c0c0c0;
+}
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #c0c0c0;
+}
+.no-games-info-message {
+  color: #777574;
+}
+.jumbotron {
+  background-color: #ffffff;
+}
+.total-tally {
+  background-color: #ececec;
+  border: 0px;
+}
+.team-name {
+  text-align: right;
+  padding-top: 5px;
+}
+.alert-danger li {
+  list-style-type: none;
+}
+.game-time {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.game-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #777574;
+}
+.team-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.bet-amount-container {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 30%;
+}
+.bet-amount-container {
+  text-align: right;
+}
+.bet-amount-addon {
+  background-color: #ffffff;
+}
+.potential-bet {
+  background-color: #ececec;
+  border-radius: 0px;
+  border-bottom: 0px;
+  border-top: 1px solid;
+  border-left: 0px;
+  border-right: 0px;
+}
+.list-group-item:first-child {
+  border-top: 0px;
+}
+.sign-in-form {
+  margin: 0 auto;
+}
+.bet-slip-title {
+  padding-top: 10px;
+}
+.list-group-item:first-child {
+  border-top: 0px;
+}
+.close {
+  font-weight: normal;
+  opacity: .5;
+}
+.menu-close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+  margin-top: 0px;
+  background-color: transparent;
+  border: 0;
+}
+.validation-error {
+  padding: 10px 2px;
+}
+.standings td form {
+  display: inherit;
+}
+.user-record {
+  float: right;
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+.user-stats {
+  padding-bottom: 20px;
+}
+:focus {
+  outline: none;
+}
+.mobile-menu > .navbar-nav > li > a:hover,
+.mobile-menu > .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-header > .navbar-menu-button:focus,
+.navbar-header > .navbar-menu-button:hover,
+.navbar-header > .navbar-bet-slip-button:focus,
+.navbar-header > .navbar-bet-slip-button:hover {
+  background-color: transparent;
+}
+.input-group-addon {
+  border-radius: 0px;
+  padding: 4px 6px;
+}
+.bet-amount {
+  border-radius: 0px;
+  padding: 6px 3px;
+}
+.home-page-panel {
+  padding: 10px 15px;
+}
+.home-page-panel-content {
+  min-height: 400px;
+}
+.home-page-panel-content-inner {
+  padding-top: 10px;
+}
+.inner-home-page-panel {
+  border: 2px solid #c0c0c0;
+  padding: 10px 20px;
+}
+.league-header {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 100%;
+  background-color: #003d63;
+  height: 75px;
+  color: #ffffff;
+}
+.home-page {
+  margin-top: 75px;
+}
+.league-header-league-name {
+  font-size: 28px;
+}
+.league-header-label {
+  margin-top: 10px;
+}
+.panel-action-row {
+  margin-bottom: 10px;
+}
+.bet-headline {
+  font-weight: bold;
+}
+.home-page-panel-heading {
+  color: #003d63;
+}
+.pending-bet-card {
+  background-color: #ececec;
+  margin: 10px 0px;
+  padding: 10px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 880px) {
+  .container {
+    width: 860px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1096px) {
+  .container {
+    width: 1070px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+.navbar-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .navbar-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 780px;
+  }
+}
+@media (min-width: 880px) {
+  .navbar-container {
+    width: 890px;
+  }
+}
+@media (min-width: 992px) {
+  .navbar-container {
+    width: 1000px;
+  }
+}
+@media (min-width: 1096px) {
+  .navbar-container {
+    width: 1100px;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar-container {
+    width: 1200px;
+  }
+}
+.rules-panel-rule {
+  margin-bottom: 10px;
+}
+.rules-panel-rule:last-child {
+  margin-bottom: 20px;
+}
+.register-invite {
+  margin-top: 10px;
+}
+.or-between-buttons {
+  text-align: center;
+  padding: 10px 0px 15px;
+}
+@media (max-width: 420px) {
+  h1 {
+    font-size: 26px;
+  }
+}

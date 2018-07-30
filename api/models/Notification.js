@@ -14,10 +14,10 @@ module.exports = {
     scope: {
       type: "string",
       defaultsTo: "Bet.tableName",
-      required: true
     },
     refId: {
-      type: "integer",
+      type: "number",
+      columnType: "integer",
       required: true
     },
     action: {

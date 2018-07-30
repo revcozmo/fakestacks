@@ -12,7 +12,7 @@
       <a class="navbar-brand" href="/">FAKE STACKS</a>
     </div>
     <div class="navbar-bet-slip collapse mobile-bet-slip">
-      <% if (session.authenticated && session.User && session.User.league && session.cart) { %>
+      <% if (session.authenticated && session.User && session.League && session.cart) { %>
       <% potentialBets = session.cart; %>
       <% totalAmount = 0; %>
       <% confirmation = false; %>
@@ -24,11 +24,11 @@
       <button type="button" class="menu-close mobile-show" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <ul class="nav navbar-nav">
         <li class="mobile-show"><a href="/">HOME</a></li>
-        <% if (session.authenticated && session.User && session.User.league) { %>
-        <li><a href="/bettable">GAMES</a></li>
+        <% if (session.authenticated && session.User && session.League) { %>
+        <li><a href="/games">GAMES</a></li>
         <li><a href="/standings">STANDINGS</a></li>
-        <li><a href="/bet">BETS</a></li>
-        <% if (session.User.admin) { %>
+        <li><a href="/bets">BETS</a></li>
+        <% if (session.Gambler && session.League && session.League.admin === session.Gambler.id) { %>
         <li><a href="/league/settings">MANAGE</a></li>
         <% } %>
         <% } %>
@@ -39,9 +39,9 @@
         <li class="mobile-left"><a href="/logout">SIGN OUT</a></li>
         <% } %>
       </ul>
-      <% if (session.authenticated && session.User && session.User.league) { %>
+      <% if (session.authenticated && session.User && session.League) { %>
         <div class="menu-bottom">
-        <a class="menu-account-bottom mobile-show" href="/account" id="account-balance" class="money">You have $<%= sails.config.cache.user_money[req.session.User.id] %>.00</a>
+        <a class="menu-account-bottom mobile-show" href="/account" id="account-balance" class="money">You have $<%= req.session.gambler_money %>.00</a>
         </div>
       <% } %>
       <div class="nav navbar-right">
@@ -55,8 +55,8 @@
             <li><a href="/user/password/<%= session.User.id %>">UPDATE PASSWORD</a></li>
           </ul>
         </li>
-        <% if (session.authenticated && session.User && session.User.league) { %>
-        <li class="money"><a href="/account" id="account-balance" class="money">$<%= sails.config.cache.user_money[req.session.User.id] %>.00</a></li>
+        <% if (session.authenticated && session.User && session.League) { %>
+        <li class="money"><a href="/account" id="account-balance" class="money">$<%= req.session.gambler_money %>.00</a></li>
         <% } %>
         <li><a href="/logout">SIGN OUT</a></li>
         <% } %>

@@ -2,7 +2,7 @@ module.exports = {
 
   sendBetNotification: function(bet) {
     var notification = {
-      user: bet.user,
+      user: bet.gambler.user,
       scope: Bet.tableName,
       refId: bet.id,
       action: "Processed Bet"

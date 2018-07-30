@@ -5,7 +5,7 @@
     <% _.each(bets, function(bet) { %>
     <div class="pending-bet-card">
       <div class="bet-headline">
-        $<%= bet.amount %> by <%= bet.user.firstName %> <%= bet.user.lastName %>
+        $<%= bet.amount %> by <%= bet.gambler.user.firstName %> <%= bet.gambler.user.lastName %>
       </div>
       <div class="">
         <% if (bet.sideId == bet.bettable.sideId1) { %>
@@ -13,7 +13,7 @@
         <% } else if (bet.sideId == bet.bettable.sideId2) { %>
         <%= bet.bettable.team2 %> <%= bet.line %>
         <% } else { %>
-        <%= bet.over ? "Over" : "Under" %> <%= bet.line %>
+        <%= bet.overunder === 'OVER' ? "Over" : "Under" %> <%= bet.line %>
         <% } %>
       </div>
       <div class="">
@@ -24,7 +24,7 @@
   </div>
   </div>
   <div class="panel-action-row">
-  <form action="/bet" method="get">
+  <form action="/bets" method="get">
     <input type="submit" class="btn btn-lg btn-primary btn-block panel-action" value="SEE ALL BETS"/>
   </form>
   </div>

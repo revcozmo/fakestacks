@@ -8,13 +8,13 @@
     <th>Name</th>
     <th>Money</th>
   </tr>
-  <% _.each(users, function(user, index) { %>
-  <tr data-id="<%= user.id %>" data-model="user">
+  <% _.each(gamblers, function(gambler, index) { %>
+  <tr data-id="<%= gambler.user.id %>" data-model="gambler">
     <td><%= index + 1 %></td>
-    <td><%= user.firstName %> <%= user.lastName %></td>
+    <td><%= gambler.user.firstName %> <%= gambler.user.lastName %></td>
     <td>
-      <a href="transaction/show/<%= user.id %>">
-        $<%= user.money %>
+      <a href="transaction/show/<%= gambler.id %>">
+        $<%= gambler.money %>
       </a>
     </td>
   </tr>

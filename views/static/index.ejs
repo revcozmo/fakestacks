@@ -1,11 +1,11 @@
-<% if (session.authenticated && session.User.league) { %>
+<% if (session.authenticated && session.League) { %>
 <div class="league-header">
   <div class="container">
     <div class="league-header-label">The League:</div>
-    <div class="league-header-league-name"><%= session.User.league.name.toUpperCase() %></div></div>
+    <div class="league-header-league-name"><%= session.League.name.toUpperCase() %></div></div>
 </div>
 <% } %>
-<% if (!session.authenticated || !session.User.league) { %>
+<% if (!session.authenticated || !session.League) { %>
 <%- include league-choice.ejs %>
 <% } else { %>
 <div class="navbar-container home-page">
@@ -20,7 +20,7 @@
     </div>
 </div>
 <% } %>
-<% if (!session.authenticated || !session.User.league) { %>
+<% if (!session.authenticated || !session.League) { %>
 <div class="signin-page">
 </div>
 <div class="signin-page-overlay"></div>

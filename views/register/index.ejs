@@ -5,13 +5,11 @@
 <form action="/register/create" method="POST" id="sign-up-form" class="fs-form">
 
   <% if (flash && flash.err) { %>
-  <ul class="alert alert-danger">
-    <% Object.keys(flash.err.Errors).forEach(function(error) { %>
-    <% flash.err.Errors[error].forEach(function(errorDesc) { %>
-    <li><%= errorDesc.message %></li>
+    <ul class="alert alert-danger">
+    <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- flash.err[error].message %></li>
     <% }) %>
-    <% }) %>
-  </ul>
+    </ul>
   <% } %>
 
   <input type="text" class="form-control" placeholder="First Name" name="firstName">

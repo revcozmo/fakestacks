@@ -14,7 +14,7 @@ module.exports = {
   attributes: {
     sport: {
       type: "string",
-      enum: Object.keys(sails.config.sports),
+      isIn: ["CFB","NFL","NBA"],
       required: true
     },
     gameKey: {
@@ -22,15 +22,16 @@ module.exports = {
   		required: true
   	},
   	gameTime: {
-  		type: 'datetime',
+      type: 'ref',
+      columnType: 'timestamp',
   		required: true
   	},
     sideId1: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
     sideId2: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
   	team1: {
@@ -58,40 +59,22 @@ module.exports = {
     },
     ouoff: {
       type: 'boolean',
-      required: true,
       defaultsTo: false
     },
     off: {
       type: 'boolean',
-      required: true,
       defaultsTo: false
     },
 
-  	toJSON: function() {
-  		var obj = this.toObject();
-  		return obj;
-  	}
-
-  },
-
-  beforeCreate: function(values, next) {
-    delete values.id;
-    Bettable.findByGameKey(values.gameKey, function foundBettable(err, foundBettables) {
-        if (err) return next(err);
-        if (foundBettables == null || foundBettables.length == 0) {
-          next();
-        }
-        else {
-          console.log("Duplicate gameKey, skipping...");
-          return;
-        }
-    });
   },
 
   updateOrCreate: function(gameKey, bettable) {
-    Bettable.findOneByGameKey(gameKey, function foundBettable(err, foundBettable) {
+    Bettable.findOne({gameKey: gameKey}, function foundBettable(err, foundBettable) {
+      if (err) {
+        console.error("ERROR on retrieving bettable: " + err);
+      }
       if (foundBettable) {
-        Bettable.update({gameKey: gameKey}, bettable, function bettableCreated(err, updatedBettable) {
+        Bettable.update({gameKey: gameKey}, bettable, function bettableUpdated(err, updatedBettable) {
           if (err) {
             console.log(err);
           }

@@ -13,8 +13,8 @@ module.exports = {
     });
   },
 
-  create: function (req, res, next) {
-    var league = req.params.all();
+  create: async function (req, res, next) {
+    var league = req.allParams();
     league.weeklyBetAccountRatio = league.weeklyBetAccountRatio / 100;
     League.create(league, function leagueCreated(err, league) {
       if (err) {
@@ -25,15 +25,21 @@ module.exports = {
 
         return res.redirect('/league/new');
       }
-      User.update(req.session.User.id, {league: league.id, admin: true}, function userUpdated() {
-        req.session.User.league = league;
-        req.session.User.admin = true;
+      req.session.League = league;
+      User.visitLeague(req.session.User.id, league.id);
+      let gambler = {
+        user: req.session.User.id,
+        league: league.id,
+        admin: true
+      };
+      Gambler.create(gambler, function (err, createdGambler) {
+        req.session.Gambler = createdGambler;
         var newAccountTransaction = {
-          user: req.session.User,
+          gambler: createdGambler.id,
           amount: league.startingAccount,
           bet: null
         };
-        Transaction.create(newAccountTransaction, function accountCreated(err) {
+        Transaction.create(newAccountTransaction, function transactionCreate(err, transaction) {
           if (err) {
             console.log(err);
             req.session.flash = {
@@ -41,7 +47,9 @@ module.exports = {
             }
             return res.redirect('/league/new');
           }
-          return res.redirect('/league/settings');
+          Transaction.updateUserMoney(req.session, transaction.amount, function() {
+            return res.redirect('/league/settings');
+          });
         });
       });
     });
@@ -59,9 +67,9 @@ module.exports = {
   },
 
   update: function(req, res, next) {
-    League.update(req.param('id'), req.params.all(), function leagueUpdated(err, updated) {
+    League.update(req.param('id'), req.allParams(), function leagueUpdated(err, updated) {
       if (err) return res.redirect('/league/edit/' + req.param('id'));
-      req.session.User.league = updated[0];
+      req.session.League = updated[0];
       res.redirect('/league/settings/');
     });
   },
@@ -71,15 +79,15 @@ module.exports = {
   },
 
   'settings': function (req, res) {
-    var league = req.session.User.league;
-    User.find().where({league: league.id}).exec(function foundUsers(err, users) {
+    var league = req.session.League;
+    Gambler.find().where({league: league.id}).populate('user').exec(function foundGamblers(err, gamblers) {
       if (err) return next(err);
-      users.sort(function(user1, user2) {
-        return (user1.lastName == user2.lastName) ? (user1.firstName > user2.firstName) : (user1.lastName > user2.lastName);
+      gamblers.sort(function(gambler1, gambler2) {
+        return (gambler1.user.lastName == gambler2.user.lastName) ? (gambler1.user.firstName > gambler2.user.firstName) : (gambler1.user.lastName > gambler2.user.lastName);
       });
       res.view({
         league: league,
-        users: users
+        users: gamblers.map(gambler => gambler.user)
       });
     });
   }

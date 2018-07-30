@@ -2,8 +2,8 @@
 <% if (bet.sideId!=null) { %>
 	data-side-id="<%= bet.sideId %>"
 <% } %>
-<% if (bet.over!=null) { %>
-	data-over=<%= bet.over %>
+<% if (bet.overunder !=null) { %>
+	data-over=<%= bet.overunder == 'OVER' ? true : false %>
 <% } %>
 >
 	<% if (!confirmation) { %>
@@ -16,13 +16,13 @@
 		<%= bet.bettable.team1 %> <%= bet.bettable.team1Spread %>
 	<% } else if (bet.sideId == bet.bettable.sideId2) { %>
 		<%= bet.bettable.team2 %> <%= bet.bettable.team2Spread %>
-	<% } else if (bet.over != null) { %>
-		<%= (bet.over==="true" ? "Over " : "Under ") + bet.bettable.overunder %>
+	<% } else if (bet.overunder != null) { %>
+		<%= (bet.overunder==='OVER' ? "Over " : "Under ") + bet.bettable.overunder %>
 	<% } %>
   </strong></p>
 	<p class="gametime"><%= bet.bettable.gameTime %></p>
 	<p>
-	<% if (bet.over!= null || bet.sideId == bet.bettable.sideId1) { %>
+	<% if (bet.overunder!= null || bet.sideId == bet.bettable.sideId1) { %>
 		<%= bet.bettable.team1 %> at <%= bet.bettable.team2 %>
 	<% } else { %>
 		<%= bet.bettable.team2 %> at <%= bet.bettable.team1 %>

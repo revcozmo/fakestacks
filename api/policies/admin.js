@@ -4,7 +4,7 @@
 module.exports = function (req, res, ok) {
 
   // User is allowed, proceed to controller
-  if (req.session.User && req.session.User.admin) {
+  if (req.session.User && req.session.Gambler && req.session.League && req.session.Gambler.id === req.session.League.admin) {
     return ok();
   }
   else {

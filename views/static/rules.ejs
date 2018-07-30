@@ -1,16 +1,16 @@
 <div class="inner-home-page-panel">
-  <% if (session.authenticated && session.User.league) { %>
+  <% if (session.authenticated && session.League) { %>
     <h3 class="home-page-panel-heading">The Rules</h3>
     <div class="home-page-panel-content">
       <div class="home-page-panel-content-inner">
-        <div class="rules-panel-rule">1. You start out with an imaginary $<%= session.User.league.startingAccount %> in your account. Whoever has the most imaginary money in their account at the end of the season wins.</div>
-        <div class="rules-panel-rule">2. You can make up to <%= session.User.league.weeklyBetCountMax %> bets per week, but don't have to make any bets.</div>
-        <div class="rules-panel-rule">3. You cannot bet more than <%= 100 * session.User.league.weeklyBetAccountRatio %>% of the stash you started the week with. If you come into the week with $100, then the most you can spread over your bets is $<%= 100 * session.User.league.weeklyBetAccountRatio %>.</div>
+        <div class="rules-panel-rule">1. You start out with an imaginary $<%= session.League.startingAccount %> in your account. Whoever has the most imaginary money in their account at the end of the season wins.</div>
+        <div class="rules-panel-rule">2. You can make up to <%= session.League.weeklyBetCountMax %> bets per week, but don't have to make any bets.</div>
+        <div class="rules-panel-rule">3. You cannot bet more than <%= 100 * session.League.weeklyBetAccountRatio %>% of the stash you started the week with. If you come into the week with $100, then the most you can spread over your bets is $<%= 100 * session.League.weeklyBetAccountRatio %>.</div>
         <div class="rules-panel-rule">4. Lines move, so please be aware that you are locked into whatever point spread or over/under you initially wager on.</div>
       </div>
     </div>
     <div class="panel-action-row">
-      <form action="/bettable" method="get">
+      <form action="/games" method="get">
       <input type="submit" class="btn btn-lg btn-primary btn-block panel-action" value="START BETTING"/>
       </form>
     </div>

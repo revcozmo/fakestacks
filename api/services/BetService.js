@@ -16,12 +16,12 @@ module.exports = {
 		var vigTally = 0;
 		for (var j=0; j<bets.length; j++) {
 			var bet = bets[j];
-			if (bet.win === true) {
+			if (bet.outcome === 'WIN') {
 				winTally++;
 				runningTally += bet.amount;
 				vigTally += vigPct * bet.amount;
 			}
-			else if (bet.win === false) {
+			else if (bet.outcome === 'LOSS') {
 				lossTally++;
 				runningTally -= bet.amount;
 			}
